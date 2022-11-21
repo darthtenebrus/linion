@@ -18,7 +18,8 @@ MainWindow ::MainWindow(QWidget *parent) :
     ui->addonListView->setMouseTracking(true);
     ui->addonListView->setModel(model);
     ui->addonListView->setItemDelegate(new QvObjectDelegate(ui->addonListView));
-    model->refreshFolderList();
+    connect(this, SIGNAL(doRefresh()), model, SLOT(refresh()));
+    emit doRefresh();
 }
 
 

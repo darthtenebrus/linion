@@ -27,14 +27,16 @@ public:
     [[nodiscard]]
     QVariant data(const QModelIndex &index, int role) const override;
 
-    const QList<ItemData> &refreshFolderList();
-
 private:
     QList<ItemData> addonList;
 
     QString addonFolderPath;
 
+    const QList<ItemData> &refreshFolderList();
     const QString &cleanColorizers(QString &input) const;
+
+public slots:
+    void refresh();
 };
 
 

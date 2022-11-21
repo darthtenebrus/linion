@@ -110,3 +110,8 @@ const QString &QAddonListModel::cleanColorizers(QString &input) const {
             .replace("|r", "")
             .replace(QRegularExpression(R"(\|t.*?\|t)"), "");
 }
+
+void QAddonListModel::refresh() {
+    refreshFolderList();
+}
+

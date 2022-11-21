@@ -22,6 +22,9 @@ private:
     QAddonListModel *model;
 
     QString addonFolderPath;
+
+signals:
+    void doRefresh();
 };
 
 #endif //TENANTCONTROL_MAINWINDOW_H
