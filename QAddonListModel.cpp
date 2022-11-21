@@ -129,7 +129,7 @@ void QAddonListModel::refresh() {
 
 void QAddonListModel::uninstallAddonClicked() {
 
-    QListView *view = static_cast<QListView *>(parent());
+    QListView *view = qobject_cast<QListView *>(parent());
     const QModelIndexList &selectedSet = view->selectionModel()->selectedIndexes();
 
     if (selectedSet.count() > 1) {
