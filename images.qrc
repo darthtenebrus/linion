@@ -1,0 +1,8 @@
+<!DOCTYPE RCC><RCC version="1.0">
+    <qresource prefix="images">
+        <file>green_check.png</file>
+        <file>red_cross.png</file>
+    </qresource>
+</RCC>
+
+
