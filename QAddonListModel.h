@@ -10,7 +10,7 @@
 #include "ItemData.h"
 
 class QAddonListModel : public QAbstractListModel {
-
+Q_OBJECT
 public:
 
     enum ObjectDataRole {
@@ -18,12 +18,16 @@ public:
         PathRole
     };
 
-    explicit QAddonListModel(QString &addonFolderPath, QObject *parent=nullptr);
+    explicit QAddonListModel(QString &addonFolderPath, QObject *parent = nullptr);
+    ~QAddonListModel() override;
 
-    [[nodiscard]] int rowCount(const QModelIndex &) const override;
-    [[nodiscard]] QVariant data(const QModelIndex &index, int role) const override;
+    [[nodiscard]]
+    int rowCount(const QModelIndex &) const override;
 
-    const QList<ItemData> & fillFolderList();
+    [[nodiscard]]
+    QVariant data(const QModelIndex &index, int role) const override;
+
+    const QList<ItemData> &fillFolderList();
 
 private:
     QList<ItemData> addonList;

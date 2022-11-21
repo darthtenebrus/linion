@@ -18,6 +18,7 @@ public:
     explicit QvObjectDelegate(QObject *parent);
     ~QvObjectDelegate() override;
 
+    [[nodiscard]]
     QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 
     void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;

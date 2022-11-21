@@ -16,6 +16,9 @@ QAddonListModel::QAddonListModel(QString &addonFolderPath, QObject *parent) : QA
                                                                               addonFolderPath(addonFolderPath) {
 }
 
+QAddonListModel::~QAddonListModel() {
+}
+
 int QAddonListModel::rowCount(const QModelIndex &) const {
     return addonList.count();
 }
