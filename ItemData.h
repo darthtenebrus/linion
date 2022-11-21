@@ -11,19 +11,30 @@
 class ItemData {
 
 private:
+    QString author;
     QString addonTitle;
     QString version;
     QString addonPath;
     bool status;
 
 public:
-    ItemData(const QString &addonTitle, const QString &version, const QString &addonPath, bool status);
+    ItemData(const QString &author, const QString &addonTitle, const QString &version,
+             const QString &addonPath, bool status);
 
-    [[nodiscard]] const QString &getAddonTitle() const;
-    [[nodiscard]] const QString &getVersion() const;
-    [[nodiscard]] const QString &getAddonPath() const;
+    [[nodiscard]]
+    const QString &getAddonTitle() const;
 
+    [[nodiscard]]
+    const QString &getVersion() const;
+
+    [[nodiscard]]
+    const QString &getAddonPath() const;
+
+    [[nodiscard]]
     bool isStatus() const;
+
+    [[nodiscard]]
+    const QString &getAuthor() const;
 };
 
 

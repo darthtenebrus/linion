@@ -38,6 +38,9 @@ QVariant QAddonListModel::data(const QModelIndex &index, int role) const {
         case QAddonListModel::PathRole:
             value = addonList.at(index.row()).getAddonPath();
             break;
+        case QAddonListModel::AuthorRole:
+            value = addonList.at(index.row()).getAuthor();
+            break;
         case Qt::DecorationRole:
             value = QPixmap(addonList.at(index.row()).isStatus() ?
                     ":/images/green_check.png" : ":/images/red_cross.png");
@@ -70,6 +73,7 @@ const QList<ItemData> & QAddonListModel::refreshFolderList() {
 
             QString title;
             QString version;
+            QString author;
             while (!file.atEnd()) {
                 QString line = file.readLine();
                 QRegularExpressionMatch match = re.match(line);
@@ -81,12 +85,17 @@ const QList<ItemData> & QAddonListModel::refreshFolderList() {
 
                     if(QString::compare("Title", tag) == 0) {
                         title = content;
-                        if (!version.isEmpty()) {
+                        if (!version.isEmpty() && !author.isEmpty()) {
                             break;
                         }
                     } else if (QString::compare("Version", tag) == 0) {
                         version = content;
-                        if (!title.isEmpty()) {
+                        if (!title.isEmpty() && !author.isEmpty()) {
+                            break;
+                        }
+                    } else if (QString::compare("Author", tag) == 0) {
+                        author = content;
+                        if (!title.isEmpty() && !version.isEmpty()) {
                             break;
                         }
                     }
@@ -96,7 +105,7 @@ const QList<ItemData> & QAddonListModel::refreshFolderList() {
             qDebug() << title << " " << version;
 #endif
             if (!title.isEmpty() && !version.isEmpty()) {
-                addonList.append(ItemData(cleanColorizers(title),
+                addonList.append(ItemData(cleanColorizers(author), cleanColorizers(title),
                                           version, fPath, true));
             }
         }
@@ -136,8 +145,8 @@ void QAddonListModel::uninstallAddonClicked() {
 #endif
 
     QMessageBox::StandardButton button = QMessageBox::question(view, tr("Info"),
-                                                               tr("Do you really want to delete this addon: ") +
-                                                               aTitle);
+                                                               tr("Do you really want to delete this addon: %1")
+                                                               .arg(aTitle));
     if (button == QMessageBox::Yes) {
         const QString &parPath = QFileInfo(aPath).absolutePath();
 #ifdef _DEBUG

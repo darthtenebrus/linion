@@ -47,10 +47,15 @@ void QvObjectDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     painter->setFont(f);
     painter->drawText(0, 0, title);
 
-    const QString &version = index.data(QAddonListModel::VersionRole).toString();
+    const QString &version = tr("Version: %1").arg(index.data(QAddonListModel::VersionRole).toString());
     painter->translate(0, QFontMetrics(f).boundingRect(title).height() + TEXT_TOP_OFFSET);
     painter->setFont(option.font);
     painter->drawText(0, 0, version);
+
+    const QString &author = index.data(QAddonListModel::AuthorRole).toString();
+    const QString &authorStrFull = tr("Created by: %1").arg(author);
+    painter->translate(QFontMetrics(option.font).boundingRect(version).width() + TEXT_TOP_OFFSET, 0);
+    painter->drawText(0,0, authorStrFull);
 
     painter->resetTransform();
     painter->setPen(QColor(0x2A, 0x2A, 0x2A));

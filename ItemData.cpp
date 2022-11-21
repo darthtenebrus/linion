@@ -4,9 +4,10 @@
 
 #include "ItemData.h"
 
-ItemData::ItemData(const QString &addonTitle, const QString &version, const QString &addonPath, bool status)
+ItemData::ItemData(const QString &author, const QString &addonTitle, const QString &version,
+                   const QString &addonPath, bool status)
         : addonTitle(
-        addonTitle), version(version), addonPath(addonPath), status(status) {}
+        addonTitle), version(version), addonPath(addonPath), status(status), author(author) {}
 
 const QString &ItemData::getAddonTitle() const {
     return addonTitle;
@@ -22,4 +23,8 @@ const QString &ItemData::getAddonPath() const {
 
 bool ItemData::isStatus() const {
     return status;
+}
+
+const QString &ItemData::getAuthor() const {
+    return author;
 }
