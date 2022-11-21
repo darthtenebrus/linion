@@ -65,8 +65,9 @@ const QList<ItemData> & QAddonListModel::refreshFolderList() {
             if (!re.isValid()) {
 #ifdef _DEBUG
                 qDebug() << re.errorString();
-            }
 #endif
+            }
+
             QString title;
             QString version;
             while (!file.atEnd()) {
