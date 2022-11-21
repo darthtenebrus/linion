@@ -46,9 +46,8 @@ QVariant QAddonListModel::data(const QModelIndex &index, int role) const {
     return value;
 }
 
-const QList<ItemData> & QAddonListModel::fillFolderList() {
-    QRegularExpression re(R"(##\s+Title:\s+(?<title>.*))");
-    QRegularExpression ver(R"(##\s+Version:\s+(?<version>.*))");
+const QList<ItemData> & QAddonListModel::refreshFolderList() {
+    QRegularExpression re(R"(##\s+(?<tag>[A-Za-z]+):\s+(?<content>.*))");
     addonList.clear();
     QDir dir = QDir(addonFolderPath);
     const QFileInfoList &dirList = dir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot);
@@ -61,7 +60,7 @@ const QList<ItemData> & QAddonListModel::fillFolderList() {
             qDebug() << "Failed to open input file.";
 #endif
         } else {
-            if (!re.isValid() || !ver.isValid()) {
+            if (!re.isValid()) {
 #ifdef _DEBUG
                 qDebug() << re.errorString();
             }
@@ -73,20 +72,27 @@ const QList<ItemData> & QAddonListModel::fillFolderList() {
                 QRegularExpressionMatch match = re.match(line);
 
                 if (match.hasMatch()) {
-                    title = match.captured("title");
-                } else {
-                    QRegularExpressionMatch vermatch = ver.match(line);
-                    if (vermatch.hasMatch()) {
-                        version = vermatch.captured("version");
+                    const QString &tag = match.captured("tag");
+                    const QString &content = match.captured("content");
+
+
+                    if(QString::compare("Title", tag) == 0) {
+                        title = content;
+                        if (!version.isEmpty()) {
+                            break;
+                        }
+                    } else if (QString::compare("Version", tag) == 0) {
+                        version = content;
+                        if (!title.isEmpty()) {
+                            break;
+                        }
                     }
                 }
-
             }
 #ifdef _DEBUG
             qDebug() << title << " " << version;
 #endif
             if (!title.isEmpty() && !version.isEmpty()) {
-
                 addonList.append(ItemData(cleanColorizers(title),
                                           version, fPath, true));
             }

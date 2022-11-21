@@ -14,10 +14,11 @@ MainWindow ::MainWindow(QWidget *parent) :
 
     addonFolderPath = "/home/esorochinskiy/Games/the-elder-scrolls-online/drive_c/users/esorochinskiy/Documents/Elder Scrolls Online/live/AddOns";
     model = new QAddonListModel(addonFolderPath);
-    model->fillFolderList();
+
     ui->addonListView->setMouseTracking(true);
     ui->addonListView->setModel(model);
     ui->addonListView->setItemDelegate(new QvObjectDelegate(ui->addonListView));
+    model->refreshFolderList();
 }
 
 

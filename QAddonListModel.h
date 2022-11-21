@@ -27,7 +27,7 @@ public:
     [[nodiscard]]
     QVariant data(const QModelIndex &index, int role) const override;
 
-    const QList<ItemData> &fillFolderList();
+    const QList<ItemData> &refreshFolderList();
 
 private:
     QList<ItemData> addonList;
