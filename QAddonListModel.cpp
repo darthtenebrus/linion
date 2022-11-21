@@ -8,12 +8,14 @@
 #include <QDebug>
 #endif
 #include <QRegularExpression>
-
+#include <QListView>
+#include <QtWidgets/QMessageBox>
 
 
 
 QAddonListModel::QAddonListModel(QString &addonFolderPath, QObject *parent) : QAbstractListModel(parent),
                                                                               addonFolderPath(addonFolderPath) {
+
 }
 
 QAddonListModel::~QAddonListModel() {
@@ -113,5 +115,34 @@ const QString &QAddonListModel::cleanColorizers(QString &input) const {
 
 void QAddonListModel::refresh() {
     refreshFolderList();
+}
+
+void QAddonListModel::uninstallAddonClicked() {
+
+    QListView *view = static_cast<QListView *>(parent());
+    const QModelIndexList &selectedSet = view->selectionModel()->selectedIndexes();
+
+    if (selectedSet.count() > 1) {
+        return; // fuckup
+    }
+
+    const QModelIndex &index = selectedSet[0];
+    const QString &aPath = index.data(QAddonListModel::PathRole).toString();
+    const QString &aTitle = index.data(Qt::DisplayRole).toString();
+#ifdef _DEBUG
+    qDebug() << aPath;
+    qDebug() << aTitle;
+#endif
+
+    QMessageBox::StandardButton button = QMessageBox::question(view, tr("Info"),
+                                                               tr("Do you really want to delete this addon: ") +
+                                                               aTitle);
+    if (button == QMessageBox::Yes) {
+        const QString &parPath = QFileInfo(aPath).absolutePath();
+#ifdef _DEBUG
+        qDebug() << parPath;
+#endif
+    }
+
 }
 
