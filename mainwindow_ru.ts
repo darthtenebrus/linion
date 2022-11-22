@@ -5,26 +5,26 @@
     <name>MainWindow</name>
     <message>
         <location filename="mainwindow.ui" line="14"/>
-        <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="127"/>
+        <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="133"/>
         <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="69"/>
         <source>Linion Addon Manager</source>
         <translation>Менеджер аддонов Linion</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="35"/>
-        <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="129"/>
+        <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="135"/>
         <source>Backup Installed Addons</source>
         <translation>Сохранить установленные аддоны</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="101"/>
-        <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="130"/>
+        <location filename="mainwindow.ui" line="119"/>
+        <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="136"/>
         <source>Help</source>
         <translation>Помощь</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="110"/>
-        <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="128"/>
+        <location filename="mainwindow.ui" line="128"/>
+        <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="134"/>
         <source>About Qt</source>
         <translation>О программе Qt</translation>
     </message>
