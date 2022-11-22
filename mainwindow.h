@@ -7,10 +7,13 @@
 #include <QProgressBar>
 #include <ui_mainwindow.h>
 #include <QFileInfoList>
+#include <QSettings>
 #include "QAddonListModel.h"
 
 class MainWindow : public QMainWindow {
 Q_OBJECT
+protected:
+    void closeEvent(QCloseEvent *event) override;
 
 public:
     MainWindow(QWidget *parent = 0);
@@ -19,12 +22,16 @@ public:
 
 private:
     Ui::MainWindow *ui;
-    QAddonListModel *model;
-
     QString addonFolderPath;
+    QSettings settings;
+    QAddonListModel *model;
+    void writeSettings();
 
 signals:
     void doRefresh();
+
+
+
 };
 
 #endif //TENANTCONTROL_MAINWINDOW_H

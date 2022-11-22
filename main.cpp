@@ -4,7 +4,7 @@
 int main(int argc, char *argv[]) {
 
     QApplication a(argc, argv);
-/*
+
     QTranslator mainTranslator;
     // look up e.g. :/i18n/myapp_de.qm
     if (mainTranslator.load(
@@ -14,7 +14,7 @@ int main(int argc, char *argv[]) {
             QLatin1String(":/i18n"))) {
         QApplication::installTranslator(&mainTranslator);
     }
-*/
+
     auto *w(new MainWindow());
     w->show();
     int res = QApplication::exec();

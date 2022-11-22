@@ -9,6 +9,7 @@
 #define ITEM_HEIGHT 64
 #define ICON_LEFT_OFFSET 16
 #define TEXT_TOP_OFFSET 6
+#define TEXT_RIGHT_OFFSET 4
 
 QvObjectDelegate::QvObjectDelegate(QObject *parent) : QItemDelegate(parent) {}
 
@@ -49,12 +50,15 @@ void QvObjectDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
 
     const QString &version = tr("Version: %1").arg(index.data(QAddonListModel::VersionRole).toString());
     painter->translate(0, QFontMetrics(f).boundingRect(title).height() + TEXT_TOP_OFFSET);
-    painter->setFont(option.font);
+    QFont newFont = option.font;
+    newFont.setItalic(true);
+    newFont.setPointSize(12);
+    painter->setFont(newFont);
     painter->drawText(0, 0, version);
 
     const QString &author = index.data(QAddonListModel::AuthorRole).toString();
     const QString &authorStrFull = tr("Created by: %1").arg(author);
-    painter->translate(QFontMetrics(option.font).boundingRect(version).width() + TEXT_TOP_OFFSET, 0);
+    painter->translate(QFontMetrics(newFont).boundingRect(version).width() + TEXT_RIGHT_OFFSET, 0);
     painter->drawText(0,0, authorStrFull);
 
     painter->resetTransform();

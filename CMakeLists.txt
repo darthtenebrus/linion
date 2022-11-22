@@ -14,14 +14,18 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
 endif()
 
 find_package(Qt5 COMPONENTS Core Widgets Network LinguistTools)
-set(RES_FILES images.qrc QvObjectDelegate.cpp QvObjectDelegate.h)
+qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} mainwindow_ru.ts)
+configure_file(translations.qrc ${CMAKE_BINARY_DIR} COPYONLY)
+set(RES_FILES ${CMAKE_BINARY_DIR}/translations.qrc images.qrc)
 
 add_executable(${PROJECT_NAME}
         main.cpp
         mainwindow.h
         mainwindow.cpp
         mainwindow.ui QAddonListModel.cpp QAddonListModel.h ItemData.cpp ItemData.h
-        ${RES_FILES})
+        QvObjectDelegate.cpp QvObjectDelegate.h
+        ${RES_FILES}
+        ${QM_FILES})
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
 target_link_libraries(${PROJECT_NAME} Qt5::Widgets)

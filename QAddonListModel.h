@@ -19,7 +19,7 @@ public:
         AuthorRole
     };
 
-    explicit QAddonListModel(QString &addonFolderPath, QObject *parent = nullptr);
+    explicit QAddonListModel(const QString &addonFolderPath, QObject *parent = nullptr);
     ~QAddonListModel() override;
 
     [[nodiscard]]

@@ -13,7 +13,7 @@
 
 
 
-QAddonListModel::QAddonListModel(QString &addonFolderPath, QObject *parent) : QAbstractListModel(parent),
+QAddonListModel::QAddonListModel(const QString &addonFolderPath, QObject *parent) : QAbstractListModel(parent),
                                                                               addonFolderPath(addonFolderPath) {
 
 }
@@ -64,6 +64,9 @@ const QList<ItemData> & QAddonListModel::refreshFolderList() {
 #ifdef _DEBUG
             qDebug() << "Failed to open input file.";
 #endif
+            QMessageBox::critical(nullptr, tr("Critical Error"), tr("Unable to locate addons"));
+            break;
+
         } else {
             if (!re.isValid()) {
 #ifdef _DEBUG
@@ -144,9 +147,10 @@ void QAddonListModel::uninstallAddonClicked() {
     qDebug() << aTitle;
 #endif
 
-    QMessageBox::StandardButton button = QMessageBox::question(view, tr("Info"),
+    QMessageBox::StandardButton button = QMessageBox::warning(view, tr("Info"),
                                                                tr("Do you really want to delete this addon: %1")
-                                                               .arg(aTitle));
+                                                               .arg(aTitle),
+                                                              QMessageBox::StandardButtons(QMessageBox::Yes | QMessageBox::No));
     if (button == QMessageBox::Yes) {
         const QString &parPath = QFileInfo(aPath).absolutePath();
 #ifdef _DEBUG

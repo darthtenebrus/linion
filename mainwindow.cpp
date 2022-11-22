@@ -6,13 +6,18 @@
 #include "QvObjectDelegate.h"
 #ifdef _DEBUG
 #include <QDebug>
+#include <QSettings>
+
 #endif
 
 MainWindow ::MainWindow(QWidget *parent) :
-        QMainWindow(parent), ui(new Ui::MainWindow()) {
+        QMainWindow(parent), ui(new Ui::MainWindow()),
+        settings(QSettings::NativeFormat, QSettings::UserScope, "linion", "config") {
     ui->setupUi(this);
 
-    addonFolderPath = "/home/esorochinskiy/Games/the-elder-scrolls-online/drive_c/users/esorochinskiy/Documents/Elder Scrolls Online/live/AddOns";
+    const QString &defValue = "/home/esorochinskiy/Games/the-elder-scrolls-online/drive_c/users/esorochinskiy/Documents/Elder Scrolls Online/live/AddOns";
+
+    addonFolderPath = settings.value("addonFolderPath", defValue).toString();
     model = new QAddonListModel(addonFolderPath, ui->addonListView);
 
     ui->addonListView->setMouseTracking(true);
@@ -31,4 +36,17 @@ MainWindow ::MainWindow(QWidget *parent) :
 MainWindow :: ~MainWindow() {
     delete model;
     delete ui;
+}
+
+void MainWindow::closeEvent(QCloseEvent *event) {
+
+    writeSettings();
+    QWidget::closeEvent(event);
+}
+
+void MainWindow::writeSettings() {
+    if (!settings.contains("addonFolderPath")) {
+        settings.setValue("addonFolderPath", addonFolderPath);
+        settings.sync();
+    }
 }
