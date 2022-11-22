@@ -8,7 +8,7 @@
 
 #define ITEM_HEIGHT 64
 #define ICON_LEFT_OFFSET 16
-#define TEXT_TOP_OFFSET 6
+#define TEXT_TOP_OFFSET 4
 #define TEXT_RIGHT_OFFSET 4
 
 QvObjectDelegate::QvObjectDelegate(QObject *parent) : QItemDelegate(parent) {}
@@ -39,27 +39,31 @@ void QvObjectDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     QPixmap pix = index.data(Qt::DecorationRole).value<QPixmap>();
     painter->translate(ICON_LEFT_OFFSET, (sizeHint(option, index).height() - pix.height()) / 2);
 
-    drawDecoration(painter, option, pix.rect(), pix);
+    painter->drawPixmap(0,0,pix);
 
     const QString &title = index.data(Qt::DisplayRole).toString();
-    painter->translate(ICON_LEFT_OFFSET + pix.width(), 0);
+
     QFont f = option.font;
     f.setBold(true);
     painter->setFont(f);
-    painter->drawText(0, 0, title);
+    painter->translate(ICON_LEFT_OFFSET + pix.width(), pix.height() / 16);
+    const QRect &brTitle = QFontMetrics(f).boundingRect(title);
+    painter->drawText(0, 0, brTitle.width(), brTitle.height(), Qt::AlignTop, title);
 
     const QString &version = tr("Version: %1").arg(index.data(QAddonListModel::VersionRole).toString());
-    painter->translate(0, QFontMetrics(f).boundingRect(title).height() + TEXT_TOP_OFFSET);
+    painter->translate(0, brTitle.height() + TEXT_TOP_OFFSET);
     QFont newFont = option.font;
     newFont.setItalic(true);
     newFont.setPointSize(12);
     painter->setFont(newFont);
-    painter->drawText(0, 0, version);
+    const QRect &brVersion = QFontMetrics(newFont).boundingRect(version);
+    painter->drawText(0, 0, brVersion.width(), brVersion.height(), Qt::AlignTop, version);
 
     const QString &author = index.data(QAddonListModel::AuthorRole).toString();
     const QString &authorStrFull = tr("Created by: %1").arg(author);
-    painter->translate(QFontMetrics(newFont).boundingRect(version).width() + TEXT_RIGHT_OFFSET, 0);
-    painter->drawText(0,0, authorStrFull);
+    painter->translate(brVersion.width() + TEXT_RIGHT_OFFSET, 0);
+    const QRect &brAuthor = QFontMetrics(newFont).boundingRect(authorStrFull);
+    painter->drawText(0,0, brAuthor.width(), brAuthor.height(), Qt::AlignTop, authorStrFull);
 
     painter->resetTransform();
     painter->setPen(QColor(0x2A, 0x2A, 0x2A));

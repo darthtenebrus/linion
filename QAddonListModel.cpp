@@ -107,7 +107,7 @@ const QList<ItemData> & QAddonListModel::refreshFolderList() {
 #ifdef _DEBUG
             qDebug() << title << " " << version;
 #endif
-            if (!title.isEmpty() && !version.isEmpty()) {
+            if (!title.isEmpty() && !version.isEmpty() && !author.isEmpty()) {
                 addonList.append(ItemData(cleanColorizers(author), cleanColorizers(title),
                                           version, fPath, true));
             }

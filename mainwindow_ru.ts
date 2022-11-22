@@ -42,12 +42,12 @@
 <context>
     <name>QvObjectDelegate</name>
     <message>
-        <location filename="QvObjectDelegate.cpp" line="51"/>
+        <location filename="QvObjectDelegate.cpp" line="53"/>
         <source>Version: %1</source>
         <translation>Версия: %1</translation>
     </message>
     <message>
-        <location filename="QvObjectDelegate.cpp" line="60"/>
+        <location filename="QvObjectDelegate.cpp" line="63"/>
         <source>Created by: %1</source>
         <translation>Создан: %1</translation>
     </message>
