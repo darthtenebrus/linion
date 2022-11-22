@@ -34,6 +34,16 @@
         <property name="text">
          <string>Backup Installed Addons</string>
         </property>
+        <property name="icon">
+         <iconset resource="images.qrc">
+          <normaloff>:/images/backup.png</normaloff>:/images/backup.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>16</width>
+          <height>16</height>
+         </size>
+        </property>
        </widget>
       </item>
       <item>
@@ -101,6 +111,8 @@ p, li { white-space: pre-wrap; }
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="images.qrc"/>
+ </resources>
  <connections/>
 </ui>

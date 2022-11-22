@@ -2,6 +2,7 @@
     <qresource prefix="images">
         <file>green_check.png</file>
         <file>red_cross.png</file>
+        <file>backup.png</file>
     </qresource>
 </RCC>
 
