@@ -30,8 +30,9 @@ private:
 signals:
     void doRefresh();
 
-
-
+public slots:
+    void currentChanged(QModelIndex,QModelIndex);
+    void aboutQtAction(bool);
 };
 
 #endif //TENANTCONTROL_MAINWINDOW_H

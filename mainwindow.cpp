@@ -29,6 +29,12 @@ MainWindow ::MainWindow(QWidget *parent) :
     ui->addonListView->setItemDelegate(new QvObjectDelegate(ui->addonListView));
     connect(this, SIGNAL(doRefresh()), model, SLOT(refresh()));
     connect(uninstallAction, SIGNAL(triggered()), model, SLOT(uninstallAddonClicked()));
+    connect(ui->addonListView->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
+            this, SLOT(currentChanged(QModelIndex,QModelIndex)));
+
+    connect(ui->actionAboutQt, SIGNAL(triggered(bool)), this, SLOT(aboutQtAction(bool)));
+
+
     emit doRefresh();
 }
 
@@ -49,4 +55,15 @@ void MainWindow::writeSettings() {
         settings.setValue("addonFolderPath", addonFolderPath);
         settings.sync();
     }
+}
+
+void MainWindow::currentChanged(QModelIndex current, QModelIndex prev) {
+
+    const QString &text = current.data(QAddonListModel::DescriptionRole).toString();
+    ui->descriptionView->setText(text);
+}
+
+
+void MainWindow::aboutQtAction(bool param) {
+    QMessageBox::aboutQt(this);
 }

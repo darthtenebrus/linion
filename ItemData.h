@@ -15,11 +15,12 @@ private:
     QString addonTitle;
     QString version;
     QString addonPath;
+    QString description;
     bool status;
 
 public:
     ItemData(const QString &author, const QString &addonTitle, const QString &version,
-             const QString &addonPath, bool status);
+             const QString &addonPath, QString &description, bool status);
 
     [[nodiscard]]
     const QString &getAddonTitle() const;
@@ -35,6 +36,8 @@ public:
 
     [[nodiscard]]
     const QString &getAuthor() const;
+
+    const QString &getDescription() const;
 };
 
 

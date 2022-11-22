@@ -16,7 +16,8 @@ public:
     enum ObjectDataRole {
         VersionRole = Qt::UserRole + 1,
         PathRole,
-        AuthorRole
+        AuthorRole,
+        DescriptionRole
     };
 
     explicit QAddonListModel(const QString &addonFolderPath, QObject *parent = nullptr);

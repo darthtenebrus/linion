@@ -41,6 +41,9 @@ QVariant QAddonListModel::data(const QModelIndex &index, int role) const {
         case QAddonListModel::AuthorRole:
             value = addonList.at(index.row()).getAuthor();
             break;
+        case QAddonListModel::DescriptionRole:
+            value = addonList.at(index.row()).getDescription();
+            break;
         case Qt::DecorationRole:
             value = QPixmap(addonList.at(index.row()).isStatus() ?
                     ":/images/green_check.png" : ":/images/red_cross.png");
@@ -77,6 +80,7 @@ const QList<ItemData> & QAddonListModel::refreshFolderList() {
             QString title;
             QString version;
             QString author;
+            QString description;
             while (!file.atEnd()) {
                 QString line = file.readLine();
                 QRegularExpressionMatch match = re.match(line);
@@ -88,19 +92,17 @@ const QList<ItemData> & QAddonListModel::refreshFolderList() {
 
                     if(QString::compare("Title", tag) == 0) {
                         title = content;
-                        if (!version.isEmpty() && !author.isEmpty()) {
-                            break;
-                        }
                     } else if (QString::compare("Version", tag) == 0) {
                         version = content;
-                        if (!title.isEmpty() && !author.isEmpty()) {
-                            break;
-                        }
                     } else if (QString::compare("Author", tag) == 0) {
                         author = content;
-                        if (!title.isEmpty() && !version.isEmpty()) {
-                            break;
-                        }
+                    } else if (QString::compare("Description", tag) == 0) {
+                        description = content;
+                    }
+
+                    if (!title.isEmpty() && !version.isEmpty() &&
+                    !author.isEmpty() && !description.isEmpty()) {
+                        break;
                     }
                 }
             }
@@ -109,7 +111,7 @@ const QList<ItemData> & QAddonListModel::refreshFolderList() {
 #endif
             if (!title.isEmpty() && !version.isEmpty() && !author.isEmpty()) {
                 addonList.append(ItemData(cleanColorizers(author), cleanColorizers(title),
-                                          version, fPath, true));
+                                          version, fPath, description,true));
             }
         }
 
@@ -159,4 +161,5 @@ void QAddonListModel::uninstallAddonClicked() {
     }
 
 }
+
 
