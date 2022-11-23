@@ -39,31 +39,31 @@
         <source>Uninstall</source>
         <translation>Удалить</translation>
     </message>
+    <message>
+        <location filename="mainwindow.cpp" line="93"/>
+        <source>Critical Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="93"/>
+        <source>Unable to locate addons</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QAddonListModel</name>
     <message>
-        <location filename="QAddonListModel.cpp" line="76"/>
-        <source>Critical Error</source>
-        <translation>Критическая ошибка</translation>
-    </message>
-    <message>
-        <location filename="QAddonListModel.cpp" line="76"/>
-        <source>Unable to locate addons</source>
-        <translation>Аддоны не найдены</translation>
-    </message>
-    <message>
-        <location filename="QAddonListModel.cpp" line="120"/>
+        <location filename="QAddonListModel.cpp" line="122"/>
         <source>No description</source>
         <translation>Нет описания</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="161"/>
+        <location filename="QAddonListModel.cpp" line="163"/>
         <source>Info</source>
         <translation>Информация</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="162"/>
+        <location filename="QAddonListModel.cpp" line="164"/>
         <source>Do you really want to delete this addon: %1</source>
         <translation>Вы действительно хотите удалить аддон %1</translation>
     </message>

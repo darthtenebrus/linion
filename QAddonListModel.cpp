@@ -6,14 +6,13 @@
 #include <QPixmap>
 
 #ifdef _DEBUG
-
 #include <QDebug>
-
 #endif
 
 #include <QRegularExpression>
 #include <QListView>
 #include <QtWidgets/QMessageBox>
+#include <QFileSystemWatcher>
 
 
 QAddonListModel::QAddonListModel(const QString &addonFolderPath, const QString &backupPath, QObject *parent)
@@ -21,9 +20,14 @@ QAddonListModel::QAddonListModel(const QString &addonFolderPath, const QString &
           addonFolderPath(addonFolderPath),
           backupPath(backupPath) {
 
+    qsw = new QFileSystemWatcher(QStringList() << addonFolderPath);
+    connect(qsw, &QFileSystemWatcher::directoryChanged, this, &QAddonListModel::refresh);
+
 }
 
 QAddonListModel::~QAddonListModel() {
+    qsw->removePath(addonFolderPath);
+    delete qsw;
 }
 
 int QAddonListModel::rowCount(const QModelIndex &) const {
@@ -72,10 +76,8 @@ void QAddonListModel::refreshFolderList() {
         if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
 #ifdef _DEBUG
             qDebug() << "Failed to open input file.";
+            continue;
 #endif
-            QMessageBox::critical(nullptr, tr("Critical Error"), tr("Unable to locate addons"));
-            break;
-
         } else {
             if (!re.isValid()) {
 #ifdef _DEBUG
@@ -166,12 +168,18 @@ void QAddonListModel::uninstallAddonClicked() {
     if (button == QMessageBox::Yes) {
         const QString &parPath = QFileInfo(aPath).absolutePath();
         QDir(parPath).removeRecursively();
-        refreshFolderList();
+
 #ifdef _DEBUG
         qDebug() << parPath;
 #endif
     }
 
+}
+
+void QAddonListModel::backupAllClicked() {
+    for(int i = 0; i < addonList.size(); i++) {
+        processBackup(addonList[i].getAddonPath());
+    }
 }
 
 void QAddonListModel::backupAddonClicked() {
@@ -184,14 +192,14 @@ void QAddonListModel::backupAddonClicked() {
         return; // fuckup
     }
     const QModelIndex &index = selectedSet[0];
+    const QString &aPath = index.data(QAddonListModel::PathRole).toString();
 
-    processBackup(index);
+    processBackup(aPath);
 }
 
-void QAddonListModel::processBackup(const QModelIndex &index) {
+void QAddonListModel::processBackup(const QString &pPath) const {
 
-    const QString &aPath = index.data(QAddonListModel::PathRole).toString();
-    const QString &parPath = QFileInfo(aPath).absolutePath();
+    const QString &parPath = QFileInfo(pPath).absolutePath();
     const QDir &srcDir = QDir(parPath);
     const QDir &destDir = QDir(backupPath + QDir::separator() + srcDir.dirName());
 
@@ -206,7 +214,7 @@ void QAddonListModel::processBackup(const QModelIndex &index) {
 }
 
 
-void QAddonListModel::copyPath(const QString &src, const QString &dst) {
+void QAddonListModel::copyPath(const QString &src, const QString &dst) const {
 
     QDir srcDir(src);
     if (!srcDir.exists()) {
@@ -216,6 +224,17 @@ void QAddonListModel::copyPath(const QString &src, const QString &dst) {
     foreach (QString f, srcDir.entryList(QDir::Files)) {
             QFile::copy(src + QDir::separator() + f, dst + QDir::separator() + f);
     }
+
+    foreach (QString d, srcDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot)) {
+            const QString &new_src_path = src + QDir::separator() + d;
+            const QString &new_dst_path = dst + QDir::separator() + d;
+            QDir(new_dst_path).mkpath(".");
+            copyPath(new_src_path, new_dst_path);
+    }
+}
+
+const QList<ItemData> &QAddonListModel::getAddonList() const {
+    return addonList;
 }
 
 

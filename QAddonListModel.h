@@ -7,6 +7,7 @@
 
 #include <QDir>
 #include <QModelIndex>
+#include <QFileSystemWatcher>
 #include "ItemData.h"
 
 class QAddonListModel : public QAbstractListModel {
@@ -29,22 +30,26 @@ public:
     [[nodiscard]]
     QVariant data(const QModelIndex &index, int role) const override;
 
+    const QList<ItemData> &getAddonList() const;
+
 private:
     QList<ItemData> addonList;
 
     QString addonFolderPath;
     QString backupPath;
+    QFileSystemWatcher *qsw;
 
 
     void refreshFolderList();
     const QString &cleanColorizers(QString &input) const;
-    void processBackup(const QModelIndex &index);
-    void copyPath(const QString& src, const QString& dst);
+    void processBackup(const QString &pPath) const;
+    void copyPath(const QString&, const QString&) const;
 
 public slots:
     void refresh();
     void uninstallAddonClicked();
     void backupAddonClicked();
+    void backupAllClicked();
 
 
 

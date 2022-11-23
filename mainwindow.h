@@ -25,15 +25,15 @@ private:
     QString addonFolderPath;
     QString backupPath;
     QSettings settings;
-    QAddonListModel *model;
     void writeSettings();
 
 signals:
     void doRefresh();
 
 public slots:
-    void currentChanged(QModelIndex,QModelIndex);
+    void currentChanged(const QModelIndex &current, const QModelIndex &prev);
     void aboutQtAction(bool);
+    void allChanged(const QModelIndex &first, const QModelIndex &last);
 };
 
 #endif //TENANTCONTROL_MAINWINDOW_H
