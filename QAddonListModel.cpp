@@ -54,7 +54,7 @@ QVariant QAddonListModel::data(const QModelIndex &index, int role) const {
     return value;
 }
 
-const QList<ItemData> & QAddonListModel::refreshFolderList() {
+void QAddonListModel::refreshFolderList() {
     QRegularExpression re(R"(##\s+(?<tag>[A-Za-z]+):\s+(?<content>.*))");
     addonList.clear();
     QDir dir = QDir(addonFolderPath);
@@ -110,15 +110,18 @@ const QList<ItemData> & QAddonListModel::refreshFolderList() {
             qDebug() << title << " " << version;
 #endif
             if (!title.isEmpty() && !version.isEmpty() && !author.isEmpty()) {
+
+                QString finalDesc = description.isEmpty() ? "[" + tr("No description") + "]" : description;
                 addonList.append(ItemData(cleanColorizers(author), cleanColorizers(title),
-                                          version, fPath, description,true));
+                                          version, fPath,
+                                          finalDesc,
+                                          true));
             }
         }
 
     }
 
     emit dataChanged(createIndex(0,0), createIndex(addonList.count() - 1, 0));
-    return addonList;
 }
 
 const QString &QAddonListModel::cleanColorizers(QString &input) const {
@@ -155,6 +158,8 @@ void QAddonListModel::uninstallAddonClicked() {
                                                               QMessageBox::StandardButtons(QMessageBox::Yes | QMessageBox::No));
     if (button == QMessageBox::Yes) {
         const QString &parPath = QFileInfo(aPath).absolutePath();
+        QDir(parPath).removeRecursively();
+        refreshFolderList();
 #ifdef _DEBUG
         qDebug() << parPath;
 #endif

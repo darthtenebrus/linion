@@ -47,12 +47,17 @@
         <translation>Не удалось обнаружить аддоны</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="152"/>
+        <location filename="QAddonListModel.cpp" line="114"/>
+        <source>No description</source>
+        <translation>Нет описания</translation>
+    </message>
+    <message>
+        <location filename="QAddonListModel.cpp" line="155"/>
         <source>Info</source>
         <translation>Информация</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="153"/>
+        <location filename="QAddonListModel.cpp" line="156"/>
         <source>Do you really want to delete this addon: %1</source>
         <translation>Вы действительно хотите удалить этот аддон: %1</translation>
     </message>

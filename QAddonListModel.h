@@ -34,7 +34,7 @@ private:
 
     QString addonFolderPath;
 
-    const QList<ItemData> &refreshFolderList();
+    void refreshFolderList();
     const QString &cleanColorizers(QString &input) const;
 
 public slots:
