@@ -16,18 +16,24 @@ MainWindow ::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     const QString &defValue = "/home/esorochinskiy/Games/the-elder-scrolls-online/drive_c/users/esorochinskiy/Documents/Elder Scrolls Online/live/AddOns";
+    const QString &defBackup = "/home/esorochinskiy/ESObackup";
 
     addonFolderPath = settings.value("addonFolderPath", defValue).toString();
-    model = new QAddonListModel(addonFolderPath, ui->addonListView);
+    backupPath = settings.value("backupPath", defBackup).toString();
+
+    model = new QAddonListModel(addonFolderPath, backupPath, ui->addonListView);
 
     ui->addonListView->setMouseTracking(true);
     ui->addonListView->setModel(model);
     auto contextMenu = new QMenu(ui->addonListView);
     ui->addonListView->setContextMenuPolicy(Qt::ActionsContextMenu);
-    auto *uninstallAction = new QAction(tr("Uninstall Addon"), contextMenu);
+    auto *backupAction = new QAction(tr("Backup"), contextMenu);
+    auto *uninstallAction = new QAction(tr("Uninstall"), contextMenu);
+    ui->addonListView->addAction(backupAction);
     ui->addonListView->addAction(uninstallAction);
     ui->addonListView->setItemDelegate(new QvObjectDelegate(ui->addonListView));
     connect(this, SIGNAL(doRefresh()), model, SLOT(refresh()));
+    connect(backupAction, SIGNAL(triggered()), model, SLOT(backupAddonClicked()));
     connect(uninstallAction, SIGNAL(triggered()), model, SLOT(uninstallAddonClicked()));
     connect(ui->addonListView->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
             this, SLOT(currentChanged(QModelIndex,QModelIndex)));
@@ -51,8 +57,19 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 }
 
 void MainWindow::writeSettings() {
+
+    bool needSync = false;
     if (!settings.contains("addonFolderPath")) {
         settings.setValue("addonFolderPath", addonFolderPath);
+        needSync = true;
+    }
+
+    if (!settings.contains("backupPath")) {
+        settings.setValue("backupPath", backupPath);
+        needSync = true;
+    }
+
+    if (needSync) {
         settings.sync();
     }
 }

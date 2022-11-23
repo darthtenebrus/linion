@@ -13,8 +13,9 @@
     <message>
         <location filename="mainwindow.ui" line="35"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="135"/>
-        <source>Backup Installed Addons</source>
-        <translation>Сохранить установленные аддоны</translation>
+        <source>Backup Installed</source>
+        <oldsource>Backup Installed Addons</oldsource>
+        <translation>Сохранить установленные</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="119"/>
@@ -29,37 +30,42 @@
         <translation>О программе Qt</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="27"/>
-        <source>Uninstall Addon</source>
-        <translation>Удалить Аддон</translation>
+        <location filename="mainwindow.cpp" line="30"/>
+        <source>Backup</source>
+        <translation>Сохранить</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="31"/>
+        <source>Uninstall</source>
+        <translation>Удалить</translation>
     </message>
 </context>
 <context>
     <name>QAddonListModel</name>
     <message>
-        <location filename="QAddonListModel.cpp" line="70"/>
+        <location filename="QAddonListModel.cpp" line="76"/>
         <source>Critical Error</source>
-        <translation>Критическая Ошибка</translation>
+        <translation>Критическая ошибка</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="70"/>
+        <location filename="QAddonListModel.cpp" line="76"/>
         <source>Unable to locate addons</source>
-        <translation>Не удалось обнаружить аддоны</translation>
+        <translation>Аддоны не найдены</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="114"/>
+        <location filename="QAddonListModel.cpp" line="120"/>
         <source>No description</source>
         <translation>Нет описания</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="155"/>
+        <location filename="QAddonListModel.cpp" line="161"/>
         <source>Info</source>
         <translation>Информация</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="156"/>
+        <location filename="QAddonListModel.cpp" line="162"/>
         <source>Do you really want to delete this addon: %1</source>
-        <translation>Вы действительно хотите удалить этот аддон: %1</translation>
+        <translation>Вы действительно хотите удалить аддон %1</translation>
     </message>
 </context>
 <context>

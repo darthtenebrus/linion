@@ -20,7 +20,7 @@ public:
         DescriptionRole
     };
 
-    explicit QAddonListModel(const QString &addonFolderPath, QObject *parent = nullptr);
+    explicit QAddonListModel(const QString &addonFolderPath, const QString &backupPath, QObject *parent = nullptr);
     ~QAddonListModel() override;
 
     [[nodiscard]]
@@ -33,13 +33,21 @@ private:
     QList<ItemData> addonList;
 
     QString addonFolderPath;
+    QString backupPath;
+
 
     void refreshFolderList();
     const QString &cleanColorizers(QString &input) const;
+    void processBackup(const QModelIndex &index);
+    void copyPath(const QString& src, const QString& dst);
 
 public slots:
     void refresh();
     void uninstallAddonClicked();
+    void backupAddonClicked();
+
+
+
 };
 
 

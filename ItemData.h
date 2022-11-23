@@ -20,7 +20,7 @@ private:
 
 public:
     ItemData(const QString &author, const QString &addonTitle, const QString &version,
-             const QString &addonPath, QString &description, bool status);
+             const QString &addonPath, const QString &description, bool status);
 
     [[nodiscard]]
     const QString &getAddonTitle() const;

@@ -4,17 +4,22 @@
 
 #include "QAddonListModel.h"
 #include <QPixmap>
+
 #ifdef _DEBUG
+
 #include <QDebug>
+
 #endif
+
 #include <QRegularExpression>
 #include <QListView>
 #include <QtWidgets/QMessageBox>
 
 
-
-QAddonListModel::QAddonListModel(const QString &addonFolderPath, QObject *parent) : QAbstractListModel(parent),
-                                                                              addonFolderPath(addonFolderPath) {
+QAddonListModel::QAddonListModel(const QString &addonFolderPath, const QString &backupPath, QObject *parent)
+        : QAbstractListModel(parent),
+          addonFolderPath(addonFolderPath),
+          backupPath(backupPath) {
 
 }
 
@@ -46,7 +51,7 @@ QVariant QAddonListModel::data(const QModelIndex &index, int role) const {
             break;
         case Qt::DecorationRole:
             value = QPixmap(addonList.at(index.row()).isStatus() ?
-                    ":/images/green_check.png" : ":/images/red_cross.png");
+                            ":/images/green_check.png" : ":/images/red_cross.png");
         default:
             break;
     }
@@ -61,7 +66,8 @@ void QAddonListModel::refreshFolderList() {
     const QFileInfoList &dirList = dir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot);
     for (int i = 0; i < dirList.count(); i++) {
         const QString &addonName = dirList.at(i).fileName();
-        const QString &fPath = addonFolderPath + "/" + addonName + "/" + addonName + ".txt";
+        auto separ = QDir::separator();
+        const QString &fPath = addonFolderPath + separ + addonName + separ + addonName + ".txt";
         QFile file(fPath);
         if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
 #ifdef _DEBUG
@@ -90,7 +96,7 @@ void QAddonListModel::refreshFolderList() {
                     const QString &content = match.captured("content");
 
 
-                    if(QString::compare("Title", tag) == 0) {
+                    if (QString::compare("Title", tag) == 0) {
                         title = content;
                     } else if (QString::compare("Version", tag) == 0) {
                         version = content;
@@ -101,7 +107,7 @@ void QAddonListModel::refreshFolderList() {
                     }
 
                     if (!title.isEmpty() && !version.isEmpty() &&
-                    !author.isEmpty() && !description.isEmpty()) {
+                        !author.isEmpty() && !description.isEmpty()) {
                         break;
                     }
                 }
@@ -111,7 +117,7 @@ void QAddonListModel::refreshFolderList() {
 #endif
             if (!title.isEmpty() && !version.isEmpty() && !author.isEmpty()) {
 
-                QString finalDesc = description.isEmpty() ? "[" + tr("No description") + "]" : description;
+                const QString &finalDesc = description.isEmpty() ? "[" + tr("No description") + "]" : description;
                 addonList.append(ItemData(cleanColorizers(author), cleanColorizers(title),
                                           version, fPath,
                                           finalDesc,
@@ -121,7 +127,7 @@ void QAddonListModel::refreshFolderList() {
 
     }
 
-    emit dataChanged(createIndex(0,0), createIndex(addonList.count() - 1, 0));
+    emit dataChanged(createIndex(0, 0), createIndex(addonList.count() - 1, 0));
 }
 
 const QString &QAddonListModel::cleanColorizers(QString &input) const {
@@ -153,9 +159,10 @@ void QAddonListModel::uninstallAddonClicked() {
 #endif
 
     QMessageBox::StandardButton button = QMessageBox::warning(view, tr("Info"),
-                                                               tr("Do you really want to delete this addon: %1")
-                                                               .arg(aTitle),
-                                                              QMessageBox::StandardButtons(QMessageBox::Yes | QMessageBox::No));
+                                                              tr("Do you really want to delete this addon: %1")
+                                                                      .arg(aTitle),
+                                                              QMessageBox::StandardButtons(
+                                                                      QMessageBox::Yes | QMessageBox::No));
     if (button == QMessageBox::Yes) {
         const QString &parPath = QFileInfo(aPath).absolutePath();
         QDir(parPath).removeRecursively();
@@ -165,6 +172,50 @@ void QAddonListModel::uninstallAddonClicked() {
 #endif
     }
 
+}
+
+void QAddonListModel::backupAddonClicked() {
+
+
+    QListView *view = qobject_cast<QListView *>(parent());
+    const QModelIndexList &selectedSet = view->selectionModel()->selectedIndexes();
+
+    if (selectedSet.count() > 1) {
+        return; // fuckup
+    }
+    const QModelIndex &index = selectedSet[0];
+
+    processBackup(index);
+}
+
+void QAddonListModel::processBackup(const QModelIndex &index) {
+
+    const QString &aPath = index.data(QAddonListModel::PathRole).toString();
+    const QString &parPath = QFileInfo(aPath).absolutePath();
+    const QDir &srcDir = QDir(parPath);
+    const QDir &destDir = QDir(backupPath);
+
+    if (!destDir.exists()) {
+        destDir.mkpath(".");
+    }
+#ifdef _DEBUG
+    qDebug() << srcDir.absolutePath();
+    qDebug() << destDir.absolutePath();
+#endif
+    copyPath(srcDir.absolutePath(), destDir.absolutePath());
+}
+
+
+void QAddonListModel::copyPath(const QString &src, const QString &dst) {
+
+    QDir srcDir(src);
+    if (!srcDir.exists()) {
+        return;
+    }
+
+    foreach (QString f, srcDir.entryList(QDir::Files)) {
+            QFile::copy(src + QDir::separator() + f, dst + QDir::separator() + f);
+    }
 }
 
 

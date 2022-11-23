@@ -23,6 +23,7 @@ public:
 private:
     Ui::MainWindow *ui;
     QString addonFolderPath;
+    QString backupPath;
     QSettings settings;
     QAddonListModel *model;
     void writeSettings();

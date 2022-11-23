@@ -32,7 +32,7 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>Backup Installed Addons</string>
+         <string>Backup Installed</string>
         </property>
         <property name="icon">
          <iconset resource="images.qrc">
