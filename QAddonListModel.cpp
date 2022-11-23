@@ -193,7 +193,7 @@ void QAddonListModel::processBackup(const QModelIndex &index) {
     const QString &aPath = index.data(QAddonListModel::PathRole).toString();
     const QString &parPath = QFileInfo(aPath).absolutePath();
     const QDir &srcDir = QDir(parPath);
-    const QDir &destDir = QDir(backupPath);
+    const QDir &destDir = QDir(backupPath + QDir::separator() + srcDir.dirName());
 
     if (!destDir.exists()) {
         destDir.mkpath(".");
