@@ -42,12 +42,12 @@
     <message>
         <location filename="mainwindow.cpp" line="93"/>
         <source>Critical Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Критическая Ошибка</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="93"/>
         <source>Unable to locate addons</source>
-        <translation type="unfinished"></translation>
+        <translation>Не могу найти аддоны</translation>
     </message>
 </context>
 <context>
