@@ -16,7 +16,7 @@ protected:
     void closeEvent(QCloseEvent *event) override;
 
 public:
-    MainWindow(QWidget *parent = 0);
+    MainWindow(QWidget *parent = nullptr);
 
     ~MainWindow();
 
