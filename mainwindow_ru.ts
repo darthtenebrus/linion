@@ -69,29 +69,29 @@
 <context>
     <name>QAddonListModel</name>
     <message>
-        <location filename="QAddonListModel.cpp" line="128"/>
+        <location filename="QAddonListModel.cpp" line="133"/>
         <source>No description</source>
         <translation>Нет описания</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="169"/>
-        <location filename="QAddonListModel.cpp" line="188"/>
+        <location filename="QAddonListModel.cpp" line="174"/>
+        <location filename="QAddonListModel.cpp" line="193"/>
         <source>Info</source>
         <translation>Информация</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="170"/>
+        <location filename="QAddonListModel.cpp" line="175"/>
         <source>Do you really want to delete this addon: %1?</source>
         <oldsource>Do you really want to delete this addon: %1</oldsource>
         <translation>Вы действительно хотите удалить аддон %1?</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="189"/>
+        <location filename="QAddonListModel.cpp" line="194"/>
         <source>Do you want to make a backup of all installed addons?</source>
         <translation>Вы хотите создать резервную копию установленных аддонов?</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="266"/>
+        <location filename="QAddonListModel.cpp" line="271"/>
         <source>Installed Addons List</source>
         <translation>Список установленых аддонов</translation>
     </message>

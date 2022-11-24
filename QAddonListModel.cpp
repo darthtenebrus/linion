@@ -38,6 +38,10 @@ int QAddonListModel::rowCount(const QModelIndex &) const {
 QVariant QAddonListModel::data(const QModelIndex &index, int role) const {
 
     QVariant value;
+    if (!index.isValid()) {
+        return value;
+    }
+    
     switch (role) {
         case Qt::DisplayRole: //string
             value = addonList.at(index.row()).getAddonTitle();
@@ -66,7 +70,8 @@ QVariant QAddonListModel::data(const QModelIndex &index, int role) const {
 
 void QAddonListModel::refreshFolderList() {
     QRegularExpression re(R"(##\s+(?<tag>[A-Za-z]+):\s+(?<content>.*))");
-    beginRemoveRows(QModelIndex(), 0, addonList.count() - 1);
+    int totalCount = addonList.count();
+    beginRemoveRows(QModelIndex(), 0, totalCount >=1 ? totalCount - 1 : 0);
     addonList.clear();
     endRemoveRows();
     QDir dir = QDir(addonFolderPath);
