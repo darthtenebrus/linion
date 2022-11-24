@@ -17,6 +17,7 @@ int main(int argc, char *argv[]) {
 
     auto *w(new MainWindow());
     w->show();
+    emit w->doRefresh();
     int res = QApplication::exec();
     delete w;
     return res;

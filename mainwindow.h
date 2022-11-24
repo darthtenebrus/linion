@@ -22,18 +22,22 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    QProgressBar *progressBar;
     QString addonFolderPath;
     QString backupPath;
     QSettings settings;
+
     void writeSettings();
 
 signals:
     void doRefresh();
 
+
 public slots:
     void currentChanged(const QModelIndex &current, const QModelIndex &prev);
     void aboutQtAction(bool);
     void allChanged(const QModelIndex &first, const QModelIndex &last);
+    void updateProgressPercent(int current, int total);
 };
 
 #endif //TENANTCONTROL_MAINWINDOW_H

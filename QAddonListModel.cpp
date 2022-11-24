@@ -13,6 +13,7 @@
 #include <QListView>
 #include <QtWidgets/QMessageBox>
 #include <QFileSystemWatcher>
+#include <QTreeView>
 
 
 QAddonListModel::QAddonListModel(const QString &addonFolderPath, const QString &backupPath, QObject *parent)
@@ -65,10 +66,15 @@ QVariant QAddonListModel::data(const QModelIndex &index, int role) const {
 
 void QAddonListModel::refreshFolderList() {
     QRegularExpression re(R"(##\s+(?<tag>[A-Za-z]+):\s+(?<content>.*))");
+    beginRemoveRows(QModelIndex(), 0, addonList.count() - 1);
     addonList.clear();
+    endRemoveRows();
     QDir dir = QDir(addonFolderPath);
     const QFileInfoList &dirList = dir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot);
-    for (int i = 0; i < dirList.count(); i++) {
+    int total = dirList.count();
+    beginInsertRows(QModelIndex(), 0, dirList.count() - 1);
+    for (int i = 0; i < total; i++) {
+        emit percent(i, total);
         const QString &addonName = dirList.at(i).fileName();
         auto separ = QDir::separator();
         const QString &fPath = addonFolderPath + separ + addonName + separ + addonName + ".txt";
@@ -128,7 +134,7 @@ void QAddonListModel::refreshFolderList() {
         }
 
     }
-
+    endInsertRows();
     emit dataChanged(createIndex(0, 0), createIndex(addonList.count() - 1, 0));
 }
 
@@ -145,7 +151,7 @@ void QAddonListModel::refresh() {
 
 void QAddonListModel::uninstallAddonClicked() {
 
-    QListView *view = qobject_cast<QListView *>(parent());
+    QTreeView *view = qobject_cast<QTreeView *>(parent());
     const QModelIndexList &selectedSet = view->selectionModel()->selectedIndexes();
 
     if (selectedSet.count() > 1) {
@@ -161,7 +167,7 @@ void QAddonListModel::uninstallAddonClicked() {
 #endif
 
     QMessageBox::StandardButton button = QMessageBox::warning(view, tr("Info"),
-                                                              tr("Do you really want to delete this addon: %1")
+                                                              tr("Do you really want to delete this addon: %1?")
                                                                       .arg(aTitle),
                                                               QMessageBox::StandardButtons(
                                                                       QMessageBox::Yes | QMessageBox::No));
@@ -177,7 +183,19 @@ void QAddonListModel::uninstallAddonClicked() {
 }
 
 void QAddonListModel::backupAllClicked() {
-    for(int i = 0; i < addonList.size(); i++) {
+
+    QTreeView *view = qobject_cast<QTreeView *>(parent());
+    QMessageBox::StandardButton button = QMessageBox::warning(view, tr("Info"),
+                                                              tr("Do you want to make a backup of all installed addons?"),
+                                                              QMessageBox::StandardButtons(
+                                                                      QMessageBox::Yes | QMessageBox::No));
+    if (button == QMessageBox::No) {
+        return;
+    }
+
+    int total = addonList.size();
+    for(int i = 0; i < total; i++) {
+        emit percent(i, total);
         processBackup(addonList[i].getAddonPath());
     }
 }
@@ -185,7 +203,8 @@ void QAddonListModel::backupAllClicked() {
 void QAddonListModel::backupAddonClicked() {
 
 
-    QListView *view = qobject_cast<QListView *>(parent());
+    const QTreeView *view = qobject_cast<QTreeView *>(parent());
+
     const QModelIndexList &selectedSet = view->selectionModel()->selectedIndexes();
 
     if (selectedSet.count() > 1) {
@@ -194,7 +213,9 @@ void QAddonListModel::backupAddonClicked() {
     const QModelIndex &index = selectedSet[0];
     const QString &aPath = index.data(QAddonListModel::PathRole).toString();
 
+    emit percent(2, 101);
     processBackup(aPath);
+    emit percent(100, 101);
 }
 
 void QAddonListModel::processBackup(const QString &pPath) const {
@@ -235,6 +256,16 @@ void QAddonListModel::copyPath(const QString &src, const QString &dst) const {
 
 const QList<ItemData> &QAddonListModel::getAddonList() const {
     return addonList;
+}
+
+QVariant QAddonListModel::headerData(int section, Qt::Orientation orientation, int role) const {
+
+    QVariant value;
+    switch (role) {
+        case Qt::DisplayRole:
+        value = tr("Installed Addons List");
+    }
+    return value;
 }
 
 

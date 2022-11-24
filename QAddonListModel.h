@@ -30,7 +30,10 @@ public:
     [[nodiscard]]
     QVariant data(const QModelIndex &index, int role) const override;
 
+    [[nodiscard]]
     const QList<ItemData> &getAddonList() const;
+
+    QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
 
 private:
     QList<ItemData> addonList;
@@ -44,6 +47,9 @@ private:
     const QString &cleanColorizers(QString &input) const;
     void processBackup(const QString &pPath) const;
     void copyPath(const QString&, const QString&) const;
+
+signals:
+    void percent(int current, int total);
 
 public slots:
     void refresh();
