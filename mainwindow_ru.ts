@@ -5,33 +5,33 @@
     <name>MainWindow</name>
     <message>
         <location filename="mainwindow.ui" line="14"/>
-        <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="149"/>
+        <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="161"/>
         <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="69"/>
         <source>Linion Addon Manager</source>
         <translation>Менеджер аддонов Linion</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="38"/>
-        <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="151"/>
+        <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="163"/>
         <source>Backup Installed</source>
         <oldsource>Backup Installed Addons</oldsource>
         <translation>Сохранить установленные</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="64"/>
-        <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="152"/>
+        <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="164"/>
         <source>Refresh List</source>
         <translation>Обновить список</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="150"/>
-        <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="153"/>
+        <location filename="mainwindow.ui" line="169"/>
+        <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="165"/>
         <source>Help</source>
         <translation>Помощь</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="159"/>
-        <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="150"/>
+        <location filename="mainwindow.ui" line="178"/>
+        <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="162"/>
         <source>About Qt</source>
         <translation>О программе Qt</translation>
     </message>
@@ -94,6 +94,19 @@
         <location filename="QAddonListModel.cpp" line="271"/>
         <source>Installed Addons List</source>
         <translation>Список установленых аддонов</translation>
+    </message>
+</context>
+<context>
+    <name>QObject</name>
+    <message>
+        <location filename="main.cpp" line="49"/>
+        <source>Already Running</source>
+        <translation>Уже Запущено</translation>
+    </message>
+    <message>
+        <location filename="main.cpp" line="50"/>
+        <source>Linion Already Running</source>
+        <translation>Приложение Linion уже запущено</translation>
     </message>
 </context>
 <context>

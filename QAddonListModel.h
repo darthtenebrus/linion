@@ -35,6 +35,8 @@ public:
 
     QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
 
+    void sort(int column, Qt::SortOrder order) override;
+
 private:
     QList<ItemData> addonList;
 

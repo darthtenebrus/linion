@@ -273,4 +273,15 @@ QVariant QAddonListModel::headerData(int section, Qt::Orientation orientation, i
     return value;
 }
 
+void QAddonListModel::sort(int column, Qt::SortOrder order) {
+
+    QList<ItemData> &tmpList = addonList;
+    emit layoutAboutToBeChanged();
+    qSort(addonList.begin(), addonList.end(), [&order](ItemData &v1, ItemData &v2) {
+        return order == Qt::AscendingOrder ? v1.getAddonTitle() < v2.getAddonTitle() : v1.getAddonTitle() > v2.getAddonTitle();
+    });
+    emit layoutChanged();
+
+}
+
 
