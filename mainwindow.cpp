@@ -72,20 +72,9 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 
 void MainWindow::writeSettings() {
 
-    bool needSync = false;
-    if (!settings.contains("addonFolderPath")) {
         settings.setValue("addonFolderPath", addonFolderPath);
-        needSync = true;
-    }
-
-    if (!settings.contains("backupPath")) {
         settings.setValue("backupPath", backupPath);
-        needSync = true;
-    }
-
-    if (needSync) {
         settings.sync();
-    }
 }
 
 void MainWindow::currentChanged(const QModelIndex &current, const QModelIndex &prev) {
