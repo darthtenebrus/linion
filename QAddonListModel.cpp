@@ -265,7 +265,8 @@ void QAddonListModel::processBackup(const QString &pPath) const {
 #endif
             const QString &command = commandList.value(0);
             commandList.removeAt(0);
-            commandList << destDir.dirName();
+            const QString &dDir = destDir.dirName();
+            commandList << (!dDir.contains(" ") ? dDir : R"(")" + dDir + R"(")");
 #ifdef _DEBUG
             qDebug() << "command = " + command;
             qDebug() << commandList;
@@ -293,7 +294,8 @@ void QAddonListModel::processBackup(const QString &pPath) const {
 #endif
             const QString &command = commandList.value(0);
             commandList.removeAt(0);
-            commandList << destDir.dirName();
+            const QString &dDir = destDir.dirName();
+            commandList << (!dDir.contains(" ") ? dDir : R"(")" + dDir + R"(")");
 #ifdef _DEBUG
             qDebug() << "command = " + command;
             qDebug() << commandList;

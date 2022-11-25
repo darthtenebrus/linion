@@ -111,7 +111,7 @@
         <translation>Сохранение одного аддона</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="348"/>
+        <location filename="QAddonListModel.cpp" line="350"/>
         <source>Installed Addons List</source>
         <translation>Список установленых аддонов</translation>
     </message>
