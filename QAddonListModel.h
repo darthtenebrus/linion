@@ -8,6 +8,7 @@
 #include <QDir>
 #include <QModelIndex>
 #include <QFileSystemWatcher>
+#include <QTreeView>
 #include "ItemData.h"
 
 class QAddonListModel : public QAbstractListModel {
@@ -21,7 +22,13 @@ public:
         DescriptionRole
     };
 
-    explicit QAddonListModel(const QString &addonFolderPath, const QString &backupPath, QObject *parent = nullptr);
+    explicit QAddonListModel(const QString &addonFolderPath,
+                             const QString &backupPath,
+                             const QString &tarCommand,
+                             const QString &zipCommand,
+                             bool useTar,
+                             bool useZip,
+                             QObject *parent);
     ~QAddonListModel() override;
 
     [[nodiscard]]
@@ -44,6 +51,11 @@ private:
     QString addonFolderPath;
     QString backupPath;
     QFileSystemWatcher *qsw;
+
+    bool useTar;
+    bool useZip;
+    QString tarCommand;
+    QString zipCommand;
 
 
     void refreshFolderList();

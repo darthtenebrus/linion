@@ -26,6 +26,10 @@ private:
     QString addonFolderPath;
     QString backupPath;
     QSettings settings;
+    bool useTar;
+    bool useZip;
+    QString tarCommand;
+    QString zipCommand;
 
     void writeSettings();
 

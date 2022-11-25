@@ -21,7 +21,20 @@ MainWindow ::MainWindow(QWidget *parent) :
     addonFolderPath = settings.value("addonFolderPath", defValue).toString();
     backupPath = settings.value("backupPath", defBackup).toString();
 
-    auto *model = new QAddonListModel(addonFolderPath, backupPath, ui->addonTreeView);
+    useTar = settings.value("useTar", "true").toBool();
+    useZip = settings.value("useZip", "false").toBool();
+
+    tarCommand = settings.value("tarCommand", "tar cvzf %1.tgz").toString();
+    zipCommand = settings.value("zipCommand", "zip -r %1.zip").toString();
+
+#ifdef _DEBUG
+    qDebug() << tarCommand;
+    qDebug() << zipCommand;
+
+#endif
+
+    auto *model = new QAddonListModel(addonFolderPath, backupPath, tarCommand, zipCommand, useTar, useZip,
+                                      ui->addonTreeView);
     
     ui->addonTreeView->setMouseTracking(true);
     ui->addonTreeView->setModel(model);
@@ -74,6 +87,10 @@ void MainWindow::writeSettings() {
 
         settings.setValue("addonFolderPath", addonFolderPath);
         settings.setValue("backupPath", backupPath);
+        settings.setValue("tarCommand", tarCommand);
+        settings.setValue("zipCommand", zipCommand);
+        settings.setValue("useTar", useTar);
+        settings.setValue("useZip", useZip);
         settings.sync();
 }
 
@@ -115,11 +132,8 @@ void MainWindow::updateProgressPercent(int current, int total, const QString &ms
         ui->refreshButton->setEnabled(false);
     }
 
-    int percent = qRound((float) current / (float) (total - 1) * 100);
-#ifdef _DEBUG
-    qDebug() << percent;
+    int percent = qRound((float) current / (float) total * 100);
 
-#endif
     progressBar->setValue(percent);
 
     if (percent == 100) {

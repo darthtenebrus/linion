@@ -14,12 +14,23 @@
 #include <QtWidgets/QMessageBox>
 #include <QFileSystemWatcher>
 #include <QTreeView>
+#include <QProcess>
 
 
-QAddonListModel::QAddonListModel(const QString &addonFolderPath, const QString &backupPath, QObject *parent)
+QAddonListModel::QAddonListModel(const QString &addonFolderPath,
+                                 const QString &backupPath,
+                                 const QString &tarCommand,
+                                 const QString &zipCommand,
+                                 bool useTar,
+                                 bool useZip,
+                                 QObject *parent)
         : QAbstractListModel(parent),
           addonFolderPath(addonFolderPath),
-          backupPath(backupPath) {
+          backupPath(backupPath),
+          tarCommand(tarCommand),
+          zipCommand(zipCommand),
+          useTar(useTar),
+          useZip(useZip) {
 
     qsw = new QFileSystemWatcher(QStringList() << addonFolderPath);
     connect(qsw, &QFileSystemWatcher::directoryChanged, this, &QAddonListModel::refresh);
@@ -141,6 +152,7 @@ void QAddonListModel::refreshFolderList() {
     }
     endInsertRows();
     emit dataChanged(createIndex(0, 0), createIndex(addonList.count() - 1, 0));
+    emit percent(total, total, "");
 }
 
 const QString &QAddonListModel::cleanColorizers(QString &input) const {
@@ -203,6 +215,7 @@ void QAddonListModel::backupAllClicked() {
         emit percent(i, total, tr("Backing up"));
         processBackup(addonList[i].getAddonPath());
     }
+    emit percent(total, total, "");
 }
 
 void QAddonListModel::backupAddonClicked() {
@@ -218,9 +231,9 @@ void QAddonListModel::backupAddonClicked() {
     const QModelIndex &index = selectedSet[0];
     const QString &aPath = index.data(QAddonListModel::PathRole).toString();
 
-    emit percent(2, 101, tr("Backing up single addon"));
+    emit percent(1, 100, tr("Backing up single addon"));
     processBackup(aPath);
-    emit percent(100, 101, tr("Backing up single addon"));
+    emit percent(100, 100, tr("Backing up single addon"));
 }
 
 void QAddonListModel::processBackup(const QString &pPath) const {
@@ -229,14 +242,78 @@ void QAddonListModel::processBackup(const QString &pPath) const {
     const QDir &srcDir = QDir(parPath);
     const QDir &destDir = QDir(backupPath + QDir::separator() + srcDir.dirName());
 
+#ifdef _DEBUG
+    qDebug() << useTar;
+    qDebug() << useZip;
+#endif
+
     if (!destDir.exists()) {
         destDir.mkpath(".");
     }
-#ifdef _DEBUG
-    qDebug() << srcDir.absolutePath();
-    qDebug() << destDir.absolutePath();
-#endif
     copyPath(srcDir.absolutePath(), destDir.absolutePath());
+
+    if(useZip || useTar) {
+        QProcess proc;
+        proc.setWorkingDirectory(backupPath);
+        if (useTar) {
+            // имя архива. Пробелы убираем
+            const QString &newTarCommand = QString(tarCommand)
+                    .arg(destDir.dirName().replace(QRegularExpression(R"(\s+)"), ""));
+            QStringList commandList = newTarCommand.trimmed().split(QRegularExpression(R"(\s+)"));
+#ifdef _DEBUG
+            qDebug() << commandList;
+#endif
+            const QString &command = commandList.value(0);
+            commandList.removeAt(0);
+            commandList << destDir.dirName();
+#ifdef _DEBUG
+            qDebug() << "command = " + command;
+            qDebug() << commandList;
+
+#endif
+            proc.start(command, commandList);
+            proc.waitForFinished();
+            QProcess::ProcessError res = proc.error();
+            const QString &strRes = QString(proc.readAllStandardOutput());
+            const QString &errRes = QString(proc.readAllStandardError());
+#ifdef _DEBUG
+            qDebug() << res;
+            qDebug() << strRes;
+            qDebug() << errRes;
+#endif
+            QDir(destDir).removeRecursively();
+
+        } else if (useZip) {
+            // имя архива. Пробелы убираем
+            const QString &newZipCommand = QString(zipCommand)
+                    .arg(destDir.dirName().replace(QRegularExpression(R"(\s+)"), ""));
+            QStringList commandList = newZipCommand.trimmed().split(QRegularExpression(R"(\s+)"));
+#ifdef _DEBUG
+            qDebug() << commandList;
+#endif
+            const QString &command = commandList.value(0);
+            commandList.removeAt(0);
+            commandList << destDir.dirName();
+#ifdef _DEBUG
+            qDebug() << "command = " + command;
+            qDebug() << commandList;
+
+#endif
+            proc.start(command, commandList);
+            proc.waitForFinished();
+            QProcess::ProcessError res = proc.error();
+            const QString &strRes = QString(proc.readAllStandardOutput());
+            const QString &errRes = QString(proc.readAllStandardError());
+#ifdef _DEBUG
+            qDebug() << res;
+            qDebug() << strRes;
+            qDebug() << errRes;
+#endif
+            QDir(destDir).removeRecursively();
+
+
+        }
+    }
 }
 
 
