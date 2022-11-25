@@ -6,13 +6,14 @@
     <message>
         <location filename="mainwindow.ui" line="14"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="161"/>
-        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="69"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="161"/>
         <source>Linion Addon Manager</source>
         <translation>Менеджер аддонов Linion</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="38"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="163"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="163"/>
         <source>Backup Installed</source>
         <oldsource>Backup Installed Addons</oldsource>
         <translation>Сохранить установленные</translation>
@@ -20,18 +21,21 @@
     <message>
         <location filename="mainwindow.ui" line="64"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="164"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="164"/>
         <source>Refresh List</source>
         <translation>Обновить список</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="169"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="165"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="165"/>
         <source>Help</source>
         <translation>Помощь</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="178"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="162"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="162"/>
         <source>About Qt</source>
         <translation>О программе Qt</translation>
     </message>
