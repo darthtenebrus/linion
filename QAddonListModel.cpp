@@ -79,7 +79,7 @@ void QAddonListModel::refreshFolderList() {
     int total = dirList.count();
     beginInsertRows(QModelIndex(), 0, dirList.count() - 1);
     for (int i = 0; i < total; i++) {
-        emit percent(i, total);
+        emit percent(i, total, tr("Refresh"));
         const QString &addonName = dirList.at(i).fileName();
         auto separ = QDir::separator();
         const QString &fPath = addonFolderPath + separ + addonName + separ + addonName + ".txt";
@@ -200,7 +200,7 @@ void QAddonListModel::backupAllClicked() {
 
     int total = addonList.size();
     for(int i = 0; i < total; i++) {
-        emit percent(i, total);
+        emit percent(i, total, tr("Backing up"));
         processBackup(addonList[i].getAddonPath());
     }
 }
@@ -218,9 +218,9 @@ void QAddonListModel::backupAddonClicked() {
     const QModelIndex &index = selectedSet[0];
     const QString &aPath = index.data(QAddonListModel::PathRole).toString();
 
-    emit percent(2, 101);
+    emit percent(2, 101, tr("Backing up single addon"));
     processBackup(aPath);
-    emit percent(100, 101);
+    emit percent(100, 101, tr("Backing up single addon"));
 }
 
 void QAddonListModel::processBackup(const QString &pPath) const {

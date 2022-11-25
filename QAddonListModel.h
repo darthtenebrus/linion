@@ -52,7 +52,7 @@ private:
     void copyPath(const QString&, const QString&) const;
 
 signals:
-    void percent(int current, int total);
+    void percent(int current, int total, const QString &msg);
 
 public slots:
     void refresh();

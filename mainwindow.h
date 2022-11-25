@@ -37,7 +37,7 @@ public slots:
     void currentChanged(const QModelIndex &current, const QModelIndex &prev);
     void aboutQtAction(bool);
     void allChanged(const QModelIndex &first, const QModelIndex &last);
-    void updateProgressPercent(int current, int total);
+    void updateProgressPercent(int current, int total, const QString &msg);
 };
 
 #endif //TENANTCONTROL_MAINWINDOW_H

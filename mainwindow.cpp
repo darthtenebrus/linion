@@ -97,13 +97,14 @@ void MainWindow::allChanged(const QModelIndex &first, const QModelIndex &last) {
     }
 }
 
-void MainWindow::updateProgressPercent(int current, int total) {
+void MainWindow::updateProgressPercent(int current, int total, const QString &msg) {
     if (!progressBar->isVisible()) {
         progressBar->setVisible(true);
     }
 
     if (!ui->statusbar->currentMessage().isEmpty()) {
         ui->statusbar->clearMessage();
+        ui->statusbar->showMessage(msg);
     }
 
     if(ui->backupButton->isEnabled()) {

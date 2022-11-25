@@ -61,13 +61,18 @@
         <translation>Не могу найти аддоны</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="126"/>
+        <location filename="mainwindow.cpp" line="127"/>
         <source>All completed</source>
         <translation>Завершено</translation>
     </message>
 </context>
 <context>
     <name>QAddonListModel</name>
+    <message>
+        <location filename="QAddonListModel.cpp" line="82"/>
+        <source>Refresh</source>
+        <translation>Обновить список</translation>
+    </message>
     <message>
         <location filename="QAddonListModel.cpp" line="133"/>
         <source>No description</source>
@@ -89,6 +94,17 @@
         <location filename="QAddonListModel.cpp" line="194"/>
         <source>Do you want to make a backup of all installed addons?</source>
         <translation>Вы хотите создать резервную копию установленных аддонов?</translation>
+    </message>
+    <message>
+        <location filename="QAddonListModel.cpp" line="203"/>
+        <source>Backing up</source>
+        <translation>Сохранение</translation>
+    </message>
+    <message>
+        <location filename="QAddonListModel.cpp" line="221"/>
+        <location filename="QAddonListModel.cpp" line="223"/>
+        <source>Backing up single addon</source>
+        <translation>Сохранение одного аддона</translation>
     </message>
     <message>
         <location filename="QAddonListModel.cpp" line="271"/>
