@@ -5,36 +5,36 @@
     <name>MainWindow</name>
     <message>
         <location filename="mainwindow.ui" line="14"/>
-        <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="161"/>
+        <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="164"/>
         <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="161"/>
         <source>Linion Addon Manager</source>
         <translation>Менеджер аддонов Linion</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="38"/>
-        <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="163"/>
+        <location filename="mainwindow.ui" line="42"/>
+        <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="166"/>
         <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="163"/>
         <source>Backup Installed</source>
         <oldsource>Backup Installed Addons</oldsource>
         <translation>Сохранить установленные</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="64"/>
-        <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="164"/>
+        <location filename="mainwindow.ui" line="68"/>
+        <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="167"/>
         <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="164"/>
         <source>Refresh List</source>
         <translation>Обновить список</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="169"/>
-        <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="165"/>
+        <location filename="mainwindow.ui" line="173"/>
+        <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="168"/>
         <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="165"/>
         <source>Help</source>
         <translation>Помощь</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="178"/>
-        <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="162"/>
+        <location filename="mainwindow.ui" line="182"/>
+        <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="165"/>
         <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="162"/>
         <source>About Qt</source>
         <translation>О программе Qt</translation>
