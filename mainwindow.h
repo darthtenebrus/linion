@@ -9,6 +9,7 @@
 #include <QFileInfoList>
 #include <QSettings>
 #include "QAddonListModel.h"
+#include "configdialog.h"
 
 class MainWindow : public QMainWindow {
 Q_OBJECT
@@ -22,6 +23,7 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    ConfigDialog *configDialog;
     QProgressBar *progressBar;
     QString addonFolderPath;
     QString backupPath;

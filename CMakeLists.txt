@@ -24,7 +24,7 @@ add_executable(${PROJECT_NAME}
         mainwindow.h
         mainwindow.cpp
         mainwindow.ui QAddonListModel.cpp QAddonListModel.h ItemData.cpp ItemData.h
-        QvObjectDelegate.cpp QvObjectDelegate.h
+        QvObjectDelegate.cpp QvObjectDelegate.h configdialog.cpp configdialog.h configdialog.ui
         ${RES_FILES}
         ${QM_FILES})
 

@@ -4,6 +4,7 @@
 #include <QJsonArray>
 #include "mainwindow.h"
 #include "QvObjectDelegate.h"
+#include "configdialog.h"
 #ifdef _DEBUG
 #include <QDebug>
 #include <QSettings>
@@ -11,7 +12,7 @@
 #endif
 
 MainWindow ::MainWindow(QWidget *parent) :
-        QMainWindow(parent), ui(new Ui::MainWindow()),
+        QMainWindow(parent), ui(new Ui::MainWindow()),configDialog(new ConfigDialog(this)),
         settings(QSettings::NativeFormat, QSettings::UserScope, "linion", "config") {
     ui->setupUi(this);
 
@@ -69,11 +70,16 @@ MainWindow ::MainWindow(QWidget *parent) :
     connect(model, &QAbstractListModel::dataChanged, this, &MainWindow::allChanged);
     connect(model, &QAddonListModel::percent, this, &MainWindow::updateProgressPercent);
     connect(ui->refreshButton, SIGNAL(clicked()), model, SLOT(refresh()));
+    connect(ui->actionSettings, &QAction::triggered, this, [=](bool checked) {
+        configDialog->show();
+        configDialog->setModal(true);
+    });
 }
 
 
 MainWindow :: ~MainWindow() {
     delete progressBar;
+    delete configDialog;
     delete ui;
 }
 
