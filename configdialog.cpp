@@ -77,3 +77,16 @@ void ConfigDialog::backupPathChoose() {
 
 }
 
+const QHash<QString, QVariant> &ConfigDialog::receiveData() const {
+
+    QHash<QString, QVariant> data;
+
+    data.insert("addonFolderPath", ui->addonFolderPath->text());
+    data.insert("backupPath", ui->backupPath->text());
+    data.insert("useTar", ui->useTar->isChecked());
+    data.insert("useZip", ui->useZip->isChecked());
+    data.insert("tarCommand", ui->tarCommand->text());
+    data.insert("zipCommand", ui->zipCommand->text());
+    return data;
+}
+
