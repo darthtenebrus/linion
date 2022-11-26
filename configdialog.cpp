@@ -6,12 +6,14 @@
 
 #include "configdialog.h"
 #include "ui_configdialog.h"
+#include "DialogItemDelegate.h"
 #include <QPushButton>
 #include <QFileDialog>
 
 ConfigDialog::ConfigDialog(QWidget *parent) :
         QDialog(parent), ui(new Ui::ConfigDialog) {
     ui->setupUi(this);
+    ui->listWidget->setItemDelegate(new DialogItemDelegate(ui->listWidget));
     connect(ui->buttonBox->button(QDialogButtonBox::Ok), SIGNAL(clicked()),
             this, SLOT(close()));
     connect(ui->buttonBox->button(QDialogButtonBox::Cancel), SIGNAL(clicked()),

@@ -115,7 +115,7 @@ void MainWindow::aboutQtAction(bool param) {
 
 void MainWindow::allChanged(const QModelIndex &first, const QModelIndex &last) {
 
-    const QAddonListModel *model = qobject_cast<const QAddonListModel *>(first.model());
+    const auto *model = qobject_cast<const QAddonListModel *>(first.model());
     
     if (model->getAddonList().isEmpty()) {
         QMessageBox::critical(this, tr("Critical Error"), tr("Unable to locate addons"));

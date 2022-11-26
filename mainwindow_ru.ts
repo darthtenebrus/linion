@@ -84,12 +84,12 @@
         <translation>Архиватор Zip</translation>
     </message>
     <message>
-        <location filename="configdialog.cpp" line="58"/>
+        <location filename="configdialog.cpp" line="60"/>
         <source>Choose ESO Adddons Directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="configdialog.cpp" line="68"/>
+        <location filename="configdialog.cpp" line="70"/>
         <source>Choose Backup Directory</source>
         <translation type="unfinished"></translation>
     </message>
