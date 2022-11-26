@@ -7,6 +7,7 @@
 #include "configdialog.h"
 #include "ui_configdialog.h"
 #include <QPushButton>
+#include <QFileDialog>
 
 ConfigDialog::ConfigDialog(QWidget *parent) :
         QDialog(parent), ui(new Ui::ConfigDialog) {
@@ -17,6 +18,9 @@ ConfigDialog::ConfigDialog(QWidget *parent) :
             this, SLOT(close()));
     connect(ui->listWidget->selectionModel(), &QItemSelectionModel::currentRowChanged,
             this, &ConfigDialog::currentChanged);
+
+    connect(ui->addonFolderPathButton, SIGNAL(clicked()), this, SLOT(addonPathChoose()));
+    connect(ui->backupPathButton, SIGNAL(clicked()), this, SLOT(backupPathChoose()));
     setTopSelected();
 }
 
@@ -48,5 +52,26 @@ void ConfigDialog::setTopSelected() {
     const QModelIndex &topIndex = ui->listWidget->model()->index(0, 0);
     ui->listWidget->setCurrentIndex(topIndex);
     ui->stackedWidget->setCurrentIndex(0);
+}
+
+void ConfigDialog::addonPathChoose() {
+    auto dir = QFileDialog::getExistingDirectory(this, tr("Choose ESO Adddons Directory"),
+                                                 ui->addonFolderPath->text(),
+                                                 QFileDialog::ShowDirsOnly
+                                                 | QFileDialog::DontResolveSymlinks);
+    if (!dir.isEmpty()) {
+        ui->addonFolderPath->setText(dir);
+    }
+}
+
+void ConfigDialog::backupPathChoose() {
+    auto dir = QFileDialog::getExistingDirectory(this, tr("Choose Backup Directory"),
+                                                 ui->backupPath->text(),
+                                                 QFileDialog::ShowDirsOnly
+                                                 | QFileDialog::DontResolveSymlinks);
+    if (!dir.isEmpty()) {
+        ui->backupPath->setText(dir);
+    }
+
 }
 

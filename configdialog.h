@@ -27,6 +27,8 @@ private:
 
 private slots:
     void currentChanged(const QModelIndex &, const QModelIndex &);
+    void addonPathChoose();
+    void backupPathChoose();
 
 
 };

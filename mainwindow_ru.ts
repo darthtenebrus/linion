@@ -5,71 +5,93 @@
     <name>ConfigDialog</name>
     <message>
         <location filename="configdialog.ui" line="17"/>
-        <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="244"/>
+        <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="251"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="244"/>
         <source>Application Settings</source>
         <translation>Настройки приложения</translation>
     </message>
     <message>
-        <location filename="configdialog.ui" line="93"/>
-        <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="249"/>
+        <location filename="configdialog.ui" line="105"/>
+        <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="256"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="249"/>
         <source>App Paths</source>
         <translation>Пути</translation>
     </message>
     <message>
-        <location filename="configdialog.ui" line="108"/>
-        <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="251"/>
+        <location filename="configdialog.ui" line="120"/>
+        <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="258"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="251"/>
         <source>Archivers</source>
         <translation>Архивы</translation>
     </message>
     <message>
-        <location filename="configdialog.ui" line="130"/>
-        <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="254"/>
+        <location filename="configdialog.ui" line="157"/>
+        <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="261"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="254"/>
         <source>TESO Addons And Backup</source>
         <translation>Аддоны и резервная копия</translation>
     </message>
     <message>
-        <location filename="configdialog.ui" line="136"/>
-        <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="255"/>
+        <location filename="configdialog.ui" line="166"/>
+        <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="262"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="255"/>
         <source>TESO Addons Path</source>
         <translation>Аддоны TESO</translation>
     </message>
     <message>
-        <location filename="configdialog.ui" line="152"/>
-        <location filename="configdialog.ui" line="175"/>
-        <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="256"/>
-        <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="258"/>
+        <location filename="configdialog.ui" line="182"/>
+        <location filename="configdialog.ui" line="205"/>
+        <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="263"/>
+        <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="265"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="256"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="258"/>
         <source>...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="configdialog.ui" line="159"/>
-        <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="257"/>
+        <location filename="configdialog.ui" line="189"/>
+        <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="264"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="257"/>
         <source>Backup Path</source>
         <translation>Резервные копии</translation>
     </message>
     <message>
-        <location filename="configdialog.ui" line="202"/>
-        <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="259"/>
+        <location filename="configdialog.ui" line="244"/>
+        <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="266"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="259"/>
         <source>Backup Archivers</source>
         <translation>Архивация</translation>
     </message>
     <message>
-        <location filename="configdialog.ui" line="211"/>
-        <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="260"/>
+        <location filename="configdialog.ui" line="253"/>
+        <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="267"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="260"/>
         <source>Do not use, just copy</source>
         <translation>Не использовть только копировать</translation>
     </message>
     <message>
-        <location filename="configdialog.ui" line="218"/>
-        <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="261"/>
+        <location filename="configdialog.ui" line="260"/>
+        <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="268"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="261"/>
         <source>Tar</source>
         <translation>Архиватор tar</translation>
     </message>
     <message>
-        <location filename="configdialog.ui" line="228"/>
-        <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="262"/>
+        <location filename="configdialog.ui" line="270"/>
+        <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="269"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="262"/>
         <source>Zip</source>
         <translation>Архиватор Zip</translation>
+    </message>
+    <message>
+        <location filename="configdialog.cpp" line="58"/>
+        <source>Choose ESO Adddons Directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="configdialog.cpp" line="68"/>
+        <source>Choose Backup Directory</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -77,14 +99,14 @@
     <message>
         <location filename="mainwindow.ui" line="14"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="172"/>
-        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="161"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="172"/>
         <source>Linion Addon Manager</source>
         <translation>Менеджер аддонов Linion</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="42"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="175"/>
-        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="163"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="175"/>
         <source>Backup Installed</source>
         <oldsource>Backup Installed Addons</oldsource>
         <translation>Сохранить установленные</translation>
@@ -92,33 +114,35 @@
     <message>
         <location filename="mainwindow.ui" line="68"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="176"/>
-        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="164"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="176"/>
         <source>Refresh List</source>
         <translation>Обновить список</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="173"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="177"/>
-        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="165"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="177"/>
         <source>Help</source>
         <translation>Помощь</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="179"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="178"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="178"/>
         <source>Settings</source>
         <translation>Настройки</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="189"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="173"/>
-        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="162"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="173"/>
         <source>About Qt</source>
         <translation>О программе Qt</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="194"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="174"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="174"/>
         <source>Application Settings</source>
         <translation>Настроить приложение</translation>
     </message>
