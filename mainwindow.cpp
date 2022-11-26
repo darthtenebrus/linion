@@ -14,25 +14,13 @@ MainWindow ::MainWindow(QWidget *parent) :
         settings(QSettings::NativeFormat, QSettings::UserScope, "linion", "config") {
     ui->setupUi(this);
 
-    const QString &defValue = "/home/esorochinskiy/Games/the-elder-scrolls-online/drive_c/users/esorochinskiy/Documents/Elder Scrolls Online/live/AddOns";
-    const QString &defBackup = "/home/esorochinskiy/ESObackup";
-
-    addonFolderPath = settings.value("addonFolderPath", defValue).toString();
-    backupPath = settings.value("backupPath", defBackup).toString();
-
-    useTar = settings.value("useTar", "true").toBool();
-    useZip = settings.value("useZip", "false").toBool();
-
-    tarCommand = settings.value("tarCommand", "tar cvzf %1.tgz").toString();
-    zipCommand = settings.value("zipCommand", "zip -r %1.zip").toString();
-
 #ifdef _DEBUG
     qDebug() << tarCommand;
     qDebug() << zipCommand;
 
 #endif
 
-    auto *model = new QAddonListModel(addonFolderPath, backupPath, tarCommand, zipCommand, useTar, useZip,
+    auto *model = new QAddonListModel(fillDataFromSettings(),
                                       ui->addonTreeView);
     
     ui->addonTreeView->setMouseTracking(true);
@@ -85,20 +73,8 @@ void MainWindow::showEvent(QShowEvent *event) {
     emit doRefresh();
 }
 
-void MainWindow::closeEvent(QCloseEvent *event) {
-
-    writeSettings();
-    QWidget::closeEvent(event);
-}
-
 void MainWindow::writeSettings() {
 
-        settings.setValue("addonFolderPath", addonFolderPath);
-        settings.setValue("backupPath", backupPath);
-        settings.setValue("tarCommand", tarCommand);
-        settings.setValue("zipCommand", zipCommand);
-        settings.setValue("useTar", useTar);
-        settings.setValue("useZip", useZip);
         settings.sync();
 }
 
@@ -153,15 +129,18 @@ void MainWindow::updateProgressPercent(int current, int total, const QString &ms
 }
 
 void MainWindow::settingsClicked(bool) {
-    QHash<QString, QVariant> data;
-    data.insert("addonFolderPath", addonFolderPath);
-    data.insert("backupPath", backupPath);
-    data.insert("useTar", useTar);
-    data.insert("useZip", useZip);
-    data.insert("tarCommand", tarCommand);
-    data.insert("zipCommand", zipCommand);
+    const QHash<QString, QVariant> &data = fillDataFromSettings();
     configDialog->transferData(data);
 
     configDialog->show();
     configDialog->setModal(true);
+}
+
+QHash<QString, QVariant> MainWindow::fillDataFromSettings() const {
+
+    QHash<QString, QVariant> data;
+    foreach(QString key, settings.allKeys()) {
+        data.insert(key, settings.value(key, defs[key]));
+    }
+    return data;
 }

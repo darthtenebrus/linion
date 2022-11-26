@@ -77,7 +77,7 @@ void ConfigDialog::backupPathChoose() {
 
 }
 
-const QHash<QString, QVariant> &ConfigDialog::receiveData() const {
+QHash<QString, QVariant> ConfigDialog::receiveData() const {
 
     QHash<QString, QVariant> data;
 

@@ -17,22 +17,11 @@
 #include <QProcess>
 
 
-QAddonListModel::QAddonListModel(const QString &addonFolderPath,
-                                 const QString &backupPath,
-                                 const QString &tarCommand,
-                                 const QString &zipCommand,
-                                 bool useTar,
-                                 bool useZip,
-                                 QObject *parent)
-        : QAbstractListModel(parent),
-          addonFolderPath(addonFolderPath),
-          backupPath(backupPath),
-          tarCommand(tarCommand),
-          zipCommand(zipCommand),
-          useTar(useTar),
-          useZip(useZip) {
+QAddonListModel::QAddonListModel(const QHash<QString, QVariant> &settings, QObject *parent)
+        : QAbstractListModel(parent) {
 
-    qsw = new QFileSystemWatcher(QStringList() << addonFolderPath);
+    setModelData(settings);
+    qsw = new QFileSystemWatcher(QStringList() << this->addonFolderPath);
     connect(qsw, &QFileSystemWatcher::directoryChanged, this, &QAddonListModel::refresh);
 
 }
@@ -364,6 +353,19 @@ void QAddonListModel::sort(int column, Qt::SortOrder order) {
         return order == Qt::AscendingOrder ? v1.getAddonTitle() < v2.getAddonTitle() : v1.getAddonTitle() > v2.getAddonTitle();
     });
     emit layoutChanged();
+
+}
+
+void QAddonListModel::setModelData(const QHash<QString, QVariant> &data) {
+
+    addonFolderPath = data.value("addonFolderPath").toString();
+    backupPath = data.value("backupPath").toString();
+
+    useTar = data.value("useTar").toBool();
+    useZip = data.value("useZip").toBool();
+
+    tarCommand = data.value("tarCommand").toString();
+    zipCommand = data.value("zipCommand").toString();
 
 }
 

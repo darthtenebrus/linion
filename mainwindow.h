@@ -14,7 +14,6 @@
 class MainWindow : public QMainWindow {
 Q_OBJECT
 protected:
-    void closeEvent(QCloseEvent *event) override;
 
     void showEvent(QShowEvent *event) override;
 
@@ -27,17 +26,26 @@ private:
     Ui::MainWindow *ui;
     ConfigDialog *configDialog;
     QProgressBar *progressBar;
-    QString addonFolderPath;
-    QString backupPath;
-    QSettings settings;
-    bool useTar;
-    bool useZip;
-    QString tarCommand;
-    QString zipCommand;
+
     QAction *backupAction;
     QAction *uninstallAction;
 
+    QSettings settings;
+    QHash<QString, QVariant> defs = {
+            {"addonFolderPath",
+             QVariant("/home/esorochinskiy/Games/the-elder-scrolls-online/drive_c/users/esorochinskiy/Documents/Elder Scrolls Online/live/AddOns")},
+            {"backupPath",
+            QVariant("/home/esorochinskiy/ESObackup")},
+            {"useTar", QVariant(true)},
+            {"useZip", QVariant(false)},
+            {"tarCommand", QVariant("tar cvzf %1.tgz")},
+            {"zipCommand", QVariant("zip -r %1.zip")}
+
+
+    };
+
     void writeSettings();
+    QHash<QString, QVariant> fillDataFromSettings() const;
 
 signals:
     void doRefresh();

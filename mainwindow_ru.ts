@@ -6,35 +6,35 @@
     <message>
         <location filename="configdialog.ui" line="17"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="251"/>
-        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="244"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="251"/>
         <source>Application Settings</source>
         <translation>Настройки приложения</translation>
     </message>
     <message>
         <location filename="configdialog.ui" line="105"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="256"/>
-        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="249"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="256"/>
         <source>App Paths</source>
         <translation>Пути</translation>
     </message>
     <message>
         <location filename="configdialog.ui" line="120"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="258"/>
-        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="251"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="258"/>
         <source>Archivers</source>
         <translation>Архивы</translation>
     </message>
     <message>
         <location filename="configdialog.ui" line="157"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="261"/>
-        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="254"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="261"/>
         <source>TESO Addons And Backup</source>
         <translation>Аддоны и резервная копия</translation>
     </message>
     <message>
         <location filename="configdialog.ui" line="166"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="262"/>
-        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="255"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="262"/>
         <source>TESO Addons Path</source>
         <translation>Аддоны TESO</translation>
     </message>
@@ -43,43 +43,43 @@
         <location filename="configdialog.ui" line="205"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="263"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="265"/>
-        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="256"/>
-        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="258"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="263"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="265"/>
         <source>...</source>
         <translation></translation>
     </message>
     <message>
         <location filename="configdialog.ui" line="189"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="264"/>
-        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="257"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="264"/>
         <source>Backup Path</source>
         <translation>Резервные копии</translation>
     </message>
     <message>
         <location filename="configdialog.ui" line="244"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="266"/>
-        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="259"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="266"/>
         <source>Backup Archivers</source>
         <translation>Архивация</translation>
     </message>
     <message>
         <location filename="configdialog.ui" line="253"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="267"/>
-        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="260"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="267"/>
         <source>Do not use, just copy</source>
         <translation>Не использовть только копировать</translation>
     </message>
     <message>
         <location filename="configdialog.ui" line="260"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="268"/>
-        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="261"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="268"/>
         <source>Tar</source>
         <translation>Архиватор tar</translation>
     </message>
     <message>
         <location filename="configdialog.ui" line="270"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="269"/>
-        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="262"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="269"/>
         <source>Zip</source>
         <translation>Архиватор Zip</translation>
     </message>
@@ -147,32 +147,32 @@
         <translation>Настроить приложение</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="42"/>
+        <location filename="mainwindow.cpp" line="30"/>
         <source>Backup</source>
         <translation>Сохранить</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="43"/>
+        <location filename="mainwindow.cpp" line="31"/>
         <source>Uninstall</source>
         <translation>Удалить</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="53"/>
+        <location filename="mainwindow.cpp" line="41"/>
         <source>Processing: %p%</source>
         <translation>Обработка: %p%</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="121"/>
+        <location filename="mainwindow.cpp" line="97"/>
         <source>Critical Error</source>
         <translation>Критическая Ошибка</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="121"/>
+        <location filename="mainwindow.cpp" line="97"/>
         <source>Unable to locate addons</source>
         <translation>Не могу найти аддоны</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="149"/>
+        <location filename="mainwindow.cpp" line="125"/>
         <source>All completed</source>
         <translation>Завершено</translation>
     </message>
@@ -180,45 +180,45 @@
 <context>
     <name>QAddonListModel</name>
     <message>
-        <location filename="QAddonListModel.cpp" line="93"/>
+        <location filename="QAddonListModel.cpp" line="82"/>
         <source>Refresh</source>
         <translation>Обновить список</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="144"/>
+        <location filename="QAddonListModel.cpp" line="133"/>
         <source>No description</source>
         <translation>Нет описания</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="191"/>
-        <location filename="QAddonListModel.cpp" line="210"/>
+        <location filename="QAddonListModel.cpp" line="180"/>
+        <location filename="QAddonListModel.cpp" line="199"/>
         <source>Info</source>
         <translation>Информация</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="192"/>
+        <location filename="QAddonListModel.cpp" line="181"/>
         <source>Do you really want to delete this addon: %1?</source>
         <oldsource>Do you really want to delete this addon: %1</oldsource>
         <translation>Вы действительно хотите удалить аддон %1?</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="211"/>
+        <location filename="QAddonListModel.cpp" line="200"/>
         <source>Do you want to make a backup of all installed addons?</source>
         <translation>Вы хотите создать резервную копию установленных аддонов?</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="220"/>
+        <location filename="QAddonListModel.cpp" line="209"/>
         <source>Backing up</source>
         <translation>Сохранение</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="239"/>
-        <location filename="QAddonListModel.cpp" line="241"/>
+        <location filename="QAddonListModel.cpp" line="228"/>
+        <location filename="QAddonListModel.cpp" line="230"/>
         <source>Backing up single addon</source>
         <translation>Сохранение одного аддона</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="355"/>
+        <location filename="QAddonListModel.cpp" line="344"/>
         <source>Installed Addons List</source>
         <translation>Список установленых аддонов</translation>
     </message>

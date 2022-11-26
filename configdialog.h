@@ -19,7 +19,7 @@ public:
     explicit ConfigDialog(QWidget *parent = nullptr);
     ~ConfigDialog() override;
     void transferData(const QHash<QString, QVariant> &data) const;
-    const QHash<QString, QVariant> &receiveData() const;
+    QHash<QString, QVariant> receiveData() const;
 
 
 private:

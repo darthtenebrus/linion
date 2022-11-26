@@ -22,13 +22,7 @@ public:
         DescriptionRole
     };
 
-    explicit QAddonListModel(const QString &addonFolderPath,
-                             const QString &backupPath,
-                             const QString &tarCommand,
-                             const QString &zipCommand,
-                             bool useTar,
-                             bool useZip,
-                             QObject *parent);
+    explicit QAddonListModel(const QHash<QString, QVariant> &settings, QObject *parent);
     ~QAddonListModel() override;
 
     [[nodiscard]]
@@ -44,6 +38,7 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
 
     void sort(int column, Qt::SortOrder order) override;
+    void setModelData(const QHash<QString, QVariant> &hash);
 
 private:
     QList<ItemData> addonList;
@@ -57,11 +52,11 @@ private:
     QString tarCommand;
     QString zipCommand;
 
-
     void refreshFolderList();
     const QString &cleanColorizers(QString &input) const;
     void processBackup(const QString &pPath) const;
     void copyPath(const QString&, const QString&) const;
+
 
 signals:
     void percent(int current, int total, const QString &msg);
