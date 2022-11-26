@@ -138,17 +138,17 @@
         <translation>Обработка: %p%</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="119"/>
+        <location filename="mainwindow.cpp" line="126"/>
         <source>Critical Error</source>
         <translation>Критическая Ошибка</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="119"/>
+        <location filename="mainwindow.cpp" line="126"/>
         <source>Unable to locate addons</source>
         <translation>Не могу найти аддоны</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="147"/>
+        <location filename="mainwindow.cpp" line="154"/>
         <source>All completed</source>
         <translation>Завершено</translation>
     </message>
@@ -166,35 +166,35 @@
         <translation>Нет описания</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="186"/>
-        <location filename="QAddonListModel.cpp" line="205"/>
+        <location filename="QAddonListModel.cpp" line="191"/>
+        <location filename="QAddonListModel.cpp" line="210"/>
         <source>Info</source>
         <translation>Информация</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="187"/>
+        <location filename="QAddonListModel.cpp" line="192"/>
         <source>Do you really want to delete this addon: %1?</source>
         <oldsource>Do you really want to delete this addon: %1</oldsource>
         <translation>Вы действительно хотите удалить аддон %1?</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="206"/>
+        <location filename="QAddonListModel.cpp" line="211"/>
         <source>Do you want to make a backup of all installed addons?</source>
         <translation>Вы хотите создать резервную копию установленных аддонов?</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="215"/>
+        <location filename="QAddonListModel.cpp" line="220"/>
         <source>Backing up</source>
         <translation>Сохранение</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="234"/>
-        <location filename="QAddonListModel.cpp" line="236"/>
+        <location filename="QAddonListModel.cpp" line="239"/>
+        <location filename="QAddonListModel.cpp" line="241"/>
         <source>Backing up single addon</source>
         <translation>Сохранение одного аддона</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="350"/>
+        <location filename="QAddonListModel.cpp" line="355"/>
         <source>Installed Addons List</source>
         <translation>Список установленых аддонов</translation>
     </message>

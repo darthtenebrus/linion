@@ -164,11 +164,16 @@ const QString &QAddonListModel::cleanColorizers(QString &input) const {
 
 void QAddonListModel::refresh() {
     refreshFolderList();
+    QModelIndex index = this->index(0, 0);
+    if (index.isValid()) {
+        auto *view = qobject_cast<QTreeView *>(parent());
+        view->setCurrentIndex(index);
+    }
 }
 
 void QAddonListModel::uninstallAddonClicked() {
 
-    QTreeView *view = qobject_cast<QTreeView *>(parent());
+    auto *view = qobject_cast<QTreeView *>(parent());
     const QModelIndexList &selectedSet = view->selectionModel()->selectedIndexes();
 
     if (selectedSet.count() > 1) {
@@ -201,7 +206,7 @@ void QAddonListModel::uninstallAddonClicked() {
 
 void QAddonListModel::backupAllClicked() {
 
-    QTreeView *view = qobject_cast<QTreeView *>(parent());
+    auto *view = qobject_cast<QTreeView *>(parent());
     QMessageBox::StandardButton button = QMessageBox::warning(view, tr("Info"),
                                                               tr("Do you want to make a backup of all installed addons?"),
                                                               QMessageBox::StandardButtons(

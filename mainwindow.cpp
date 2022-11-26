@@ -41,8 +41,8 @@ MainWindow ::MainWindow(QWidget *parent) :
     ui->addonTreeView->setModel(model);
     auto contextMenu = new QMenu(ui->addonTreeView);
     ui->addonTreeView->setContextMenuPolicy(Qt::ActionsContextMenu);
-    auto *backupAction = new QAction(tr("Backup"), contextMenu);
-    auto *uninstallAction = new QAction(tr("Uninstall"), contextMenu);
+    backupAction = new QAction(tr("Backup"), contextMenu);
+    uninstallAction = new QAction(tr("Uninstall"), contextMenu);
     ui->addonTreeView->addAction(backupAction);
     ui->addonTreeView->addAction(uninstallAction);
 
@@ -78,9 +78,16 @@ MainWindow ::MainWindow(QWidget *parent) :
 
 
 MainWindow :: ~MainWindow() {
+    delete uninstallAction;
+    delete backupAction;
     delete progressBar;
     delete configDialog;
     delete ui;
+}
+
+void MainWindow::showEvent(QShowEvent *event) {
+    QWidget::showEvent(event);
+    emit doRefresh();
 }
 
 void MainWindow::closeEvent(QCloseEvent *event) {
