@@ -1,7 +1,5 @@
 #include <QtWidgets/QMessageBox>
-#include <QJsonObject>
-#include <QJsonDocument>
-#include <QJsonArray>
+#include <QHash>
 #include "mainwindow.h"
 #include "QvObjectDelegate.h"
 #include "configdialog.h"
@@ -70,10 +68,7 @@ MainWindow ::MainWindow(QWidget *parent) :
     connect(model, &QAbstractListModel::dataChanged, this, &MainWindow::allChanged);
     connect(model, &QAddonListModel::percent, this, &MainWindow::updateProgressPercent);
     connect(ui->refreshButton, SIGNAL(clicked()), model, SLOT(refresh()));
-    connect(ui->actionSettings, &QAction::triggered, this, [=](bool checked) {
-        configDialog->show();
-        configDialog->setModal(true);
-    });
+    connect(ui->actionSettings, &QAction::triggered, this, &MainWindow::settingsClicked);
 }
 
 
@@ -155,4 +150,18 @@ void MainWindow::updateProgressPercent(int current, int total, const QString &ms
         ui->backupButton->setEnabled(true);
         ui->refreshButton->setEnabled(true);
     }
+}
+
+void MainWindow::settingsClicked(bool) {
+    QHash<QString, QVariant> data;
+    data.insert("addonFolderPath", addonFolderPath);
+    data.insert("backupPath", backupPath);
+    data.insert("useTar", useTar);
+    data.insert("useZip", useZip);
+    data.insert("tarCommand", tarCommand);
+    data.insert("zipCommand", zipCommand);
+    configDialog->transferData(data);
+
+    configDialog->show();
+    configDialog->setModal(true);
 }

@@ -15,8 +15,38 @@ ConfigDialog::ConfigDialog(QWidget *parent) :
             this, SLOT(close()));
     connect(ui->buttonBox->button(QDialogButtonBox::Cancel), SIGNAL(clicked()),
             this, SLOT(close()));
+    connect(ui->listWidget->selectionModel(), &QItemSelectionModel::currentRowChanged,
+            this, &ConfigDialog::currentChanged);
+    setTopSelected();
 }
 
 ConfigDialog::~ConfigDialog() {
     delete ui;
 }
+
+void ConfigDialog::transferData(const QHash<QString, QVariant> &data) const {
+    ui->addonFolderPath->setText(data.value("addonFolderPath").toString());
+    ui->backupPath->setText(data.value("backupPath").toString());
+    bool useTar = data.value("useTar").toBool();
+    bool useZip = data.value("useZip").toBool();
+    if (!useTar && !useZip) {
+        ui->doNotUse->setChecked(true);
+    }
+    ui->useTar->setChecked(data.value("useTar").toBool());
+    ui->useZip->setChecked(data.value("useZip").toBool());
+
+    ui->tarCommand->setText(data.value("tarCommand").toString());
+    ui->zipCommand->setText(data.value("zipCommand").toString());
+
+}
+
+void ConfigDialog::currentChanged(const QModelIndex &current, const QModelIndex &prev) {
+    ui->stackedWidget->setCurrentIndex(current.row());
+}
+
+void ConfigDialog::setTopSelected() {
+    const QModelIndex &topIndex = ui->listWidget->model()->index(0, 0);
+    ui->listWidget->setCurrentIndex(topIndex);
+    ui->stackedWidget->setCurrentIndex(0);
+}
+
