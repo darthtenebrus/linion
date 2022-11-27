@@ -26,7 +26,7 @@
    </property>
    <property name="styleSheet">
     <string notr="true">QToolButton { border: 1px solid; border-radius: 5px; border-color: rgb(80, 80, 80); padding: 5px; }
-QToolButton:hover {  border-color: rgb(80, 226, 255) }
+QToolButton:hover {  background-color: rgb(88, 88, 88) }
 #TopFrame { background-color:rgb(47, 47, 47)}</string>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1">
