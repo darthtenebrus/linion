@@ -51,18 +51,27 @@
        </property>
        <property name="maximumSize">
         <size>
-         <width>112</width>
+         <width>113</width>
          <height>16777215</height>
         </size>
        </property>
        <property name="mouseTracking">
         <bool>true</bool>
        </property>
+       <property name="verticalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOff</enum>
+       </property>
+       <property name="horizontalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOff</enum>
+       </property>
        <property name="editTriggers">
         <set>QAbstractItemView::NoEditTriggers</set>
        </property>
        <property name="showDropIndicator" stdset="0">
         <bool>false</bool>
+       </property>
+       <property name="selectionBehavior">
+        <enum>QAbstractItemView::SelectRows</enum>
        </property>
        <property name="horizontalScrollMode">
         <enum>QAbstractItemView::ScrollPerPixel</enum>
@@ -132,7 +141,7 @@
      <item>
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="pathsPage">
         <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -250,7 +259,7 @@
             <item row="0" column="0">
              <widget class="QRadioButton" name="doNotUse">
               <property name="text">
-               <string>Do not use, just copy</string>
+               <string>Do not use just copy</string>
               </property>
              </widget>
             </item>

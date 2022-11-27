@@ -24,6 +24,23 @@ ConfigDialog::ConfigDialog(QWidget *parent) :
 
     connect(ui->addonFolderPathButton, SIGNAL(clicked()), this, SLOT(addonPathChoose()));
     connect(ui->backupPathButton, SIGNAL(clicked()), this, SLOT(backupPathChoose()));
+
+    auto *locUi = ui;
+    connect(ui->doNotUse, &QRadioButton::toggled, this, [locUi]() {
+        locUi->tarCommand->setEnabled(false);
+        locUi->zipCommand->setEnabled(false);
+    });
+
+    connect(ui->useTar, &QRadioButton::toggled, this, [locUi](bool toggled) {
+        locUi->tarCommand->setEnabled(toggled);
+        locUi->zipCommand->setEnabled(!toggled);
+    });
+
+    connect(ui->useZip, &QRadioButton::toggled, this, [locUi](bool toggled) {
+        locUi->tarCommand->setEnabled(!toggled);
+        locUi->zipCommand->setEnabled(toggled);
+    });
+
 }
 
 ConfigDialog::~ConfigDialog() {

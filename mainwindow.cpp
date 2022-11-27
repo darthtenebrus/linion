@@ -78,8 +78,13 @@ void MainWindow::writeSettings(const PreferencesType &data) {
 
 void MainWindow::currentChanged(const QModelIndex &current, const QModelIndex &prev) {
 
-    const QString &text = current.data(QAddonListModel::DescriptionRole).toString();
-    ui->descriptionView->setText(text);
+    const QString &desc = current.data(QAddonListModel::DescriptionRole).toString();
+    const QString &version = current.data(QAddonListModel::VersionRole).toString();
+    const QString &author = current.data(QAddonListModel::AuthorRole).toString();
+    ui->descriptionView->setText(desc);
+    ui->descriptionView->append("\n" + tr("Version: %1").arg(version));
+    ui->descriptionView->append(tr("Author: %1").arg(author));
+
 }
 
 
