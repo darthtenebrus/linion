@@ -7,6 +7,7 @@
 #include "configdialog.h"
 #include "ui_configdialog.h"
 #include "DialogItemDelegate.h"
+#include "preferences.h"
 #include <QPushButton>
 #include <QFileDialog>
 
@@ -15,22 +16,21 @@ ConfigDialog::ConfigDialog(QWidget *parent) :
     ui->setupUi(this);
     ui->listWidget->setItemDelegate(new DialogItemDelegate(ui->listWidget));
     connect(ui->buttonBox->button(QDialogButtonBox::Ok), SIGNAL(clicked()),
-            this, SLOT(close()));
+            this, SLOT(accept()));
     connect(ui->buttonBox->button(QDialogButtonBox::Cancel), SIGNAL(clicked()),
-            this, SLOT(close()));
+            this, SLOT(reject()));
     connect(ui->listWidget->selectionModel(), &QItemSelectionModel::currentRowChanged,
             this, &ConfigDialog::currentChanged);
 
     connect(ui->addonFolderPathButton, SIGNAL(clicked()), this, SLOT(addonPathChoose()));
     connect(ui->backupPathButton, SIGNAL(clicked()), this, SLOT(backupPathChoose()));
-    setTopSelected();
 }
 
 ConfigDialog::~ConfigDialog() {
     delete ui;
 }
 
-void ConfigDialog::transferData(const QHash<QString, QVariant> &data) const {
+void ConfigDialog::transferData(const PreferencesType &data) const {
     ui->addonFolderPath->setText(data.value("addonFolderPath").toString());
     ui->backupPath->setText(data.value("backupPath").toString());
     bool useTar = data.value("useTar").toBool();
@@ -77,9 +77,9 @@ void ConfigDialog::backupPathChoose() {
 
 }
 
-QHash<QString, QVariant> ConfigDialog::receiveData() const {
+PreferencesType ConfigDialog::receiveData() const {
 
-    QHash<QString, QVariant> data;
+    PreferencesType data;
 
     data.insert("addonFolderPath", ui->addonFolderPath->text());
     data.insert("backupPath", ui->backupPath->text());

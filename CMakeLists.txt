@@ -27,7 +27,7 @@ add_executable(${PROJECT_NAME}
         QvObjectDelegate.cpp QvObjectDelegate.h configdialog.cpp configdialog.h configdialog.ui
         DialogItemDelegate.cpp DialogItemDelegate.h
         ${RES_FILES}
-        ${QM_FILES})
+        ${QM_FILES} preferences.h)
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
 target_link_libraries(${PROJECT_NAME} Qt5::Widgets)

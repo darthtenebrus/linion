@@ -10,6 +10,7 @@
 #include <QFileSystemWatcher>
 #include <QTreeView>
 #include "ItemData.h"
+#include "preferences.h"
 
 class QAddonListModel : public QAbstractListModel {
 Q_OBJECT
@@ -22,7 +23,7 @@ public:
         DescriptionRole
     };
 
-    explicit QAddonListModel(const QHash<QString, QVariant> &settings, QObject *parent);
+    explicit QAddonListModel(const PreferencesType &settings, QObject *parent);
     ~QAddonListModel() override;
 
     [[nodiscard]]
@@ -38,7 +39,7 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
 
     void sort(int column, Qt::SortOrder order) override;
-    void setModelData(const QHash<QString, QVariant> &hash);
+    void setModelData(const PreferencesType &hash);
 
 private:
     QList<ItemData> addonList;

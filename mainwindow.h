@@ -24,6 +24,7 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    QAddonListModel *model;
     ConfigDialog *configDialog;
     QProgressBar *progressBar;
 
@@ -31,7 +32,7 @@ private:
     QAction *uninstallAction;
 
     QSettings settings;
-    QHash<QString, QVariant> defs = {
+    PreferencesType defs = {
             {"addonFolderPath",
              QVariant("/home/esorochinskiy/Games/the-elder-scrolls-online/drive_c/users/esorochinskiy/Documents/Elder Scrolls Online/live/AddOns")},
             {"backupPath",
@@ -44,11 +45,14 @@ private:
 
     };
 
-    void writeSettings();
-    QHash<QString, QVariant> fillDataFromSettings() const;
+    void writeSettings(const PreferencesType &data);
+
+    [[nodiscard]]
+    PreferencesType fillDataFromSettings() const;
 
 signals:
     void doRefresh();
+
 
 
 public slots:
@@ -57,8 +61,7 @@ public slots:
     void allChanged(const QModelIndex &first, const QModelIndex &last);
     void updateProgressPercent(int current, int total, const QString &msg);
     void settingsClicked(bool checked);
-
-
+    void configAccepted();
 
 };
 

@@ -6,6 +6,7 @@
 #define LINION_CONFIGDIALOG_H
 
 #include <QDialog>
+#include "preferences.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -18,13 +19,16 @@ Q_OBJECT
 public:
     explicit ConfigDialog(QWidget *parent = nullptr);
     ~ConfigDialog() override;
-    void transferData(const QHash<QString, QVariant> &data) const;
-    QHash<QString, QVariant> receiveData() const;
+    void setTopSelected();
+    void transferData(const PreferencesType &data) const;
+
+    [[nodiscard]]
+    PreferencesType receiveData() const;
 
 
 private:
     Ui::ConfigDialog *ui;
-    void setTopSelected();
+
 
 private slots:
     void currentChanged(const QModelIndex &, const QModelIndex &);

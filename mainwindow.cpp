@@ -14,15 +14,8 @@ MainWindow ::MainWindow(QWidget *parent) :
         settings(QSettings::NativeFormat, QSettings::UserScope, "linion", "config") {
     ui->setupUi(this);
 
-#ifdef _DEBUG
-    qDebug() << tarCommand;
-    qDebug() << zipCommand;
-
-#endif
-
-    auto *model = new QAddonListModel(fillDataFromSettings(),
+    model = new QAddonListModel(fillDataFromSettings(),
                                       ui->addonTreeView);
-    
     ui->addonTreeView->setMouseTracking(true);
     ui->addonTreeView->setModel(model);
     auto contextMenu = new QMenu(ui->addonTreeView);
@@ -46,6 +39,7 @@ MainWindow ::MainWindow(QWidget *parent) :
 
     ui->addonTreeView->setItemDelegate(new QvObjectDelegate(ui->addonTreeView));
     connect(this, SIGNAL(doRefresh()), model, SLOT(refresh()));
+    connect(configDialog, &QDialog::accepted, this, &MainWindow::configAccepted);
     connect(backupAction, SIGNAL(triggered()), model, SLOT(backupAddonClicked()));
     connect(uninstallAction, SIGNAL(triggered()), model, SLOT(uninstallAddonClicked()));
     connect(ui->addonTreeView->selectionModel(), &QItemSelectionModel::currentRowChanged,
@@ -65,6 +59,7 @@ MainWindow :: ~MainWindow() {
     delete backupAction;
     delete progressBar;
     delete configDialog;
+    delete model;
     delete ui;
 }
 
@@ -73,8 +68,11 @@ void MainWindow::showEvent(QShowEvent *event) {
     emit doRefresh();
 }
 
-void MainWindow::writeSettings() {
+void MainWindow::writeSettings(const PreferencesType &data) {
 
+    foreach(QString key, data.keys()) {
+            settings.setValue(key, data.value(key));
+        }
         settings.sync();
 }
 
@@ -129,18 +127,32 @@ void MainWindow::updateProgressPercent(int current, int total, const QString &ms
 }
 
 void MainWindow::settingsClicked(bool) {
-    const QHash<QString, QVariant> &data = fillDataFromSettings();
+    const PreferencesType &data = fillDataFromSettings();
     configDialog->transferData(data);
-
-    configDialog->show();
+    configDialog->setTopSelected();
     configDialog->setModal(true);
+    configDialog->show();
+
 }
 
-QHash<QString, QVariant> MainWindow::fillDataFromSettings() const {
+void MainWindow::configAccepted() {
+#ifdef _DEBUG
+    qDebug() << "Accepted";
+#endif
+    const PreferencesType  &data = configDialog->receiveData();
+    writeSettings(data);
+    model->setModelData(data);
+    emit doRefresh();
 
-    QHash<QString, QVariant> data;
+}
+
+PreferencesType MainWindow::fillDataFromSettings() const {
+
+    PreferencesType data;
     foreach(QString key, settings.allKeys()) {
         data.insert(key, settings.value(key, defs[key]));
     }
     return data;
 }
+
+

@@ -15,7 +15,7 @@ void DialogItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
     } else if (option.state & QStyle::State_MouseOver) {
         painter->fillRect(option.rect, option.palette.midlight());
     }
-
+    painter->restore();
     QItemDelegate::paint(painter, option, index);
 }
 

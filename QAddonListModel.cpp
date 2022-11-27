@@ -3,6 +3,7 @@
 //
 
 #include "QAddonListModel.h"
+#include "preferences.h"
 #include <QPixmap>
 
 #ifdef _DEBUG
@@ -17,7 +18,7 @@
 #include <QProcess>
 
 
-QAddonListModel::QAddonListModel(const QHash<QString, QVariant> &settings, QObject *parent)
+QAddonListModel::QAddonListModel(const PreferencesType &settings, QObject *parent)
         : QAbstractListModel(parent) {
 
     setModelData(settings);
@@ -356,7 +357,7 @@ void QAddonListModel::sort(int column, Qt::SortOrder order) {
 
 }
 
-void QAddonListModel::setModelData(const QHash<QString, QVariant> &data) {
+void QAddonListModel::setModelData(const PreferencesType &data) {
 
     addonFolderPath = data.value("addonFolderPath").toString();
     backupPath = data.value("backupPath").toString();
