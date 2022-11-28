@@ -25,9 +25,9 @@
     </sizepolicy>
    </property>
    <property name="styleSheet">
-    <string notr="true">QToolButton { border: 1px solid; border-radius: 5px; border-color: rgb(80, 80, 80); padding: 5px; }
-QToolButton:hover {  background-color: rgb(88, 88, 88) }
-#TopFrame { background-color:rgb(47, 47, 47)}</string>
+    <string notr="true">QToolButton { border: 1px solid; border-radius: 10px; border-color:  rgb(49, 54, 59); padding: 5px; background-color: rgb(49, 54, 59)}
+QToolButton:hover {  background-color: rgb(89, 94, 99); }
+#TopFrame { background-color: rgba(25, 25, 25); }</string>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1">
     <property name="spacing">
@@ -54,10 +54,13 @@ QToolButton:hover {  background-color: rgb(88, 88, 88) }
        </sizepolicy>
       </property>
       <property name="frameShape">
-       <enum>QFrame::NoFrame</enum>
+       <enum>QFrame::Panel</enum>
       </property>
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
+      </property>
+      <property name="lineWidth">
+       <number>2</number>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
@@ -158,6 +161,18 @@ QToolButton:hover {  background-color: rgb(88, 88, 88) }
          <height>16777215</height>
         </size>
        </property>
+       <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <property name="lineWidth">
+        <number>2</number>
+       </property>
+       <property name="midLineWidth">
+        <number>0</number>
+       </property>
        <property name="indentation">
         <number>10</number>
        </property>
@@ -183,6 +198,15 @@ QToolButton:hover {  background-color: rgb(88, 88, 88) }
          <width>300</width>
          <height>0</height>
         </size>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <property name="lineWidth">
+        <number>1</number>
        </property>
        <property name="html">
         <string notr="true">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
