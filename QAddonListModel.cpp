@@ -22,13 +22,14 @@ QAddonListModel::QAddonListModel(const PreferencesType &settings, QObject *paren
         : QAbstractListModel(parent) {
 
     setModelData(settings);
-    qsw = new QFileSystemWatcher(QStringList() << this->addonFolderPath);
+    qsw = new QFileSystemWatcher(QStringList() << this->addonFolderPath << this->backupPath);
     connect(qsw, &QFileSystemWatcher::directoryChanged, this, &QAddonListModel::refresh);
 
 }
 
 QAddonListModel::~QAddonListModel() {
     qsw->removePath(addonFolderPath);
+    qsw->removePath(backupPath);
     delete qsw;
 }
 
@@ -386,7 +387,7 @@ ItemData::ItemStatus QAddonListModel::checkBackupStatus(const QString &aName) co
             return ItemData::Installed;
         }
     } else {
-        if (QDir(backupPath + QDir::separator() + aName + ".zip").exists()) {
+        if (QDir(backupPath + QDir::separator() + aName).exists()) {
             return ItemData::InstalledBackedUp;
         } else {
             return ItemData::Installed;

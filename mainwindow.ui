@@ -63,6 +63,22 @@ QToolButton:hover {  background-color: rgb(89, 94, 99); }
        <number>2</number>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout">
+       <property name="spacing">
+        <number>12</number>
+       </property>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>824</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
        <item>
         <widget class="QToolButton" name="backupButton">
          <property name="sizePolicy">
@@ -71,6 +87,9 @@ QToolButton:hover {  background-color: rgb(89, 94, 99); }
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="toolTip">
+          <string>Backup Installed</string>
+         </property>
          <property name="styleSheet">
           <string notr="true"/>
          </property>
@@ -78,8 +97,7 @@ QToolButton:hover {  background-color: rgb(89, 94, 99); }
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="images.qrc">
-           <normaloff>:/images/backup.png</normaloff>:/images/backup.png</iconset>
+          <iconset theme="folder"/>
          </property>
          <property name="iconSize">
           <size>
@@ -125,17 +143,17 @@ QToolButton:hover {  background-color: rgb(89, 94, 99); }
         </widget>
        </item>
        <item>
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
+        <widget class="QToolButton" name="setupButton">
+         <property name="toolTip">
+          <string>Settings</string>
          </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>824</width>
-           <height>20</height>
-          </size>
+         <property name="text">
+          <string/>
          </property>
-        </spacer>
+         <property name="icon">
+          <iconset theme="preferences-other"/>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>

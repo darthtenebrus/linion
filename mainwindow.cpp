@@ -51,6 +51,7 @@ MainWindow ::MainWindow(QWidget *parent) :
     connect(model, &QAddonListModel::percent, this, &MainWindow::updateProgressPercent);
     connect(ui->refreshButton, SIGNAL(clicked()), model, SLOT(refresh()));
     connect(ui->actionSettings, &QAction::triggered, this, &MainWindow::settingsClicked);
+    connect(ui->setupButton, &QToolButton::clicked, this, &MainWindow::settingsClicked);
 }
 
 
