@@ -5,10 +5,15 @@
 #ifndef LINION_ITEMDATA_H
 #define LINION_ITEMDATA_H
 
-
 #include <QString>
 
 class ItemData {
+
+public:
+    enum ItemStatus {
+        Installed = 1,
+        InstalledBackedUp
+    };
 
 private:
     QString author;
@@ -16,11 +21,13 @@ private:
     QString version;
     QString addonPath;
     QString description;
-    bool status;
+    ItemStatus status;
+
 
 public:
+
     ItemData(const QString &author, const QString &addonTitle, const QString &version,
-             const QString &addonPath, const QString &description, bool status);
+             const QString &addonPath, const QString &description, const ItemStatus &status);
 
     [[nodiscard]]
     const QString &getAddonTitle() const;
@@ -32,11 +39,12 @@ public:
     const QString &getAddonPath() const;
 
     [[nodiscard]]
-    bool isStatus() const;
+    ItemStatus isStatus() const;
 
     [[nodiscard]]
     const QString &getAuthor() const;
 
+    [[nodiscard]]
     const QString &getDescription() const;
 };
 

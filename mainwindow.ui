@@ -75,7 +75,7 @@ QToolButton:hover {  background-color: rgb(89, 94, 99); }
           <string notr="true"/>
          </property>
          <property name="text">
-          <string>Backup Installed</string>
+          <string/>
          </property>
          <property name="icon">
           <iconset resource="images.qrc">
@@ -88,7 +88,7 @@ QToolButton:hover {  background-color: rgb(89, 94, 99); }
           </size>
          </property>
          <property name="toolButtonStyle">
-          <enum>Qt::ToolButtonFollowStyle</enum>
+          <enum>Qt::ToolButtonIconOnly</enum>
          </property>
          <property name="autoRaise">
           <bool>false</bool>
@@ -99,6 +99,9 @@ QToolButton:hover {  background-color: rgb(89, 94, 99); }
         <widget class="QToolButton" name="refreshButton">
          <property name="focusPolicy">
           <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="toolTip">
+          <string>Refresh List</string>
          </property>
          <property name="styleSheet">
           <string notr="true"/>
@@ -111,7 +114,7 @@ QToolButton:hover {  background-color: rgb(89, 94, 99); }
            <normaloff>.</normaloff>.</iconset>
          </property>
          <property name="toolButtonStyle">
-          <enum>Qt::ToolButtonFollowStyle</enum>
+          <enum>Qt::ToolButtonIconOnly</enum>
          </property>
          <property name="autoRaise">
           <bool>false</bool>

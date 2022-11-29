@@ -5,7 +5,7 @@
 #include "ItemData.h"
 
 ItemData::ItemData(const QString &author, const QString &addonTitle, const QString &version,
-                   const QString &addonPath, const QString &description, bool status)
+                   const QString &addonPath, const QString &description, const ItemStatus &status)
         : addonTitle(
         addonTitle), version(version), addonPath(addonPath), status(status), author(author), description(description) {}
 
@@ -21,7 +21,7 @@ const QString &ItemData::getAddonPath() const {
     return addonPath;
 }
 
-bool ItemData::isStatus() const {
+ItemData::ItemStatus ItemData::isStatus() const {
     return status;
 }
 

@@ -58,6 +58,9 @@ private:
     void processBackup(const QString &pPath) const;
     void copyPath(const QString&, const QString&) const;
 
+    [[nodiscard]]
+    ItemData::ItemStatus checkBackupStatus(const QString &qString) const;
+
 
 signals:
     void percent(int current, int total, const QString &msg);
@@ -67,8 +70,6 @@ public slots:
     void uninstallAddonClicked();
     void backupAddonClicked();
     void backupAllClicked();
-
-
 
 };
 

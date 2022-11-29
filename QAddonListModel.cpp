@@ -60,7 +60,7 @@ QVariant QAddonListModel::data(const QModelIndex &index, int role) const {
             value = addonList.at(index.row()).getDescription();
             break;
         case Qt::DecorationRole:
-            value = QPixmap(addonList.at(index.row()).isStatus() ?
+            value = QPixmap(addonList.at(index.row()).isStatus() == ItemData::InstalledBackedUp ?
                             ":/images/green_check.png" : ":/images/red_cross.png");
         default:
             break;
@@ -132,10 +132,11 @@ void QAddonListModel::refreshFolderList() {
             if (!title.isEmpty() && !version.isEmpty() && !author.isEmpty()) {
 
                 const QString &finalDesc = description.isEmpty() ? "[" + tr("No description") + "]" : description;
+                ItemData::ItemStatus backupStatus = checkBackupStatus(addonName);
                 addonList.append(ItemData(cleanColorizers(author), cleanColorizers(title),
                                           version, fPath,
                                           finalDesc,
-                                          true));
+                                          backupStatus));
             }
         }
 
@@ -367,6 +368,30 @@ void QAddonListModel::setModelData(const PreferencesType &data) {
 
     tarCommand = data.value("tarCommand").toString();
     zipCommand = data.value("zipCommand").toString();
+
+}
+
+ItemData::ItemStatus QAddonListModel::checkBackupStatus(const QString &aName) const {
+
+    if (useTar) {
+        if (QFile(backupPath + QDir::separator() + aName + ".tgz").exists()) {
+            return ItemData::InstalledBackedUp;
+        } else {
+            return ItemData::Installed;
+        }
+    } else if (useZip) {
+        if (QFile(backupPath + QDir::separator() + aName + ".zip").exists()) {
+            return ItemData::InstalledBackedUp;
+        } else {
+            return ItemData::Installed;
+        }
+    } else {
+        if (QDir(backupPath + QDir::separator() + aName + ".zip").exists()) {
+            return ItemData::InstalledBackedUp;
+        } else {
+            return ItemData::Installed;
+        }
+    }
 
 }
 
