@@ -5,10 +5,16 @@
 #ifndef LINION_QADDONLISTMODEL_H
 #define LINION_QADDONLISTMODEL_H
 
+#include <QJsonObject>
+#include <QJsonDocument>
+#include <QJsonArray>
 #include <QDir>
 #include <QModelIndex>
 #include <QFileSystemWatcher>
 #include <QTreeView>
+#include <QtNetwork/QNetworkAccessManager>
+#include <QtNetwork/QNetworkRequest>
+#include <QtNetwork/QNetworkReply>
 #include "ItemData.h"
 #include "preferences.h"
 
@@ -42,7 +48,12 @@ public:
     void setModelData(const PreferencesType &hash);
 
 private:
+
+    static QString listUrl;
+
+    QNetworkAccessManager *manager;
     QList<ItemData> addonList;
+    QList<QJsonObject> esoSiteList;
 
     QString addonFolderPath;
     QString backupPath;
@@ -54,6 +65,8 @@ private:
     QString zipCommand;
 
     void refreshFolderList();
+    void refreshESOSiteList();
+    void setTopIndex();
     const QString &cleanColorizers(QString &input) const;
     void processBackup(const QString &pPath) const;
     void copyPath(const QString&, const QString&) const;
@@ -70,6 +83,9 @@ public slots:
     void uninstallAddonClicked();
     void backupAddonClicked();
     void backupAllClicked();
+
+private slots:
+    void replyFinished(QNetworkReply *replyFinished);
 
 };
 

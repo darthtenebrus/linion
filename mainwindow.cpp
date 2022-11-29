@@ -120,6 +120,10 @@ void MainWindow::updateProgressPercent(int current, int total, const QString &ms
         ui->refreshButton->setEnabled(false);
     }
 
+    if (ui->setupButton->isEnabled()) {
+        ui->setupButton->setEnabled(false);
+    }
+
     int percent = qRound((float) current / (float) total * 100);
 
     progressBar->setValue(percent);
@@ -129,6 +133,7 @@ void MainWindow::updateProgressPercent(int current, int total, const QString &ms
         ui->statusbar->showMessage(tr("All completed"));
         ui->backupButton->setEnabled(true);
         ui->refreshButton->setEnabled(true);
+        ui->setupButton->setEnabled(true);
     }
 }
 

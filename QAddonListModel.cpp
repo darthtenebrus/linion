@@ -17,13 +17,15 @@
 #include <QTreeView>
 #include <QProcess>
 
+QString QAddonListModel::listUrl = "https://api.mmoui.com/v3/game/ESO/filelist.json";
 
 QAddonListModel::QAddonListModel(const PreferencesType &settings, QObject *parent)
-        : QAbstractListModel(parent) {
+        : QAbstractListModel(parent), manager(new QNetworkAccessManager(this)) {
 
     setModelData(settings);
     qsw = new QFileSystemWatcher(QStringList() << this->addonFolderPath << this->backupPath);
     connect(qsw, &QFileSystemWatcher::directoryChanged, this, &QAddonListModel::refresh);
+    connect(manager, &QNetworkAccessManager::finished, this, &QAddonListModel::replyFinished);
 
 }
 
@@ -31,6 +33,7 @@ QAddonListModel::~QAddonListModel() {
     qsw->removePath(addonFolderPath);
     qsw->removePath(backupPath);
     delete qsw;
+    delete manager;
 }
 
 int QAddonListModel::rowCount(const QModelIndex &) const {
@@ -155,11 +158,11 @@ const QString &QAddonListModel::cleanColorizers(QString &input) const {
 }
 
 void QAddonListModel::refresh() {
-    refreshFolderList();
-    QModelIndex index = this->index(0, 0);
-    if (index.isValid()) {
-        auto *view = qobject_cast<QTreeView *>(parent());
-        view->setCurrentIndex(index);
+    if (esoSiteList.isEmpty()) {
+        refreshESOSiteList();
+    } else {
+        refreshFolderList();
+        setTopIndex();
     }
 }
 
@@ -394,6 +397,48 @@ ItemData::ItemStatus QAddonListModel::checkBackupStatus(const QString &aName) co
         }
     }
 
+}
+
+void QAddonListModel::replyFinished(QNetworkReply *reply) {
+
+    emit percent(100,100, "");
+    QNetworkReply::NetworkError error = reply->error();
+    if (error == QNetworkReply::NetworkError::NoError) {
+        const QByteArray &byteres = reply->readAll();
+        const QJsonDocument &document = QJsonDocument::fromJson(byteres);
+        if (!document.isEmpty() && document.isArray()) {
+            const QJsonArray &dataArray = document.array();
+            foreach(QJsonValue v, dataArray) {
+                    if (v.isObject()) {
+                        esoSiteList.append(v.toObject());
+                    }
+            }
+            refreshFolderList();
+            setTopIndex();
+        } else {
+            QMessageBox::critical(qobject_cast<QTreeView *>(parent()), tr("Fatal"),
+                                  tr("Invalid data"));
+        }
+    } else {
+        QMessageBox::critical(qobject_cast<QTreeView *>(parent()), tr("Fatal"),
+                              reply->errorString());
+    }
+
+}
+
+void QAddonListModel::refreshESOSiteList() {
+    emit percent(0,100, tr("Updating data"));
+    QNetworkRequest request = QNetworkRequest(QUrl(listUrl));
+    request.setRawHeader("Content-Type", "application/json");
+    manager->get(QNetworkRequest(request));
+}
+
+void QAddonListModel::setTopIndex() {
+    QModelIndex index = this->index(0, 0);
+    if (index.isValid()) {
+        auto *view = qobject_cast<QTreeView *>(parent());
+        view->setCurrentIndex(index);
+    }
 }
 
 
