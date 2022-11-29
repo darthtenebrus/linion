@@ -105,7 +105,7 @@
         <translation>Менеджер аддонов Linion</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="91"/>
+        <location filename="mainwindow.ui" line="78"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="209"/>
         <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="200"/>
         <source>Backup Installed</source>
@@ -113,8 +113,8 @@
         <translation>Сохранить установленные</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="122"/>
-        <location filename="mainwindow.ui" line="128"/>
+        <location filename="mainwindow.ui" line="109"/>
+        <location filename="mainwindow.ui" line="115"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="213"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="215"/>
         <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="201"/>
@@ -129,7 +129,7 @@
         <translation>Помощь</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="148"/>
+        <location filename="mainwindow.ui" line="135"/>
         <location filename="mainwindow.ui" line="261"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="217"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="221"/>
