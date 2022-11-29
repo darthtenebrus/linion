@@ -71,7 +71,7 @@ void MainWindow::showEvent(QShowEvent *event) {
 
 void MainWindow::writeSettings(const PreferencesType &data) {
 
-    foreach(QString key, data.keys()) {
+    for(const QString& key : data.keys()) {
             settings.setValue(key, data.value(key));
         }
         settings.sync();
@@ -160,7 +160,7 @@ void MainWindow::configAccepted() {
 PreferencesType MainWindow::fillDataFromSettings() const {
 
     PreferencesType data;
-    foreach(QString key, settings.allKeys()) {
+    for(const QString& key : settings.allKeys()) {
         data.insert(key, settings.value(key, defs[key]));
     }
     return data;

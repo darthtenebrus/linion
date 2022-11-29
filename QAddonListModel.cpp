@@ -66,6 +66,16 @@ QVariant QAddonListModel::data(const QModelIndex &index, int role) const {
         case Qt::DecorationRole:
             value = QPixmap(addonList.at(index.row()).isStatus() == ItemData::InstalledBackedUp ?
                             ":/images/green_check.png" : ":/images/red_cross.png");
+            break;
+        case QAddonListModel::DownloadTotalRole:
+            value = addonList.at(index.row()).getDownloadTotal();
+            break;
+        case QAddonListModel::DownloadMonthlyRole:
+            value = addonList.at(index.row()).getDownloadMonthly();
+            break;
+        case QAddonListModel::FavoriteTotalRole:
+            value = addonList.at(index.row()).getFavoriteTotal();
+            break;
         default:
             break;
     }
@@ -130,17 +140,28 @@ void QAddonListModel::refreshFolderList() {
                     }
                 }
             }
-#ifdef _DEBUG
-            qDebug() << title << " " << version;
-#endif
+
             if (!title.isEmpty() && !version.isEmpty() && !author.isEmpty()) {
 
                 const QString &finalDesc = description.isEmpty() ? "[" + tr("No description") + "]" : description;
                 ItemData::ItemStatus backupStatus = checkBackupStatus(addonName);
-                addonList.append(ItemData(cleanColorizers(author), cleanColorizers(title),
-                                          version, fPath,
-                                          finalDesc,
-                                          backupStatus));
+                auto foundNetData = std::find_if(esoSiteList.begin(), esoSiteList.end(), [&addonName](QJsonObject o) {
+
+                    return o.value("UIDir").toArray()[0] == addonName;
+                });
+                if (foundNetData != esoSiteList.end()) {
+#ifdef _DEBUG
+                    qDebug() << foundNetData->value("UIDownloadTotal").toString();
+#endif
+                    addonList.append(ItemData(cleanColorizers(author), cleanColorizers(title),
+                                              version, fPath,
+                                              finalDesc,
+                                              backupStatus,
+                                              foundNetData->value("UIDownloadTotal").toString("0"),
+                                              foundNetData->value("UIDownloadMonthly").toString("0"),
+                                              foundNetData->value("UIFavoriteTotal").toString("0"),
+                                              foundNetData->value("UIFileInfoURL").toString()));
+                }
             }
         }
 
@@ -326,11 +347,11 @@ void QAddonListModel::copyPath(const QString &src, const QString &dst) const {
         return;
     }
 
-    foreach (QString f, srcDir.entryList(QDir::Files)) {
+    for (const QString& f : srcDir.entryList(QDir::Files)) {
             QFile::copy(src + QDir::separator() + f, dst + QDir::separator() + f);
     }
 
-    foreach (QString d, srcDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot)) {
+    for (const QString& d : srcDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot)) {
             const QString &new_src_path = src + QDir::separator() + d;
             const QString &new_dst_path = dst + QDir::separator() + d;
             QDir(new_dst_path).mkpath(".");
@@ -408,11 +429,11 @@ void QAddonListModel::replyFinished(QNetworkReply *reply) {
         const QJsonDocument &document = QJsonDocument::fromJson(byteres);
         if (!document.isEmpty() && document.isArray()) {
             const QJsonArray &dataArray = document.array();
-            foreach(QJsonValue v, dataArray) {
-                    if (v.isObject()) {
-                        esoSiteList.append(v.toObject());
-                    }
-            }
+            for (QJsonValue v : dataArray)
+                if (v.isObject()) {
+                    esoSiteList.append(v.toObject());
+                }
+
             refreshFolderList();
             setTopIndex();
         } else {

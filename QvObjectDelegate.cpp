@@ -10,6 +10,7 @@
 #define ICON_LEFT_OFFSET 16
 #define TEXT_TOP_OFFSET 4
 #define TEXT_RIGHT_OFFSET 4
+#define TEXT_LEFT_OFFSET 10
 
 QvObjectDelegate::QvObjectDelegate(QObject *parent) : QItemDelegate(parent) {}
 
@@ -66,6 +67,30 @@ void QvObjectDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     painter->drawText(0,0, brAuthor.width(), brAuthor.height(), Qt::AlignTop, authorStrFull);
 
     painter->resetTransform();
+    newFont = option.font;
+    newFont.setItalic(true);
+    newFont.setPointSize(8);
+    painter->setFont(newFont);
+
+    painter->translate(option.rect.left() + option.rect.width(),
+    option.rect.top());
+    painter->translate(- 50, (option.rect.height() - pix.height()) / 2 + pix.height() / 16);
+    const QString &downTotal = index.data(QAddonListModel::DownloadTotalRole).toString();
+    const QRect &brDownTotal = QFontMetrics(newFont).boundingRect(downTotal);
+    painter->drawText(0, 0, brDownTotal.width(), brDownTotal.height(), Qt::AlignTop, downTotal);
+    painter->translate(0, brDownTotal.height() + TEXT_TOP_OFFSET);
+
+    const QString &downMonthly = index.data(QAddonListModel::DownloadMonthlyRole).toString();
+    const QRect &brdownMonthly = QFontMetrics(newFont).boundingRect(downMonthly);
+    painter->drawText(0, 0, brdownMonthly.width(), brdownMonthly.height(), Qt::AlignTop, downMonthly);
+    painter->translate(0, brdownMonthly.height() + TEXT_TOP_OFFSET);
+
+    const QString &favTotal = index.data(QAddonListModel::FavoriteTotalRole).toString();
+    const QRect &brfavTotal = QFontMetrics(newFont).boundingRect(favTotal);
+    painter->drawText(0, 0, brfavTotal.width(), brfavTotal.height(), Qt::AlignTop, favTotal);
+    
+    painter->resetTransform();
+    
     painter->setPen(QColor(0x2A, 0x2A, 0x2A));
     painter->drawLine(option.rect.bottomLeft(), option.rect.bottomRight());
     painter->restore();

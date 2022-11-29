@@ -26,7 +26,10 @@ public:
         VersionRole = Qt::UserRole + 1,
         PathRole,
         AuthorRole,
-        DescriptionRole
+        DescriptionRole,
+        DownloadTotalRole,
+        DownloadMonthlyRole,
+        FavoriteTotalRole
     };
 
     explicit QAddonListModel(const PreferencesType &settings, QObject *parent);

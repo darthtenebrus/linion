@@ -22,12 +22,17 @@ private:
     QString addonPath;
     QString description;
     ItemStatus status;
+    QString DownloadTotal;
+    QString DownloadMonthly;
+    QString FavoriteTotal;
+    QString FileInfoURL;
 
 
 public:
 
     ItemData(const QString &author, const QString &addonTitle, const QString &version,
-             const QString &addonPath, const QString &description, const ItemStatus &status);
+             const QString &addonPath, const QString &description, const ItemStatus &status,
+             const QString &downloadTotal, const QString &downloadMonthly, const QString &favoriteTotal, const QString &fileInfoUrl);
 
     [[nodiscard]]
     const QString &getAddonTitle() const;
@@ -46,6 +51,18 @@ public:
 
     [[nodiscard]]
     const QString &getDescription() const;
+
+    [[nodiscard]]
+    const QString &getDownloadTotal() const;
+
+    [[nodiscard]]
+    const QString &getDownloadMonthly() const;
+
+    [[nodiscard]]
+    const QString &getFavoriteTotal() const;
+
+    [[nodiscard]]
+    const QString &getFileInfoUrl() const;
 };
 
 
