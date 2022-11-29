@@ -20,8 +20,8 @@ MainWindow ::MainWindow(QWidget *parent) :
     ui->addonTreeView->setModel(model);
     auto contextMenu = new QMenu(ui->addonTreeView);
     ui->addonTreeView->setContextMenuPolicy(Qt::ActionsContextMenu);
-    backupAction = new QAction(tr("Backup"), contextMenu);
-    uninstallAction = new QAction(tr("Uninstall"), contextMenu);
+    backupAction = new QAction(QIcon::fromTheme("folder"), tr("Backup"), contextMenu);
+    uninstallAction = new QAction(QIcon::fromTheme("delete"), tr("Uninstall"), contextMenu);
     ui->addonTreeView->addAction(backupAction);
     ui->addonTreeView->addAction(uninstallAction);
 
