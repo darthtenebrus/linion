@@ -7,7 +7,9 @@
 #include <QPixmap>
 
 #ifdef _DEBUG
+
 #include <QDebug>
+
 #endif
 
 #include <QRegularExpression>
@@ -46,7 +48,7 @@ QVariant QAddonListModel::data(const QModelIndex &index, int role) const {
     if (!index.isValid()) {
         return value;
     }
-    
+
     switch (role) {
         case Qt::DisplayRole: //string
             value = addonList.at(index.row()).getAddonTitle();
@@ -76,6 +78,9 @@ QVariant QAddonListModel::data(const QModelIndex &index, int role) const {
         case QAddonListModel::FavoriteTotalRole:
             value = addonList.at(index.row()).getFavoriteTotal();
             break;
+        case QAddonListModel::FileInfoURLRole:
+            value = addonList.at(index.row()).getFileInfoUrl();
+            break;
         default:
             break;
     }
@@ -86,7 +91,7 @@ QVariant QAddonListModel::data(const QModelIndex &index, int role) const {
 void QAddonListModel::refreshFolderList() {
     QRegularExpression re(R"(##\s+(?<tag>[A-Za-z]+):\s+(?<content>.*))");
     int totalCount = addonList.count();
-    beginRemoveRows(QModelIndex(), 0, totalCount >=1 ? totalCount - 1 : 0);
+    beginRemoveRows(QModelIndex(), 0, totalCount >= 1 ? totalCount - 1 : 0);
     addonList.clear();
     endRemoveRows();
     QDir dir = QDir(addonFolderPath);
@@ -150,9 +155,7 @@ void QAddonListModel::refreshFolderList() {
                     return o.value("UIDir").toArray()[0] == addonName;
                 });
                 if (foundNetData != esoSiteList.end()) {
-#ifdef _DEBUG
-                    qDebug() << foundNetData->value("UIDownloadTotal").toString();
-#endif
+
                     addonList.append(ItemData(cleanColorizers(author), cleanColorizers(title),
                                               version, fPath,
                                               finalDesc,
@@ -232,7 +235,7 @@ void QAddonListModel::backupAllClicked() {
     }
 
     int total = addonList.size();
-    for(int i = 0; i < total; i++) {
+    for (int i = 0; i < total; i++) {
         emit percent(i, total, tr("Backing up"));
         processBackup(addonList[i].getAddonPath());
     }
@@ -241,11 +244,8 @@ void QAddonListModel::backupAllClicked() {
 
 void QAddonListModel::backupAddonClicked() {
 
-
     const QTreeView *view = qobject_cast<QTreeView *>(parent());
-
     const QModelIndexList &selectedSet = view->selectionModel()->selectedIndexes();
-
     if (selectedSet.count() > 1) {
         return; // fuckup
     }
@@ -273,7 +273,7 @@ void QAddonListModel::processBackup(const QString &pPath) const {
     }
     copyPath(srcDir.absolutePath(), destDir.absolutePath());
 
-    if(useZip || useTar) {
+    if (useZip || useTar) {
         QProcess proc;
         proc.setWorkingDirectory(backupPath);
         if (useTar) {
@@ -347,15 +347,15 @@ void QAddonListModel::copyPath(const QString &src, const QString &dst) const {
         return;
     }
 
-    for (const QString& f : srcDir.entryList(QDir::Files)) {
-            QFile::copy(src + QDir::separator() + f, dst + QDir::separator() + f);
+    for (const QString &f: srcDir.entryList(QDir::Files)) {
+        QFile::copy(src + QDir::separator() + f, dst + QDir::separator() + f);
     }
 
-    for (const QString& d : srcDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot)) {
-            const QString &new_src_path = src + QDir::separator() + d;
-            const QString &new_dst_path = dst + QDir::separator() + d;
-            QDir(new_dst_path).mkpath(".");
-            copyPath(new_src_path, new_dst_path);
+    for (const QString &d: srcDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot)) {
+        const QString &new_src_path = src + QDir::separator() + d;
+        const QString &new_dst_path = dst + QDir::separator() + d;
+        QDir(new_dst_path).mkpath(".");
+        copyPath(new_src_path, new_dst_path);
     }
 }
 
@@ -368,7 +368,7 @@ QVariant QAddonListModel::headerData(int section, Qt::Orientation orientation, i
     QVariant value;
     switch (role) {
         case Qt::DisplayRole:
-        value = tr("Installed Addons List");
+            value = tr("Installed Addons List");
     }
     return value;
 }
@@ -377,7 +377,8 @@ void QAddonListModel::sort(int column, Qt::SortOrder order) {
 
     emit layoutAboutToBeChanged();
     qSort(addonList.begin(), addonList.end(), [&order](ItemData &v1, ItemData &v2) {
-        return order == Qt::AscendingOrder ? v1.getAddonTitle() < v2.getAddonTitle() : v1.getAddonTitle() > v2.getAddonTitle();
+        return order == Qt::AscendingOrder ? v1.getAddonTitle() < v2.getAddonTitle() : v1.getAddonTitle() >
+                                                                                       v2.getAddonTitle();
     });
     emit layoutChanged();
 
@@ -422,23 +423,28 @@ ItemData::ItemStatus QAddonListModel::checkBackupStatus(const QString &aName) co
 
 void QAddonListModel::replyFinished(QNetworkReply *reply) {
 
-    emit percent(100,100, "");
+    emit percent(100, 100, "");
     QNetworkReply::NetworkError error = reply->error();
     if (error == QNetworkReply::NetworkError::NoError) {
-        const QByteArray &byteres = reply->readAll();
-        const QJsonDocument &document = QJsonDocument::fromJson(byteres);
-        if (!document.isEmpty() && document.isArray()) {
-            const QJsonArray &dataArray = document.array();
-            for (QJsonValue v : dataArray)
-                if (v.isObject()) {
-                    esoSiteList.append(v.toObject());
-                }
 
-            refreshFolderList();
-            setTopIndex();
-        } else {
-            QMessageBox::critical(qobject_cast<QTreeView *>(parent()), tr("Fatal"),
-                                  tr("Invalid data"));
+        const QString &senderUrl = reply->request().url().toString();
+
+        if (listUrl == senderUrl) {
+            const QByteArray &byteres = reply->readAll();
+            const QJsonDocument &document = QJsonDocument::fromJson(byteres);
+            if (!document.isEmpty() && document.isArray()) {
+                const QJsonArray &dataArray = document.array();
+                for (QJsonValue v: dataArray)
+                    if (v.isObject()) {
+                        esoSiteList.append(v.toObject());
+                    }
+
+                refreshFolderList();
+                setTopIndex();
+            } else {
+                QMessageBox::critical(qobject_cast<QTreeView *>(parent()), tr("Fatal"),
+                                      tr("Invalid data"));
+            }
         }
     } else {
         QMessageBox::critical(qobject_cast<QTreeView *>(parent()), tr("Fatal"),
@@ -448,14 +454,14 @@ void QAddonListModel::replyFinished(QNetworkReply *reply) {
 }
 
 void QAddonListModel::refreshESOSiteList() {
-    emit percent(0,100, tr("Updating data"));
+    emit percent(0, 100, tr("Updating data"));
     QNetworkRequest request = QNetworkRequest(QUrl(listUrl));
     request.setRawHeader("Content-Type", "application/json");
     manager->get(QNetworkRequest(request));
 }
 
 void QAddonListModel::setTopIndex() {
-    QModelIndex index = this->index(0, 0);
+    const QModelIndex &index = this->index(0, 0);
     if (index.isValid()) {
         auto *view = qobject_cast<QTreeView *>(parent());
         view->setCurrentIndex(index);
@@ -463,9 +469,66 @@ void QAddonListModel::setTopIndex() {
 }
 
 void QAddonListModel::reinstallAddonClicked() {
+    const QTreeView *view = qobject_cast<QTreeView *>(parent());
+    const QModelIndexList &selectedSet = view->selectionModel()->selectedIndexes();
+    if (selectedSet.count() > 1) {
+        return; // fuckup
+    }
+
+    const QModelIndex &index = selectedSet[0];
+    if (index.isValid()) {
+        QRegExp rx(R"(info([0-9]*)-([^\.]+)\.html)");
+        QString &&urlPath = index.data(QAddonListModel::FileInfoURLRole).toString();
+        QString &downPath = urlPath.replace(rx, R"(dl\1/\2.zip)");
+
+        auto *tmpRedirectManager = new QNetworkAccessManager(this);
+        connect(tmpRedirectManager, &QNetworkAccessManager::finished, this, [=](QNetworkReply *reply) {
+
+            emit percent(100, 100, "");
+            QNetworkReply::NetworkError error = reply->error();
+
+            if (error == QNetworkReply::NetworkError::NoError) {
+
+                const QString &aPath = index.data(QAddonListModel::PathRole).toString();
+                const QString &pPath = QFileInfo(aPath).absolutePath() + ".zip";
+
+                /*
+int httpStatus = reply->attribute(
+        QNetworkRequest::HttpStatusCodeAttribute).toInt();
+const QString &httpStatusMessage = reply->attribute(
+        QNetworkRequest::HttpReasonPhraseAttribute).toString();
+const QVariant &loc = reply->header(QNetworkRequest::LocationHeader);
+
 #ifdef _DEBUG
-    qDebug() << "addon refresh";
+qDebug() << httpStatus << httpStatusMessage << loc;
 #endif
+
+ */
+
+                QFile file(pPath);
+
+                if (!file.open(QIODevice::ReadWrite | QIODevice::Truncate)) {
+                    QMessageBox::critical(qobject_cast<QTreeView *>(parent()), tr("Fatal"),
+                                          tr("I/O error"));
+                    return;
+                }
+
+                const QByteArray &arr = reply->readAll();
+
+                file.write(arr);
+                file.flush();
+                file.close();
+            } else {
+                QMessageBox::critical(qobject_cast<QTreeView *>(parent()), tr("Fatal"),
+                                      reply->errorString());
+            }
+        });
+        emit percent(0, 100, tr("Downloading"));
+        QNetworkRequest &&request = QNetworkRequest(QUrl(downPath));
+        request.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
+        tmpRedirectManager->get(request);
+
+    }
 }
 
 

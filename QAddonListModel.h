@@ -29,7 +29,8 @@ public:
         DescriptionRole,
         DownloadTotalRole,
         DownloadMonthlyRole,
-        FavoriteTotalRole
+        FavoriteTotalRole,
+        FileInfoURLRole
     };
 
     explicit QAddonListModel(const PreferencesType &settings, QObject *parent);
@@ -90,7 +91,6 @@ public slots:
 
 private slots:
     void replyFinished(QNetworkReply *replyFinished);
-
 };
 
 
