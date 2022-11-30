@@ -148,27 +148,27 @@
         <translation>Обработка: %p%</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="86"/>
+        <location filename="mainwindow.cpp" line="88"/>
         <source>Version: %1</source>
         <translation>Версия: %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="87"/>
+        <location filename="mainwindow.cpp" line="89"/>
         <source>Author: %1</source>
         <translation>Автор: %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="101"/>
-        <source>Critical Error</source>
-        <translation>Критическая Ошибка</translation>
+        <location filename="mainwindow.cpp" line="105"/>
+        <source>Information</source>
+        <translation>Информация</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="101"/>
-        <source>Unable to locate addons</source>
-        <translation>Не могу найти аддоны</translation>
+        <location filename="mainwindow.cpp" line="106"/>
+        <source>Unable to locate addons. Do you want to open the settings dialog and choose the path to the addons folder yourself?</source>
+        <translation>Не могу найти аддоны. Хотите открыть настройки и выбрать папку с установленными аддонами?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="133"/>
+        <location filename="mainwindow.cpp" line="144"/>
         <source>All completed</source>
         <translation>Завершено</translation>
     </message>

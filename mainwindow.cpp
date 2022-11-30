@@ -51,6 +51,7 @@ MainWindow ::MainWindow(QWidget *parent) :
     connect(model, &QAddonListModel::percent, this, &MainWindow::updateProgressPercent);
     connect(ui->refreshButton, SIGNAL(clicked()), model, SLOT(refresh()));
     connect(ui->actionSettings, &QAction::triggered, this, &MainWindow::settingsClicked);
+    connect(this, &MainWindow::setup, this, &MainWindow::settingsClicked);
     connect(ui->setupButton, &QToolButton::clicked, this, &MainWindow::settingsClicked);
 }
 
@@ -79,13 +80,16 @@ void MainWindow::writeSettings(const PreferencesType &data) {
 
 void MainWindow::currentChanged(const QModelIndex &current, const QModelIndex &prev) {
 
-    const QString &desc = current.data(QAddonListModel::DescriptionRole).toString();
-    const QString &version = current.data(QAddonListModel::VersionRole).toString();
-    const QString &author = current.data(QAddonListModel::AuthorRole).toString();
-    ui->descriptionView->setText(desc);
-    ui->descriptionView->append("\n" + tr("Version: %1").arg(version));
-    ui->descriptionView->append(tr("Author: %1").arg(author));
-
+    if (current.isValid()) {
+        const QString &desc = current.data(QAddonListModel::DescriptionRole).toString();
+        const QString &version = current.data(QAddonListModel::VersionRole).toString();
+        const QString &author = current.data(QAddonListModel::AuthorRole).toString();
+        ui->descriptionView->setText(desc);
+        ui->descriptionView->append("\n" + tr("Version: %1").arg(version));
+        ui->descriptionView->append(tr("Author: %1").arg(author));
+    } else {
+        ui->descriptionView->clear();
+    }
 }
 
 
@@ -98,7 +102,14 @@ void MainWindow::allChanged(const QModelIndex &first, const QModelIndex &last) {
     const auto *model = qobject_cast<const QAddonListModel *>(first.model());
     
     if (model->getAddonList().isEmpty()) {
-        QMessageBox::critical(this, tr("Critical Error"), tr("Unable to locate addons"));
+        QMessageBox::StandardButton answer = QMessageBox::question(this, tr("Information"),
+                                                                   tr("Unable to locate addons. Do you want "
+                                                                      "to open the settings dialog and "
+                                                                      "choose the path to the addons folder yourself?"));
+        if (answer == QMessageBox::StandardButton::Yes) {
+            emit setup();
+        }
+
     }
 }
 

@@ -52,6 +52,7 @@ private:
 
 signals:
     void doRefresh();
+    void setup(bool clicked = true);
 
 
 
