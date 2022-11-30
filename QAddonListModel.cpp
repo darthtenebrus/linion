@@ -462,4 +462,10 @@ void QAddonListModel::setTopIndex() {
     }
 }
 
+void QAddonListModel::reinstallAddonClicked() {
+#ifdef _DEBUG
+    qDebug() << "addon refresh";
+#endif
+}
+
 

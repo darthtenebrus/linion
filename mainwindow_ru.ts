@@ -139,36 +139,42 @@
     </message>
     <message>
         <location filename="mainwindow.cpp" line="24"/>
+        <source>Reinstall Or Update</source>
+        <oldsource>Reinstall/update</oldsource>
+        <translation>Переустановить или обновить</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="25"/>
         <source>Uninstall</source>
         <translation>Удалить</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="34"/>
+        <location filename="mainwindow.cpp" line="37"/>
         <source>Processing: %p%</source>
         <translation>Обработка: %p%</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="88"/>
+        <location filename="mainwindow.cpp" line="92"/>
         <source>Version: %1</source>
         <translation>Версия: %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="89"/>
+        <location filename="mainwindow.cpp" line="93"/>
         <source>Author: %1</source>
         <translation>Автор: %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="105"/>
+        <location filename="mainwindow.cpp" line="109"/>
         <source>Information</source>
         <translation>Информация</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="106"/>
+        <location filename="mainwindow.cpp" line="110"/>
         <source>Unable to locate addons. Do you want to open the settings dialog and choose the path to the addons folder yourself?</source>
         <translation>Не могу найти аддоны. Хотите открыть настройки и выбрать папку с установленными аддонами?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="144"/>
+        <location filename="mainwindow.cpp" line="148"/>
         <source>All completed</source>
         <translation>Завершено</translation>
     </message>

@@ -85,6 +85,7 @@ public slots:
     void refresh();
     void uninstallAddonClicked();
     void backupAddonClicked();
+    void reinstallAddonClicked();
     void backupAllClicked();
 
 private slots:

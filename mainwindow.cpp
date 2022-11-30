@@ -21,8 +21,11 @@ MainWindow ::MainWindow(QWidget *parent) :
     auto contextMenu = new QMenu(ui->addonTreeView);
     ui->addonTreeView->setContextMenuPolicy(Qt::ActionsContextMenu);
     backupAction = new QAction(QIcon::fromTheme("folder"), tr("Backup"), contextMenu);
+    reinstallAction = new QAction(QIcon::fromTheme("folder-sync"), tr("Reinstall Or Update"), contextMenu);
     uninstallAction = new QAction(QIcon::fromTheme("delete"), tr("Uninstall"), contextMenu);
+    // folder-sync
     ui->addonTreeView->addAction(backupAction);
+    ui->addonTreeView->addAction(reinstallAction);
     ui->addonTreeView->addAction(uninstallAction);
 
     progressBar = new QProgressBar(ui->statusbar);
@@ -41,6 +44,7 @@ MainWindow ::MainWindow(QWidget *parent) :
     connect(this, SIGNAL(doRefresh()), model, SLOT(refresh()));
     connect(configDialog, &QDialog::accepted, this, &MainWindow::configAccepted);
     connect(backupAction, SIGNAL(triggered()), model, SLOT(backupAddonClicked()));
+    connect(reinstallAction, SIGNAL(triggered()), model, SLOT(reinstallAddonClicked()));
     connect(uninstallAction, SIGNAL(triggered()), model, SLOT(uninstallAddonClicked()));
     connect(ui->addonTreeView->selectionModel(), &QItemSelectionModel::currentRowChanged,
             this, &MainWindow::currentChanged);
