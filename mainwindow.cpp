@@ -1,5 +1,6 @@
 #include <QtWidgets/QMessageBox>
 #include <QHash>
+#include <QDesktopServices>
 #include "mainwindow.h"
 #include "QvObjectDelegate.h"
 #include "configdialog.h"
