@@ -75,6 +75,7 @@ private:
     const QString &cleanColorizers(QString &input) const;
     void processBackup(const QString &pPath) const;
     void copyPath(const QString&, const QString&) const;
+    void prepareAndCleanDestDir(const QDir &dir) const;
 
     [[nodiscard]]
     ItemData::ItemStatus checkBackupStatus(const QString &qString) const;
@@ -92,6 +93,7 @@ public slots:
 
 private slots:
     void replyFinished(QNetworkReply *replyFinished);
+
 };
 
 

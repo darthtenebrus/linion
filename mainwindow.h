@@ -34,6 +34,7 @@ private:
     QAction *backupAction;
     QAction *uninstallAction;
     QAction *reinstallAction;
+    QAction *visitSiteAction;
 
     QSettings settings;
     PreferencesType defs = {
@@ -68,6 +69,7 @@ public slots:
     void updateProgressPercent(int current, int total, const QString &msg);
     void settingsClicked(bool checked);
     void configAccepted();
+
 };
 
 #endif //TENANTCONTROL_MAINWINDOW_H

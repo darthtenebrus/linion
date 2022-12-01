@@ -8,6 +8,7 @@
 
 #include <QDebug>
 #include <QSettings>
+#include <QDesktopServices>
 
 #endif
 
@@ -25,9 +26,11 @@ MainWindow::MainWindow(QWidget *parent) :
     backupAction = new QAction(QIcon::fromTheme("folder"), tr("Backup"), contextMenu);
     reinstallAction = new QAction(QIcon::fromTheme("folder-sync"), tr("Reinstall Or Update"), contextMenu);
     uninstallAction = new QAction(QIcon::fromTheme("delete"), tr("Uninstall"), contextMenu);
+    visitSiteAction = new QAction(QIcon::fromTheme("gnumeric-link-url"), tr("Visit Web site"), contextMenu);
     // folder-sync
     ui->addonTreeView->addAction(backupAction);
     ui->addonTreeView->addAction(reinstallAction);
+    ui->addonTreeView->addAction(visitSiteAction);
     ui->addonTreeView->addAction(uninstallAction);
 
     progressBar = new QProgressBar(ui->statusbar);
@@ -48,6 +51,22 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(backupAction, SIGNAL(triggered()), model, SLOT(backupAddonClicked()));
     connect(reinstallAction, SIGNAL(triggered()), model, SLOT(reinstallAddonClicked()));
     connect(uninstallAction, SIGNAL(triggered()), model, SLOT(uninstallAddonClicked()));
+    
+    
+    connect(visitSiteAction, &QAction::triggered, model, [=]() {
+
+        const QModelIndexList &selectedSet = ui->addonTreeView->selectionModel()->selectedIndexes();
+        if (selectedSet.count() > 1) {
+            return; // fuckup
+        }
+
+        const QModelIndex &index = selectedSet[0];
+        if (index.isValid()) {
+            const QString &url = index.data(QAddonListModel::FileInfoURLRole).toString();
+            QDesktopServices::openUrl(QUrl(url));
+        }
+    });
+    
     connect(ui->addonTreeView->selectionModel(), &QItemSelectionModel::currentRowChanged,
             this, &MainWindow::currentChanged);
 

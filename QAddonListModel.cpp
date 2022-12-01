@@ -264,19 +264,7 @@ void QAddonListModel::processBackup(const QString &pPath) const {
     const QDir &destDir = QDir(((useTar || useZip) ? QDir::tempPath() :
             backupPath) + QDir::separator() + srcDir.dirName());
 
-
-    if (!destDir.exists()) {
-        destDir.mkpath(".");
-    } else if (!destDir.isEmpty()){
-
-        for (const QFileInfo &c : destDir.entryInfoList(QDir::NoDotAndDotDot | QDir::Dirs | QDir::Files)) {
-            if (c.isDir()) {
-                QDir(c.absoluteFilePath()).removeRecursively();
-            } else if (c.isFile()) {
-                QFile(c.absoluteFilePath()).remove();
-            }
-        }
-    }
+    prepareAndCleanDestDir(destDir);
     
     copyPath(srcDir.absolutePath(), destDir.absolutePath());
     
@@ -500,25 +488,12 @@ void QAddonListModel::reinstallAddonClicked() {
             if (error == QNetworkReply::NetworkError::NoError) {
 
                 const QString &aPath = index.data(QAddonListModel::PathRole).toString();
-                const QString &dirPath = QDir::tempPath() + QDir::separator() + QDir(
+                const QString &tmpDirPath = QDir::tempPath() + QDir::separator() + QDir(
                         QFileInfo(aPath).absolutePath()
                 ).dirName();
-                const QString &filePath =  dirPath + ".zip";
+                const QString &tmpFilePath = tmpDirPath + ".zip";
 
-                /*
-int httpStatus = reply->attribute(
-        QNetworkRequest::HttpStatusCodeAttribute).toInt();
-const QString &httpStatusMessage = reply->attribute(
-        QNetworkRequest::HttpReasonPhraseAttribute).toString();
-const QVariant &loc = reply->header(QNetworkRequest::LocationHeader);
-
-#ifdef _DEBUG
-qDebug() << httpStatus << httpStatusMessage << loc;
-#endif
-
- */
-
-                QFile file(filePath);
+                QFile file(tmpFilePath);
 
                 if (!file.open(QIODevice::ReadWrite | QIODevice::Truncate)) {
                     QMessageBox::critical(qobject_cast<QTreeView *>(parent()), tr("Fatal"),
@@ -531,6 +506,41 @@ qDebug() << httpStatus << httpStatusMessage << loc;
                 file.write(arr);
                 file.flush();
                 file.close();
+                
+                QProcess extractProc;
+                extractProc.setWorkingDirectory(QDir::tempPath());
+                
+                QStringList commandList = zipExtractCommand.trimmed().split(
+                        QRegularExpression(R"(\s+)")
+                        );
+
+                const QString &command = commandList.value(0);
+                commandList.removeAt(0);
+                commandList << QFileInfo(tmpFilePath).fileName();
+#ifdef _DEBUG
+                qDebug() << "command " + command;
+                qDebug() << commandList;
+#endif
+                extractProc.start(command, commandList);
+                extractProc.waitForFinished();
+                QProcess::ProcessError res = extractProc.error();
+                const QString &strRes = QString(extractProc.readAllStandardOutput());
+                const QString &errRes = QString(extractProc.readAllStandardError());
+#ifdef _DEBUG
+                qDebug() << res;
+                qDebug() << strRes;
+                qDebug() << errRes;
+#endif
+                QFile::remove(tmpFilePath);
+
+                QDir &&srcDir = QDir(tmpDirPath);
+                const QDir &dstDir = QDir(addonFolderPath + QDir::separator() + srcDir.dirName());
+
+                prepareAndCleanDestDir(dstDir);
+                copyPath(srcDir.absolutePath(), dstDir.absolutePath());
+                srcDir.removeRecursively();
+
+                
             } else {
                 QMessageBox::critical(qobject_cast<QTreeView *>(parent()), tr("Fatal"),
                                       reply->errorString());
@@ -541,6 +551,21 @@ qDebug() << httpStatus << httpStatusMessage << loc;
         request.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
         tmpRedirectManager->get(request);
 
+    }
+}
+
+void QAddonListModel::prepareAndCleanDestDir(const QDir &destDir) const {
+    if (!destDir.exists()) {
+        destDir.mkpath(".");
+    } else if (!destDir.isEmpty()){
+
+        for (const QFileInfo &c : destDir.entryInfoList(QDir::NoDotAndDotDot | QDir::Dirs | QDir::Files)) {
+            if (c.isDir()) {
+                QDir(c.absoluteFilePath()).removeRecursively();
+            } else if (c.isFile()) {
+                QFile(c.absoluteFilePath()).remove();
+            }
+        }
     }
 }
 

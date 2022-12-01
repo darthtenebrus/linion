@@ -60,6 +60,7 @@ void ConfigDialog::transferData(const PreferencesType &data) const {
 
     ui->tarCommand->setText(data.value("tarCommand").toString());
     ui->zipCommand->setText(data.value("zipCommand").toString());
+    ui->zipExtractCommand->setText(data.value("zipExtractCommand").toString());
 
 }
 
@@ -104,6 +105,7 @@ PreferencesType ConfigDialog::receiveData() const {
     data.insert("useZip", ui->useZip->isChecked());
     data.insert("tarCommand", ui->tarCommand->text());
     data.insert("zipCommand", ui->zipCommand->text());
+    data.insert("zipExtractCommand", ui->zipExtractCommand->text());
     return data;
 }
 
