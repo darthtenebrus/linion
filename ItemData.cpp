@@ -6,10 +6,11 @@
 
 ItemData::ItemData(const QString &author, const QString &addonTitle, const QString &version,
                    const QString &addonPath, const QString &description, const ItemStatus &status,
-                   const QString &downloadTotal, const QString &downloadMonthly, const QString &favoriteTotal, const QString &fileInfoUrl)
+                   const QString &downloadTotal, const QString &downloadMonthly,
+                   const QString &favoriteTotal, const QString &fileInfoUrl, const QString &siteVersion)
         : addonTitle(addonTitle), version(version), addonPath(addonPath), status(status), author(author),
         description(description),DownloadTotal(downloadTotal), DownloadMonthly(downloadMonthly),
-        FavoriteTotal(favoriteTotal), FileInfoURL(fileInfoUrl) {}
+        FavoriteTotal(favoriteTotal), FileInfoURL(fileInfoUrl), SiteVersion(siteVersion) {}
 
 const QString &ItemData::getAddonTitle() const {
     return addonTitle;
@@ -49,4 +50,8 @@ const QString &ItemData::getFavoriteTotal() const {
 
 const QString &ItemData::getFileInfoUrl() const {
     return FileInfoURL;
+}
+
+const QString &ItemData::getSiteVersion() const {
+    return SiteVersion;
 }

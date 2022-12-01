@@ -30,7 +30,8 @@ public:
         DownloadTotalRole,
         DownloadMonthlyRole,
         FavoriteTotalRole,
-        FileInfoURLRole
+        FileInfoURLRole,
+        SiteVersionRole
     };
 
     explicit QAddonListModel(const PreferencesType &settings, QObject *parent);

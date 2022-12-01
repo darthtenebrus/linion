@@ -56,6 +56,9 @@ QVariant QAddonListModel::data(const QModelIndex &index, int role) const {
         case QAddonListModel::VersionRole:
             value = addonList.at(index.row()).getVersion();
             break;
+        case QAddonListModel::SiteVersionRole:
+            value = addonList.at(index.row()).getSiteVersion();
+            break;
         case QAddonListModel::PathRole:
             value = addonList.at(index.row()).getAddonPath();
             break;
@@ -163,7 +166,8 @@ void QAddonListModel::refreshFolderList() {
                                               foundNetData->value("UIDownloadTotal").toString("0"),
                                               foundNetData->value("UIDownloadMonthly").toString("0"),
                                               foundNetData->value("UIFavoriteTotal").toString("0"),
-                                              foundNetData->value("UIFileInfoURL").toString()));
+                                              foundNetData->value("UIFileInfoURL").toString(),
+                                              foundNetData->value("UIVersion").toString()));
                 }
             }
         }

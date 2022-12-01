@@ -199,73 +199,73 @@
 <context>
     <name>QAddonListModel</name>
     <message>
-        <location filename="QAddonListModel.cpp" line="102"/>
+        <location filename="QAddonListModel.cpp" line="105"/>
         <source>Refresh</source>
         <translation>Обновить список</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="151"/>
+        <location filename="QAddonListModel.cpp" line="154"/>
         <source>No description</source>
         <translation>Нет описания</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="210"/>
-        <location filename="QAddonListModel.cpp" line="229"/>
+        <location filename="QAddonListModel.cpp" line="214"/>
+        <location filename="QAddonListModel.cpp" line="233"/>
         <source>Info</source>
         <translation>Информация</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="211"/>
+        <location filename="QAddonListModel.cpp" line="215"/>
         <source>Do you really want to delete this addon: %1?</source>
         <oldsource>Do you really want to delete this addon: %1</oldsource>
         <translation>Вы действительно хотите удалить аддон %1?</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="230"/>
+        <location filename="QAddonListModel.cpp" line="234"/>
         <source>Do you want to make a backup of all installed addons?</source>
         <translation>Вы хотите создать резервную копию установленных аддонов?</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="239"/>
+        <location filename="QAddonListModel.cpp" line="243"/>
         <source>Backing up</source>
         <translation>Сохранение</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="255"/>
-        <location filename="QAddonListModel.cpp" line="257"/>
+        <location filename="QAddonListModel.cpp" line="259"/>
+        <location filename="QAddonListModel.cpp" line="261"/>
         <source>Backing up single addon</source>
         <translation>Сохранение одного аддона</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="380"/>
+        <location filename="QAddonListModel.cpp" line="384"/>
         <source>Installed Addons List</source>
         <translation>Список установленых аддонов</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="443"/>
-        <location filename="QAddonListModel.cpp" line="448"/>
-        <location filename="QAddonListModel.cpp" line="499"/>
-        <location filename="QAddonListModel.cpp" line="545"/>
+        <location filename="QAddonListModel.cpp" line="447"/>
+        <location filename="QAddonListModel.cpp" line="452"/>
+        <location filename="QAddonListModel.cpp" line="503"/>
+        <location filename="QAddonListModel.cpp" line="549"/>
         <source>Fatal</source>
         <translation>Критическая ошибка</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="444"/>
+        <location filename="QAddonListModel.cpp" line="448"/>
         <source>Invalid data</source>
         <translation>Некорректные данные</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="455"/>
+        <location filename="QAddonListModel.cpp" line="459"/>
         <source>Updating data</source>
         <translation>Обновление данных</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="500"/>
+        <location filename="QAddonListModel.cpp" line="504"/>
         <source>I/O error</source>
         <translation>Ошибка ввода/вывода</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="549"/>
+        <location filename="QAddonListModel.cpp" line="553"/>
         <source>Downloading</source>
         <translation>Загрузка с сайта</translation>
     </message>
