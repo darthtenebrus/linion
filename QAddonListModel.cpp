@@ -261,21 +261,29 @@ void QAddonListModel::processBackup(const QString &pPath) const {
 
     const QString &parPath = QFileInfo(pPath).absolutePath();
     const QDir &srcDir = QDir(parPath);
-    const QDir &destDir = QDir(backupPath + QDir::separator() + srcDir.dirName());
+    const QDir &destDir = QDir(((useTar || useZip) ? QDir::tempPath() :
+            backupPath) + QDir::separator() + srcDir.dirName());
 
-#ifdef _DEBUG
-    qDebug() << useTar;
-    qDebug() << useZip;
-#endif
 
     if (!destDir.exists()) {
         destDir.mkpath(".");
-    }
-    copyPath(srcDir.absolutePath(), destDir.absolutePath());
+    } else if (!destDir.isEmpty()){
 
+        for (const QFileInfo &c : destDir.entryInfoList(QDir::NoDotAndDotDot | QDir::Dirs | QDir::Files)) {
+            if (c.isDir()) {
+                QDir(c.absoluteFilePath()).removeRecursively();
+            } else if (c.isFile()) {
+                QFile(c.absoluteFilePath()).remove();
+            }
+        }
+    }
+    
+    copyPath(srcDir.absolutePath(), destDir.absolutePath());
+    
     if (useZip || useTar) {
+
         QProcess proc;
-        proc.setWorkingDirectory(backupPath);
+        proc.setWorkingDirectory(QDir::tempPath());
         if (useTar) {
             // имя архива. Пробелы убираем
             const QString &newTarCommand = QString(tarCommand)
@@ -303,8 +311,7 @@ void QAddonListModel::processBackup(const QString &pPath) const {
             qDebug() << strRes;
             qDebug() << errRes;
 #endif
-            QDir(destDir).removeRecursively();
-
+            
         } else if (useZip) {
             // имя архива. Пробелы убираем
             const QString &newZipCommand = QString(zipCommand)
@@ -332,10 +339,24 @@ void QAddonListModel::processBackup(const QString &pPath) const {
             qDebug() << strRes;
             qDebug() << errRes;
 #endif
-            QDir(destDir).removeRecursively();
-
-
+            
         }
+
+        QDir ddir(destDir);
+        ddir.removeRecursively();
+        const QString &ext = (useTar ? ".tgz" : (useZip ? ".zip" : ""));
+
+        const QString &srcPath = QDir::tempPath() + QDir::separator() + ddir.dirName() + ext;
+        const QString &dstPath = backupPath + QDir::separator() + ddir.dirName() + ext;
+#ifdef _DEBUG
+        qDebug() << srcPath;
+        qDebug() << dstPath;
+#endif
+        if (QFile::exists(dstPath)) {
+            QFile::remove(dstPath);
+        }
+        QFile::copy( srcPath, dstPath);
+        QFile::remove(srcPath);
     }
 }
 
@@ -394,29 +415,18 @@ void QAddonListModel::setModelData(const PreferencesType &data) {
 
     tarCommand = data.value("tarCommand").toString();
     zipCommand = data.value("zipCommand").toString();
+    zipExtractCommand = data.value("zipExtractCommand").toString();
 
 }
 
 ItemData::ItemStatus QAddonListModel::checkBackupStatus(const QString &aName) const {
 
-    if (useTar) {
-        if (QFile(backupPath + QDir::separator() + aName + ".tgz").exists()) {
-            return ItemData::InstalledBackedUp;
-        } else {
-            return ItemData::Installed;
-        }
-    } else if (useZip) {
-        if (QFile(backupPath + QDir::separator() + aName + ".zip").exists()) {
-            return ItemData::InstalledBackedUp;
-        } else {
-            return ItemData::Installed;
-        }
+    if (QFile(backupPath + QDir::separator() + aName + ".tgz").exists() ||
+        QFile(backupPath + QDir::separator() + aName + ".zip").exists() ||
+        QDir(backupPath + QDir::separator() + aName).exists()) {
+        return ItemData::InstalledBackedUp;
     } else {
-        if (QDir(backupPath + QDir::separator() + aName).exists()) {
-            return ItemData::InstalledBackedUp;
-        } else {
-            return ItemData::Installed;
-        }
+        return ItemData::Installed;
     }
 
 }
@@ -490,7 +500,10 @@ void QAddonListModel::reinstallAddonClicked() {
             if (error == QNetworkReply::NetworkError::NoError) {
 
                 const QString &aPath = index.data(QAddonListModel::PathRole).toString();
-                const QString &pPath = QFileInfo(aPath).absolutePath() + ".zip";
+                const QString &dirPath = QDir::tempPath() + QDir::separator() + QDir(
+                        QFileInfo(aPath).absolutePath()
+                ).dirName();
+                const QString &filePath =  dirPath + ".zip";
 
                 /*
 int httpStatus = reply->attribute(
@@ -505,7 +518,7 @@ qDebug() << httpStatus << httpStatusMessage << loc;
 
  */
 
-                QFile file(pPath);
+                QFile file(filePath);
 
                 if (!file.open(QIODevice::ReadWrite | QIODevice::Truncate)) {
                     QMessageBox::critical(qobject_cast<QTreeView *>(parent()), tr("Fatal"),

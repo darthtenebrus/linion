@@ -67,6 +67,7 @@ private:
     bool useZip;
     QString tarCommand;
     QString zipCommand;
+    QString zipExtractCommand;
 
     void refreshFolderList();
     void refreshESOSiteList();

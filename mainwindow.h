@@ -22,6 +22,9 @@ public:
 
     ~MainWindow();
 
+protected:
+    void closeEvent(QCloseEvent *event) override;
+
 private:
     Ui::MainWindow *ui;
     QAddonListModel *model;
@@ -35,13 +38,14 @@ private:
     QSettings settings;
     PreferencesType defs = {
             {"addonFolderPath",
-             QVariant("/home/esorochinskiy/Games/the-elder-scrolls-online/drive_c/users/esorochinskiy/Documents/Elder Scrolls Online/live/AddOns")},
+             QVariant(QDir::homePath())},
             {"backupPath",
-            QVariant("/home/esorochinskiy/ESObackup")},
+            QVariant(QDir::homePath() + QDir::separator() + "ESObackup")},
             {"useTar", QVariant(true)},
             {"useZip", QVariant(false)},
             {"tarCommand", QVariant("tar cvzf %1.tgz")},
-            {"zipCommand", QVariant("zip -r %1.zip")}
+            {"zipCommand", QVariant("zip -r %1.zip")},
+            {"zipExtractCommand", QVariant("unzip -o")}
 
 
     };

@@ -3,19 +3,21 @@
 #include "mainwindow.h"
 #include "QvObjectDelegate.h"
 #include "configdialog.h"
+
 #ifdef _DEBUG
+
 #include <QDebug>
 #include <QSettings>
 
 #endif
 
-MainWindow ::MainWindow(QWidget *parent) :
-        QMainWindow(parent), ui(new Ui::MainWindow()),configDialog(new ConfigDialog(this)),
+MainWindow::MainWindow(QWidget *parent) :
+        QMainWindow(parent), ui(new Ui::MainWindow()), configDialog(new ConfigDialog(this)),
         settings(QSettings::NativeFormat, QSettings::UserScope, "linion", "config") {
     ui->setupUi(this);
 
     model = new QAddonListModel(fillDataFromSettings(),
-                                      ui->addonTreeView);
+                                ui->addonTreeView);
     ui->addonTreeView->setMouseTracking(true);
     ui->addonTreeView->setModel(model);
     auto contextMenu = new QMenu(ui->addonTreeView);
@@ -60,7 +62,7 @@ MainWindow ::MainWindow(QWidget *parent) :
 }
 
 
-MainWindow :: ~MainWindow() {
+MainWindow::~MainWindow() {
     delete uninstallAction;
     delete backupAction;
     delete progressBar;
@@ -76,10 +78,10 @@ void MainWindow::showEvent(QShowEvent *event) {
 
 void MainWindow::writeSettings(const PreferencesType &data) {
 
-    for(const QString& key : data.keys()) {
-            settings.setValue(key, data.value(key));
-        }
-        settings.sync();
+    for (const QString &key : data.keys()) {
+        settings.setValue(key, data.value(key));
+    }
+    settings.sync();
 }
 
 void MainWindow::currentChanged(const QModelIndex &current, const QModelIndex &prev) {
@@ -104,7 +106,7 @@ void MainWindow::aboutQtAction(bool param) {
 void MainWindow::allChanged(const QModelIndex &first, const QModelIndex &last) {
 
     const auto *model = qobject_cast<const QAddonListModel *>(first.model());
-    
+
     if (model->getAddonList().isEmpty()) {
         QMessageBox::StandardButton answer = QMessageBox::question(this, tr("Information"),
                                                                    tr("Unable to locate addons. Do you want "
@@ -127,7 +129,7 @@ void MainWindow::updateProgressPercent(int current, int total, const QString &ms
         ui->statusbar->showMessage(msg);
     }
 
-    if(ui->backupButton->isEnabled()) {
+    if (ui->backupButton->isEnabled()) {
         ui->backupButton->setEnabled(false);
     }
 
@@ -165,7 +167,7 @@ void MainWindow::configAccepted() {
 #ifdef _DEBUG
     qDebug() << "Accepted";
 #endif
-    const PreferencesType  &data = configDialog->receiveData();
+    const PreferencesType &data = configDialog->receiveData();
     writeSettings(data);
     model->setModelData(data);
     emit doRefresh();
@@ -175,10 +177,21 @@ void MainWindow::configAccepted() {
 PreferencesType MainWindow::fillDataFromSettings() const {
 
     PreferencesType data;
-    for(const QString& key : settings.allKeys()) {
+    for (const QString &key: defs.keys()) {
         data.insert(key, settings.value(key, defs[key]));
     }
     return data;
+}
+
+void MainWindow::closeEvent(QCloseEvent *event) {
+
+    for (const QString &key: defs.keys()) {
+        if (!settings.contains(key)) {
+            settings.setValue(key, defs[key]);
+        }
+    }
+    settings.sync();
+    QWidget::closeEvent(event);
 }
 
 
