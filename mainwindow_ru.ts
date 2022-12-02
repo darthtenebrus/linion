@@ -194,27 +194,27 @@
         <translation>Обработка: %p%</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="114"/>
+        <location filename="mainwindow.cpp" line="116"/>
         <source>Version: %1</source>
         <translation>Версия: %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="115"/>
+        <location filename="mainwindow.cpp" line="117"/>
         <source>Author: %1</source>
         <translation>Автор: %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="131"/>
+        <location filename="mainwindow.cpp" line="133"/>
         <source>Information</source>
         <translation>Информация</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="132"/>
+        <location filename="mainwindow.cpp" line="134"/>
         <source>Unable to locate addons. Do you want to open the settings dialog and choose the path to the addons folder yourself?</source>
         <translation>Не могу найти аддоны. Хотите открыть настройки и выбрать папку с установленными аддонами?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="170"/>
+        <location filename="mainwindow.cpp" line="172"/>
         <source>All completed</source>
         <translation>Завершено</translation>
     </message>
@@ -268,7 +268,7 @@
         <location filename="QAddonListModel.cpp" line="448"/>
         <location filename="QAddonListModel.cpp" line="453"/>
         <location filename="QAddonListModel.cpp" line="505"/>
-        <location filename="QAddonListModel.cpp" line="556"/>
+        <location filename="QAddonListModel.cpp" line="554"/>
         <source>Fatal</source>
         <translation>Критическая ошибка</translation>
     </message>
@@ -289,7 +289,7 @@
     </message>
     <message>
         <location filename="QAddonListModel.cpp" line="490"/>
-        <location filename="QAddonListModel.cpp" line="560"/>
+        <location filename="QAddonListModel.cpp" line="558"/>
         <source>Downloading</source>
         <translation>Загрузка с сайта</translation>
     </message>

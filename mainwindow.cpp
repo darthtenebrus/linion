@@ -83,6 +83,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
 MainWindow::~MainWindow() {
+    delete visitSiteAction;
+    delete reinstallAction;
     delete uninstallAction;
     delete backupAction;
     delete progressBar;
