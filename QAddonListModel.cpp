@@ -550,7 +550,7 @@ void QAddonListModel::reinstallAddonClicked() {
                 }
 
             } else {
-                emit percent(100, 100, "");
+                emit percent(100, 100);
                 QMessageBox::critical(qobject_cast<QTreeView *>(parent()), tr("Fatal"),
                                       reply->errorString());
             }

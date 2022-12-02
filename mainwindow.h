@@ -30,6 +30,7 @@ private:
     QAddonListModel *model;
     ConfigDialog *configDialog;
     QProgressBar *progressBar;
+    QMenu *contextMenu;
 
     QAction *backupAction;
     QAction *uninstallAction;

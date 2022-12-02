@@ -22,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
                                 ui->addonTreeView);
     ui->addonTreeView->setMouseTracking(true);
     ui->addonTreeView->setModel(model);
-    auto contextMenu = new QMenu(ui->addonTreeView);
+    contextMenu = new QMenu(ui->addonTreeView);
     ui->addonTreeView->setContextMenuPolicy(Qt::ActionsContextMenu);
     backupAction = new QAction(QIcon::fromTheme("folder"), tr("Backup"), contextMenu);
     reinstallAction = new QAction(QIcon::fromTheme("folder-sync"), tr("Reinstall Or Update"), contextMenu);
@@ -83,6 +83,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
 MainWindow::~MainWindow() {
+    delete contextMenu;
     delete visitSiteAction;
     delete reinstallAction;
     delete uninstallAction;
