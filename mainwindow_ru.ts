@@ -222,74 +222,74 @@
 <context>
     <name>QAddonListModel</name>
     <message>
-        <location filename="QAddonListModel.cpp" line="106"/>
+        <location filename="QAddonListModel.cpp" line="171"/>
         <source>Refresh</source>
         <translation>Обновить список</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="147"/>
+        <location filename="QAddonListModel.cpp" line="136"/>
         <source>No description</source>
         <translation>Нет описания</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="204"/>
-        <location filename="QAddonListModel.cpp" line="220"/>
+        <location filename="QAddonListModel.cpp" line="216"/>
+        <location filename="QAddonListModel.cpp" line="232"/>
         <source>Info</source>
         <translation>Информация</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="205"/>
+        <location filename="QAddonListModel.cpp" line="217"/>
         <source>Do you really want to delete this addon: %1?</source>
         <oldsource>Do you really want to delete this addon: %1</oldsource>
         <translation>Вы действительно хотите удалить аддон %1?</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="221"/>
+        <location filename="QAddonListModel.cpp" line="233"/>
         <source>Do you want to make a backup of all installed addons?</source>
         <translation>Вы хотите создать резервную копию установленных аддонов?</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="230"/>
+        <location filename="QAddonListModel.cpp" line="242"/>
         <source>Backing up</source>
         <translation>Сохранение</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="246"/>
-        <location filename="QAddonListModel.cpp" line="248"/>
+        <location filename="QAddonListModel.cpp" line="258"/>
+        <location filename="QAddonListModel.cpp" line="260"/>
         <source>Backing up single addon</source>
         <translation>Сохранение одного аддона</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="347"/>
+        <location filename="QAddonListModel.cpp" line="359"/>
         <source>Installed Addons List</source>
         <translation>Список установленых аддонов</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="436"/>
-        <location filename="QAddonListModel.cpp" line="441"/>
-        <location filename="QAddonListModel.cpp" line="493"/>
-        <location filename="QAddonListModel.cpp" line="535"/>
+        <location filename="QAddonListModel.cpp" line="448"/>
+        <location filename="QAddonListModel.cpp" line="453"/>
+        <location filename="QAddonListModel.cpp" line="505"/>
+        <location filename="QAddonListModel.cpp" line="556"/>
         <source>Fatal</source>
         <translation>Критическая ошибка</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="437"/>
+        <location filename="QAddonListModel.cpp" line="449"/>
         <source>Invalid data</source>
         <translation>Некорректные данные</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="448"/>
+        <location filename="QAddonListModel.cpp" line="460"/>
         <source>Updating data</source>
         <translation>Обновление данных</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="494"/>
+        <location filename="QAddonListModel.cpp" line="506"/>
         <source>I/O error</source>
         <translation>Ошибка ввода/вывода</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="478"/>
-        <location filename="QAddonListModel.cpp" line="539"/>
+        <location filename="QAddonListModel.cpp" line="490"/>
+        <location filename="QAddonListModel.cpp" line="560"/>
         <source>Downloading</source>
         <translation>Загрузка с сайта</translation>
     </message>

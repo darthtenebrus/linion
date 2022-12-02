@@ -77,14 +77,15 @@ private:
     void processBackup(const QString &pPath) const;
     void copyPath(const QString&, const QString&) const;
     void prepareAndCleanDestDir(const QDir &dir) const;
+    ItemData * prepareAndFillDataByAddonName(const QString &addonName) const;
 
     [[nodiscard]]
     ItemData::ItemStatus checkBackupStatus(const QString &qString) const;
 
 
 signals:
-    void percent(int current, int total, const QString &msg);
-    void refreshSelf();
+    void percent(int current, int total, const QString &msg = "");
+
 
 public slots:
     void refresh();
@@ -95,7 +96,6 @@ public slots:
 
 private slots:
     void replyFinished(QNetworkReply *replyFinished);
-
 };
 
 

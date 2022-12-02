@@ -27,7 +27,6 @@ QAddonListModel::QAddonListModel(const PreferencesType &settings, QObject *paren
     setModelData(settings);
     qsw = new QFileSystemWatcher(QStringList() << this->addonFolderPath << this->backupPath);
     connect(qsw, &QFileSystemWatcher::directoryChanged, this, &QAddonListModel::refresh);
-    connect(this, &QAddonListModel::refreshSelf, this, &QAddonListModel::refresh);
     connect(manager, &QNetworkAccessManager::finished, this, &QAddonListModel::replyFinished);
 
 }
@@ -92,8 +91,74 @@ QVariant QAddonListModel::data(const QModelIndex &index, int role) const {
     return value;
 }
 
-void QAddonListModel::refreshFolderList() {
+ItemData *QAddonListModel::prepareAndFillDataByAddonName(const QString &addonName) const {
     QRegularExpression re(R"(##\s+(?<tag>[A-Za-z]+):\s+(?<content>.*))");
+
+    auto separ = QDir::separator();
+    const QString &fPath = addonFolderPath + separ + addonName + separ + addonName + ".txt";
+    QFile file(fPath);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        return nullptr;
+    } else {
+
+        QString title;
+        QString version;
+        QString author;
+        QString description;
+        while (!file.atEnd()) {
+            QString line = file.readLine();
+            QRegularExpressionMatch match = re.match(line);
+
+            if (match.hasMatch()) {
+                const QString &tag = match.captured("tag");
+                const QString &content = match.captured("content");
+
+
+                if (QString::compare("Title", tag) == 0) {
+                    title = content;
+                } else if (QString::compare("Version", tag) == 0) {
+                    version = content;
+                } else if (QString::compare("Author", tag) == 0) {
+                    author = content;
+                } else if (QString::compare("Description", tag) == 0) {
+                    description = content;
+                }
+
+                if (!title.isEmpty() && !version.isEmpty() &&
+                    !author.isEmpty() && !description.isEmpty()) {
+                    break;
+                }
+            }
+        }
+
+        if (!title.isEmpty() && !version.isEmpty() && !author.isEmpty()) {
+
+            const QString &finalDesc = description.isEmpty() ? "[" + tr("No description") + "]" : description;
+            ItemData::ItemStatus backupStatus = checkBackupStatus(addonName);
+            auto foundNetData = std::find_if(esoSiteList.begin(), esoSiteList.end(), [&addonName](QJsonObject o) {
+
+                return o.value("UIDir").toArray()[0] == addonName;
+            });
+            if (foundNetData != esoSiteList.end()) {
+                auto *retData = new ItemData(cleanColorizers(author), cleanColorizers(title),
+                         version, fPath,
+                         finalDesc,
+                         backupStatus,
+                         foundNetData->value("UIDownloadTotal").toString("0"),
+                         foundNetData->value("UIDownloadMonthly").toString("0"),
+                         foundNetData->value("UIFavoriteTotal").toString("0"),
+                         foundNetData->value("UIFileInfoURL").toString(),
+                         foundNetData->value("UIVersion").toString());
+                return retData;
+            }
+            return nullptr;
+        }
+        return nullptr;
+    }
+} 
+
+void QAddonListModel::refreshFolderList() {
+
     int totalCount = addonList.count();
     beginRemoveRows(QModelIndex(), 0, totalCount >= 1 ? totalCount - 1 : 0);
     addonList.clear();
@@ -105,65 +170,12 @@ void QAddonListModel::refreshFolderList() {
     for (int i = 0; i < total; i++) {
         emit percent(i, total, tr("Refresh"));
         const QString &addonName = dirList.at(i).fileName();
-        auto separ = QDir::separator();
-        const QString &fPath = addonFolderPath + separ + addonName + separ + addonName + ".txt";
-        QFile file(fPath);
-        if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        ItemData *rData = prepareAndFillDataByAddonName(addonName);
+        if (rData == nullptr) {
             continue;
-        } else {
-
-            QString title;
-            QString version;
-            QString author;
-            QString description;
-            while (!file.atEnd()) {
-                QString line = file.readLine();
-                QRegularExpressionMatch match = re.match(line);
-
-                if (match.hasMatch()) {
-                    const QString &tag = match.captured("tag");
-                    const QString &content = match.captured("content");
-
-
-                    if (QString::compare("Title", tag) == 0) {
-                        title = content;
-                    } else if (QString::compare("Version", tag) == 0) {
-                        version = content;
-                    } else if (QString::compare("Author", tag) == 0) {
-                        author = content;
-                    } else if (QString::compare("Description", tag) == 0) {
-                        description = content;
-                    }
-
-                    if (!title.isEmpty() && !version.isEmpty() &&
-                        !author.isEmpty() && !description.isEmpty()) {
-                        break;
-                    }
-                }
-            }
-
-            if (!title.isEmpty() && !version.isEmpty() && !author.isEmpty()) {
-
-                const QString &finalDesc = description.isEmpty() ? "[" + tr("No description") + "]" : description;
-                ItemData::ItemStatus backupStatus = checkBackupStatus(addonName);
-                auto foundNetData = std::find_if(esoSiteList.begin(), esoSiteList.end(), [&addonName](QJsonObject o) {
-
-                    return o.value("UIDir").toArray()[0] == addonName;
-                });
-                if (foundNetData != esoSiteList.end()) {
-
-                    addonList.append(ItemData(cleanColorizers(author), cleanColorizers(title),
-                                              version, fPath,
-                                              finalDesc,
-                                              backupStatus,
-                                              foundNetData->value("UIDownloadTotal").toString("0"),
-                                              foundNetData->value("UIDownloadMonthly").toString("0"),
-                                              foundNetData->value("UIFavoriteTotal").toString("0"),
-                                              foundNetData->value("UIFileInfoURL").toString(),
-                                              foundNetData->value("UIVersion").toString()));
-                }
-            }
         }
+        addonList.append(*rData);
+        delete rData;
 
     }
     endInsertRows();
@@ -521,15 +533,22 @@ void QAddonListModel::reinstallAddonClicked() {
                 QFile::remove(tmpFilePath);
 
                 QDir &&srcDir = QDir(tmpDirPath);
-                const QDir &dstDir = QDir(addonFolderPath + QDir::separator() + srcDir.dirName());
+                const QString &addonName = srcDir.dirName();
+                const QDir &dstDir = QDir(addonFolderPath + QDir::separator() + addonName);
 
                 prepareAndCleanDestDir(dstDir);
                 copyPath(srcDir.absolutePath(), dstDir.absolutePath());
                 srcDir.removeRecursively();
 
-                emit percent(100, 100, "");
+                emit percent(100, 100);
+                //emit refreshSelf();
+                ItemData *rData = prepareAndFillDataByAddonName(addonName);
+                if (rData != nullptr) {
+                    addonList.replace(index.row(), *rData);
+                    delete rData;
+                    emit dataChanged(index, index);
+                }
 
-                emit refreshSelf();
             } else {
                 emit percent(100, 100, "");
                 QMessageBox::critical(qobject_cast<QTreeView *>(parent()), tr("Fatal"),
