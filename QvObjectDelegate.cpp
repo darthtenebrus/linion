@@ -51,7 +51,9 @@ void QvObjectDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     const QRect &brTitle = QFontMetrics(f).boundingRect(title);
     painter->drawText(0, 0, brTitle.width(), brTitle.height(), Qt::AlignTop, title);
 
-    const QString &version = tr("Version: %1").arg(index.data(QAddonListModel::VersionRole).toString());
+    const QString &cversion = index.data(QAddonListModel::VersionRole).toString();
+    const QString &siteversion = index.data(QAddonListModel::SiteVersionRole).toString();
+    const QString &version = tr("Version: %1").arg(cversion);
     painter->translate(0, brTitle.height() + TEXT_TOP_OFFSET);
     QFont newFont = option.font;
     newFont.setItalic(true);
@@ -66,13 +68,33 @@ void QvObjectDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     const QRect &brAuthor = QFontMetrics(newFont).boundingRect(authorStrFull);
     painter->drawText(0,0, brAuthor.width(), brAuthor.height(), Qt::AlignTop, authorStrFull);
 
+    if (cversion != siteversion) {
+
+        newFont.setBold(true);
+        const QString &siteversionFull = tr("Available: %1").arg(siteversion);
+        const QRect &brsiteversion = QFontMetrics(newFont).boundingRect(siteversionFull);
+        painter->resetTransform();
+        painter->translate(option.rect.bottomRight());
+        painter->translate(- 100 - brsiteversion.width() - TEXT_RIGHT_OFFSET * 2,
+                           - brsiteversion.height() - TEXT_TOP_OFFSET * 8);
+        
+        painter->fillRect(0,0, brsiteversion.width() + TEXT_RIGHT_OFFSET,
+                          brsiteversion.height() + TEXT_RIGHT_OFFSET * 4, Qt::green);
+        auto pen = painter->pen();
+        painter->setPen(Qt::black);
+        painter->drawText(TEXT_RIGHT_OFFSET * 2,TEXT_RIGHT_OFFSET * 2,
+                          brsiteversion.width(), brsiteversion.height(),
+                          Qt::AlignTop, siteversionFull);
+        painter->setPen(pen);
+    }
+
     painter->resetTransform();
     newFont = option.font;
     newFont.setItalic(true);
     newFont.setPointSize(8);
     painter->setFont(newFont);
 
-    painter->translate(option.rect.left() + option.rect.width(),
+    painter->translate(option.rect.right(),
     option.rect.top());
     painter->translate(- 50, (option.rect.height() - pix.height()) / 2 + pix.height() / 16);
     const QString &downTotal = index.data(QAddonListModel::DownloadTotalRole).toString();

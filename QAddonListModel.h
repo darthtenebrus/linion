@@ -84,6 +84,7 @@ private:
 
 signals:
     void percent(int current, int total, const QString &msg);
+    void refreshSelf();
 
 public slots:
     void refresh();

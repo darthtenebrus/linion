@@ -27,6 +27,7 @@ QAddonListModel::QAddonListModel(const PreferencesType &settings, QObject *paren
     setModelData(settings);
     qsw = new QFileSystemWatcher(QStringList() << this->addonFolderPath << this->backupPath);
     connect(qsw, &QFileSystemWatcher::directoryChanged, this, &QAddonListModel::refresh);
+    connect(this, &QAddonListModel::refreshSelf, this, &QAddonListModel::refresh);
     connect(manager, &QNetworkAccessManager::finished, this, &QAddonListModel::replyFinished);
 
 }
@@ -108,16 +109,8 @@ void QAddonListModel::refreshFolderList() {
         const QString &fPath = addonFolderPath + separ + addonName + separ + addonName + ".txt";
         QFile file(fPath);
         if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-#ifdef _DEBUG
-            qDebug() << "Failed to open input file.";
             continue;
-#endif
         } else {
-            if (!re.isValid()) {
-#ifdef _DEBUG
-                qDebug() << re.errorString();
-#endif
-            }
 
             QString title;
             QString version;
@@ -206,10 +199,7 @@ void QAddonListModel::uninstallAddonClicked() {
     const QModelIndex &index = selectedSet[0];
     const QString &aPath = index.data(QAddonListModel::PathRole).toString();
     const QString &aTitle = index.data(Qt::DisplayRole).toString();
-#ifdef _DEBUG
-    qDebug() << aPath;
-    qDebug() << aTitle;
-#endif
+
 
     QMessageBox::StandardButton button = QMessageBox::warning(view, tr("Info"),
                                                               tr("Do you really want to delete this addon: %1?")
@@ -220,9 +210,6 @@ void QAddonListModel::uninstallAddonClicked() {
         const QString &parPath = QFileInfo(aPath).absolutePath();
         QDir(parPath).removeRecursively();
 
-#ifdef _DEBUG
-        qDebug() << parPath;
-#endif
     }
 
 }
@@ -281,56 +268,35 @@ void QAddonListModel::processBackup(const QString &pPath) const {
             const QString &newTarCommand = QString(tarCommand)
                     .arg(destDir.dirName().replace(QRegularExpression(R"(\s+)"), ""));
             QStringList commandList = newTarCommand.trimmed().split(QRegularExpression(R"(\s+)"));
-#ifdef _DEBUG
-            qDebug() << commandList;
-#endif
+
             const QString &command = commandList.value(0);
             commandList.removeAt(0);
             const QString &dDir = destDir.dirName();
             commandList << (!dDir.contains(" ") ? dDir : R"(")" + dDir + R"(")");
-#ifdef _DEBUG
-            qDebug() << "command = " + command;
-            qDebug() << commandList;
 
-#endif
             proc.start(command, commandList);
             proc.waitForFinished();
             QProcess::ProcessError res = proc.error();
             const QString &strRes = QString(proc.readAllStandardOutput());
             const QString &errRes = QString(proc.readAllStandardError());
-#ifdef _DEBUG
-            qDebug() << res;
-            qDebug() << strRes;
-            qDebug() << errRes;
-#endif
             
         } else if (useZip) {
             // имя архива. Пробелы убираем
             const QString &newZipCommand = QString(zipCommand)
                     .arg(destDir.dirName().replace(QRegularExpression(R"(\s+)"), ""));
             QStringList commandList = newZipCommand.trimmed().split(QRegularExpression(R"(\s+)"));
-#ifdef _DEBUG
-            qDebug() << commandList;
-#endif
+
             const QString &command = commandList.value(0);
             commandList.removeAt(0);
             const QString &dDir = destDir.dirName();
             commandList << (!dDir.contains(" ") ? dDir : R"(")" + dDir + R"(")");
-#ifdef _DEBUG
-            qDebug() << "command = " + command;
-            qDebug() << commandList;
 
-#endif
             proc.start(command, commandList);
             proc.waitForFinished();
             QProcess::ProcessError res = proc.error();
             const QString &strRes = QString(proc.readAllStandardOutput());
             const QString &errRes = QString(proc.readAllStandardError());
-#ifdef _DEBUG
-            qDebug() << res;
-            qDebug() << strRes;
-            qDebug() << errRes;
-#endif
+
             
         }
 
@@ -340,10 +306,7 @@ void QAddonListModel::processBackup(const QString &pPath) const {
 
         const QString &srcPath = QDir::tempPath() + QDir::separator() + ddir.dirName() + ext;
         const QString &dstPath = backupPath + QDir::separator() + ddir.dirName() + ext;
-#ifdef _DEBUG
-        qDebug() << srcPath;
-        qDebug() << dstPath;
-#endif
+
         if (QFile::exists(dstPath)) {
             QFile::remove(dstPath);
         }
@@ -388,8 +351,34 @@ QVariant QAddonListModel::headerData(int section, Qt::Orientation orientation, i
 
 void QAddonListModel::sort(int column, Qt::SortOrder order) {
 
+
     emit layoutAboutToBeChanged();
     qSort(addonList.begin(), addonList.end(), [&order](ItemData &v1, ItemData &v2) {
+
+        const QString &ver1 = v1.getVersion();
+        const QString &site1 = v1.getSiteVersion();
+
+        const QString &ver2 = v2.getVersion();
+        const QString &site2 = v2.getSiteVersion();
+
+        bool preCondition = ((ver1 != site1) && (ver2 == site2));
+        bool postCondition = ((ver1 == site1) && (ver2 != site2));
+#ifdef _DEBUG
+        qDebug() << "1 title = " + v1.getAddonTitle();
+        qDebug() << "2 title = " + v2.getAddonTitle();
+
+        qDebug() << "pre = " << preCondition;
+        qDebug() << "post = " << postCondition;
+#endif
+
+        if (preCondition) {
+            return  preCondition;
+        }
+
+        if (postCondition) {
+            return false;
+        }
+
         return order == Qt::AscendingOrder ? v1.getAddonTitle() < v2.getAddonTitle() : v1.getAddonTitle() >
                                                                                        v2.getAddonTitle();
     });
@@ -486,7 +475,7 @@ void QAddonListModel::reinstallAddonClicked() {
         auto *tmpRedirectManager = new QNetworkAccessManager(this);
         connect(tmpRedirectManager, &QNetworkAccessManager::finished, this, [=](QNetworkReply *reply) {
 
-            emit percent(100, 100, "");
+            emit percent(50, 100, tr("Downloading"));
             QNetworkReply::NetworkError error = reply->error();
 
             if (error == QNetworkReply::NetworkError::NoError) {
@@ -500,6 +489,7 @@ void QAddonListModel::reinstallAddonClicked() {
                 QFile file(tmpFilePath);
 
                 if (!file.open(QIODevice::ReadWrite | QIODevice::Truncate)) {
+                    emit percent(100, 100, "");
                     QMessageBox::critical(qobject_cast<QTreeView *>(parent()), tr("Fatal"),
                                           tr("I/O error"));
                     return;
@@ -521,20 +511,13 @@ void QAddonListModel::reinstallAddonClicked() {
                 const QString &command = commandList.value(0);
                 commandList.removeAt(0);
                 commandList << QFileInfo(tmpFilePath).fileName();
-#ifdef _DEBUG
-                qDebug() << "command " + command;
-                qDebug() << commandList;
-#endif
+
                 extractProc.start(command, commandList);
                 extractProc.waitForFinished();
                 QProcess::ProcessError res = extractProc.error();
                 const QString &strRes = QString(extractProc.readAllStandardOutput());
                 const QString &errRes = QString(extractProc.readAllStandardError());
-#ifdef _DEBUG
-                qDebug() << res;
-                qDebug() << strRes;
-                qDebug() << errRes;
-#endif
+
                 QFile::remove(tmpFilePath);
 
                 QDir &&srcDir = QDir(tmpDirPath);
@@ -544,8 +527,11 @@ void QAddonListModel::reinstallAddonClicked() {
                 copyPath(srcDir.absolutePath(), dstDir.absolutePath());
                 srcDir.removeRecursively();
 
-                
+                emit percent(100, 100, "");
+
+                emit refreshSelf();
             } else {
+                emit percent(100, 100, "");
                 QMessageBox::critical(qobject_cast<QTreeView *>(parent()), tr("Fatal"),
                                       reply->errorString());
             }
