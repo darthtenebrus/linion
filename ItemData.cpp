@@ -55,3 +55,11 @@ const QString &ItemData::getFileInfoUrl() const {
 const QString &ItemData::getSiteVersion() const {
     return SiteVersion;
 }
+
+const QString &ItemData::getExternalPicUrl() const {
+    return ExternalPicURL;
+}
+
+void ItemData::setExternalPicUrl(const QString &externalPicUrl) {
+    ExternalPicURL = externalPicUrl;
+}

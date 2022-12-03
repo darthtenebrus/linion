@@ -12,7 +12,8 @@ class ItemData {
 public:
     enum ItemStatus {
         Installed = 1,
-        InstalledBackedUp
+        InstalledBackedUp,
+        NotInstalled
     };
 
 private:
@@ -27,6 +28,7 @@ private:
     QString FavoriteTotal;
     QString FileInfoURL;
     QString SiteVersion;
+    QString ExternalPicURL;
 
 
 public:
@@ -68,6 +70,10 @@ public:
 
     [[nodiscard]]
     const QString &getSiteVersion() const;
+
+    const QString &getExternalPicUrl() const;
+
+    void setExternalPicUrl(const QString &externalPicUrl);
 };
 
 

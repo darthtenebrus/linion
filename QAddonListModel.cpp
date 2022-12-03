@@ -69,7 +69,7 @@ QVariant QAddonListModel::data(const QModelIndex &index, int role) const {
             value = addonList.at(index.row()).getDescription();
             break;
         case Qt::DecorationRole:
-            value = QPixmap(addonList.at(index.row()).isStatus() == ItemData::InstalledBackedUp ?
+            value = (addonList.at(index.row()).isStatus() == ItemData::InstalledBackedUp ?
                             ":/images/green_check.png" : ":/images/red_cross.png");
             break;
         case QAddonListModel::DownloadTotalRole:
