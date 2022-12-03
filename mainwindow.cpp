@@ -71,6 +71,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->addonTreeView->selectionModel(), &QItemSelectionModel::currentRowChanged,
             this, &MainWindow::currentChanged);
 
+    connect(model, &QAddonListModel::currentRowDetailChanged,
+            this, &MainWindow::currentChanged);
+
     connect(ui->actionAboutQt, SIGNAL(triggered(bool)), this, SLOT(aboutQtAction(bool)));
     connect(ui->backupButton, SIGNAL(clicked()), model, SLOT(backupAllClicked()));
     connect(model, &QAbstractListModel::dataChanged, this, &MainWindow::allChanged);

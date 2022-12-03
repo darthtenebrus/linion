@@ -85,6 +85,7 @@ private:
 
 signals:
     void percent(int current, int total, const QString &msg = "");
+    void currentRowDetailChanged(const QModelIndex &current, const QModelIndex &prev);
 
 
 public slots:

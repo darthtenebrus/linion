@@ -547,6 +547,7 @@ void QAddonListModel::reinstallAddonClicked() {
                     addonList.replace(index.row(), *rData);
                     delete rData;
                     emit dataChanged(index, index);
+                    emit currentRowDetailChanged(index, index);
                 }
 
             } else {
