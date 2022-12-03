@@ -86,7 +86,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
 MainWindow::~MainWindow() {
-    delete contextMenu;
+
     delete visitSiteAction;
     delete reinstallAction;
     delete uninstallAction;
@@ -94,6 +94,7 @@ MainWindow::~MainWindow() {
     delete progressBar;
     delete configDialog;
     delete model;
+    delete contextMenu;
     delete ui;
 }
 

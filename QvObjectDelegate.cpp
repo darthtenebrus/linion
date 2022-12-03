@@ -97,15 +97,22 @@ void QvObjectDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     painter->translate(option.rect.right(),
     option.rect.top());
     painter->translate(- 50, (option.rect.height() - pix.height()) / 2 + pix.height() / 16);
+
+    makeIcon(painter, "download");
+
     const QString &downTotal = index.data(QAddonListModel::DownloadTotalRole).toString();
     const QRect &brDownTotal = QFontMetrics(newFont).boundingRect(downTotal);
     painter->drawText(0, 0, brDownTotal.width(), brDownTotal.height(), Qt::AlignTop, downTotal);
     painter->translate(0, brDownTotal.height() + TEXT_TOP_OFFSET);
 
+    makeIcon(painter, "view-calendar-month");
+
     const QString &downMonthly = index.data(QAddonListModel::DownloadMonthlyRole).toString();
     const QRect &brdownMonthly = QFontMetrics(newFont).boundingRect(downMonthly);
     painter->drawText(0, 0, brdownMonthly.width(), brdownMonthly.height(), Qt::AlignTop, downMonthly);
     painter->translate(0, brdownMonthly.height() + TEXT_TOP_OFFSET);
+
+    makeIcon(painter, "favorite");
 
     const QString &favTotal = index.data(QAddonListModel::FavoriteTotalRole).toString();
     const QRect &brfavTotal = QFontMetrics(newFont).boundingRect(favTotal);
@@ -116,4 +123,12 @@ void QvObjectDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     painter->setPen(QColor(0x2A, 0x2A, 0x2A));
     painter->drawLine(option.rect.bottomLeft(), option.rect.bottomRight());
     painter->restore();
+}
+
+void QvObjectDelegate::makeIcon(QPainter *painter, const QString &nIcon) const {
+    painter->translate( - 14,0);
+    const QIcon &downIcon = QIcon::fromTheme(nIcon);
+    const QPixmap &downPix = downIcon.pixmap(10, 10);
+    painter->drawPixmap(0, 0, downPix);
+    painter->translate(14,0);
 }

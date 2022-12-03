@@ -23,7 +23,8 @@ public:
 
     void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 
-
+private:
+    void makeIcon(QPainter *painter, const QString &nIcon) const;
 };
 
 
