@@ -99,6 +99,7 @@ public slots:
 
 private slots:
     void replyFinished(QNetworkReply *replyFinished);
+    void onPercentDownload(qint64, qint64);
 };
 
 

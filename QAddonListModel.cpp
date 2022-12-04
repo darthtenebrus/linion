@@ -459,9 +459,7 @@ void QAddonListModel::refreshESOSiteList() {
     QNetworkRequest request = QNetworkRequest(QUrl(listUrl));
     request.setRawHeader("Content-Type", "application/json");
     m_currentReply = manager->get(QNetworkRequest(request));
-    connect(m_currentReply, &QNetworkReply::downloadProgress, this, [=](qint64 c, qint64 t) {
-        emit percent(c, t, tr("Downloading list"));
-    });
+    connect(m_currentReply, &QNetworkReply::downloadProgress, this, &QAddonListModel::onPercentDownload);
     connect(m_currentReply, &QNetworkReply::readyRead, this, [=]() {
         m_buffer += m_currentReply->readAll();
     });
@@ -572,9 +570,7 @@ void QAddonListModel::reinstallAddonClicked() {
                 file->write(cRep->readAll());
             }
         });
-        connect(cRep, &QNetworkReply::downloadProgress, this, [=](qint64 c, qint64 t) {
-            emit percent(c, t, tr("Downloading from site"));
-        });
+        connect(cRep, &QNetworkReply::downloadProgress, this, &QAddonListModel::onPercentDownload);
     }
 }
 
@@ -590,6 +586,14 @@ void QAddonListModel::prepareAndCleanDestDir(const QDir &destDir) const {
                 QFile(c.absoluteFilePath()).remove();
             }
         }
+    }
+}
+
+void QAddonListModel::onPercentDownload(qint64 c, qint64 t) {
+    if(!t) {
+        emit percent(100, 100);
+    } else {
+        emit percent(c, t, tr("Downloading from site"));
     }
 }
 
