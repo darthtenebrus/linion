@@ -209,7 +209,7 @@
     <message>
         <location filename="mainwindow.cpp" line="90"/>
         <source>Find More Addons</source>
-        <translation></translation>
+        <translation>Поиск Аддонов Для Установки</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="131"/>
