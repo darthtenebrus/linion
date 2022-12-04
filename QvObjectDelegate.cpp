@@ -6,7 +6,7 @@
 #include "QAddonListModel.h"
 #include <QPainter>
 
-#define ITEM_HEIGHT 64
+#define ITEM_HEIGHT 80
 #define ICON_LEFT_OFFSET 16
 #define TEXT_TOP_OFFSET 4
 #define TEXT_RIGHT_OFFSET 4
@@ -91,12 +91,12 @@ void QvObjectDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     painter->resetTransform();
     newFont = option.font;
     newFont.setItalic(true);
-    newFont.setPointSize(8);
+    newFont.setPixelSize(12);
     painter->setFont(newFont);
 
     painter->translate(option.rect.right(),
     option.rect.top());
-    painter->translate(- 50, (option.rect.height() - pix.height()) / 2 + pix.height() / 16);
+    painter->translate(- 70, (option.rect.height() - pix.height()) / 2 - pix.height() / 8);
 
     makeIcon(painter, "download");
 
@@ -126,9 +126,9 @@ void QvObjectDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
 }
 
 void QvObjectDelegate::makeIcon(QPainter *painter, const QString &nIcon) const {
-    painter->translate( - 14,0);
+    painter->translate( - 16,0);
     const QIcon &downIcon = QIcon::fromTheme(nIcon);
-    const QPixmap &downPix = downIcon.pixmap(10, 10);
+    const QPixmap &downPix = downIcon.pixmap(14, 14);
     painter->drawPixmap(0, 0, downPix);
-    painter->translate(14,0);
+    painter->translate(16,0);
 }
