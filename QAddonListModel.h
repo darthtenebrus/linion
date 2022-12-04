@@ -57,6 +57,8 @@ private:
     static QString listUrl;
 
     QNetworkAccessManager *manager;
+    QNetworkReply *m_currentReply {nullptr};
+    QByteArray m_buffer;
     QList<ItemData> addonList;
     QList<QJsonObject> esoSiteList;
 
