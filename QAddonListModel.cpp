@@ -171,7 +171,7 @@ void QAddonListModel::refreshFolderList() {
         emit percent(i, total, tr("Refresh"));
         const QString &addonName = dirList.at(i).fileName();
         ItemData *rData = prepareAndFillDataByAddonName(addonName);
-        if (rData == nullptr) {
+        if (!rData) {
             continue;
         }
         addonList.append(*rData);
@@ -542,7 +542,7 @@ void QAddonListModel::reinstallAddonClicked() {
                 emit percent(100, 100);
                 //emit refreshSelf();
                 ItemData *rData = prepareAndFillDataByAddonName(addonName);
-                if (rData != nullptr) {
+                if (rData) {
                     addonList.replace(index.row(), *rData);
                     delete rData;
                     emit dataChanged(index, index);
