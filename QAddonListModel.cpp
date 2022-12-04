@@ -356,7 +356,7 @@ QVariant QAddonListModel::headerData(int section, Qt::Orientation orientation, i
     QVariant value;
     switch (role) {
         case Qt::DisplayRole:
-            value = tr("Installed Addons List");
+            value = headerTitle;
     }
     return value;
 }
@@ -595,6 +595,11 @@ void QAddonListModel::onPercentDownload(qint64 c, qint64 t) {
     } else {
         emit percent(c, t, tr("Downloading from site"));
     }
+}
+
+void QAddonListModel::setHeaderTitle(const QString &hTitle) {
+    QAddonListModel::headerTitle = hTitle;
+    emit headerDataChanged(Qt::Horizontal, 0,0);
 }
 
 

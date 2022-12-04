@@ -175,53 +175,64 @@
         <translation>Настроить приложение</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="27"/>
+        <location filename="mainwindow.cpp" line="23"/>
+        <location filename="mainwindow.cpp" line="86"/>
+        <source>Installed Addons List</source>
+        <translation>Список установленых аддонов</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="28"/>
         <source>Backup</source>
         <translation>Сохранить</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="28"/>
+        <location filename="mainwindow.cpp" line="29"/>
         <source>Reinstall Or Update</source>
         <oldsource>Reinstall/update</oldsource>
         <translation>Переустановить или обновить</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="29"/>
+        <location filename="mainwindow.cpp" line="30"/>
         <source>Uninstall</source>
         <translation>Удалить</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="30"/>
+        <location filename="mainwindow.cpp" line="31"/>
         <source>Visit Web site</source>
         <translation>Перейти на сайт</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="43"/>
+        <location filename="mainwindow.cpp" line="44"/>
         <source>Processing: %p%</source>
         <translation>Обработка: %p%</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="121"/>
+        <location filename="mainwindow.cpp" line="90"/>
+        <source>Find More Addons</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="131"/>
         <source>Version: %1</source>
         <translation>Версия: %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="122"/>
+        <location filename="mainwindow.cpp" line="132"/>
         <source>Author: %1</source>
         <translation>Автор: %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="138"/>
+        <location filename="mainwindow.cpp" line="148"/>
         <source>Information</source>
         <translation>Информация</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="139"/>
+        <location filename="mainwindow.cpp" line="149"/>
         <source>Unable to locate addons. Do you want to open the settings dialog and choose the path to the addons folder yourself?</source>
         <translation>Не могу найти аддоны. Хотите открыть настройки и выбрать папку с установленными аддонами?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="177"/>
+        <location filename="mainwindow.cpp" line="187"/>
         <source>All completed</source>
         <translation>Завершено</translation>
     </message>
@@ -265,11 +276,6 @@
         <location filename="QAddonListModel.cpp" line="260"/>
         <source>Backing up single addon</source>
         <translation>Сохранение одного аддона</translation>
-    </message>
-    <message>
-        <location filename="QAddonListModel.cpp" line="359"/>
-        <source>Installed Addons List</source>
-        <translation>Список установленых аддонов</translation>
     </message>
     <message>
         <location filename="QAddonListModel.cpp" line="445"/>

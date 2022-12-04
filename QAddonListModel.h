@@ -51,11 +51,11 @@ public:
 
     void sort(int column, Qt::SortOrder order) override;
     void setModelData(const PreferencesType &hash);
+    void setHeaderTitle(const QString &);
 
 private:
-
     static QString listUrl;
-
+    QString headerTitle;
     QNetworkAccessManager *manager;
     QNetworkReply *m_currentReply {nullptr};
     QByteArray m_buffer;

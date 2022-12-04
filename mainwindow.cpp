@@ -20,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     model = new QAddonListModel(fillDataFromSettings(),
                                 ui->addonTreeView);
+    model->setHeaderTitle(tr("Installed Addons List"));
     ui->addonTreeView->setMouseTracking(true);
     ui->addonTreeView->setModel(model);
     contextMenu = new QMenu(ui->addonTreeView);
@@ -47,11 +48,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->statusbar->addPermanentWidget(progressBar);
 
     ui->addonTreeView->setItemDelegate(new QvObjectDelegate(ui->addonTreeView));
-    connect(this, SIGNAL(doRefresh()), model, SLOT(refresh()));
+    connect(this, &MainWindow::doRefresh, model, &QAddonListModel::refresh);
     connect(configDialog, &QDialog::accepted, this, &MainWindow::configAccepted);
-    connect(backupAction, SIGNAL(triggered()), model, SLOT(backupAddonClicked()));
-    connect(reinstallAction, SIGNAL(triggered()), model, SLOT(reinstallAddonClicked()));
-    connect(uninstallAction, SIGNAL(triggered()), model, SLOT(uninstallAddonClicked()));
+    connect(backupAction, &QAction::triggered, model, &QAddonListModel::backupAddonClicked);
+    connect(reinstallAction, &QAction::triggered, model, &QAddonListModel::reinstallAddonClicked);
+    connect(uninstallAction, &QAction::triggered, model, &QAddonListModel::uninstallAddonClicked);
     
     
     connect(visitSiteAction, &QAction::triggered, model, [=]() {
@@ -74,11 +75,20 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(model, &QAddonListModel::currentRowDetailChanged,
             this, &MainWindow::currentChanged);
 
-    connect(ui->actionAboutQt, SIGNAL(triggered(bool)), this, SLOT(aboutQtAction(bool)));
-    connect(ui->backupButton, SIGNAL(clicked()), model, SLOT(backupAllClicked()));
+    connect(ui->actionAboutQt, &QAction::triggered, this, &MainWindow::aboutQtAction);
+    connect(ui->backupButton, &QToolButton::clicked, model, &QAddonListModel::backupAllClicked);
     connect(model, &QAbstractListModel::dataChanged, this, &MainWindow::allChanged);
     connect(model, &QAddonListModel::percent, this, &MainWindow::updateProgressPercent);
-    connect(ui->refreshButton, SIGNAL(clicked()), model, SLOT(refresh()));
+    connect(ui->refreshButton, &QToolButton::clicked, model, &QAddonListModel::refresh);
+
+    connect(ui->refreshButton, &QToolButton::clicked, this, [=]() {
+        ui->controls->setCurrentIndex(0);
+        model->setHeaderTitle(tr("Installed Addons List"));
+    });
+    connect(ui->findMoreButton, &QToolButton::clicked, this, [=]() {
+        ui->controls->setCurrentIndex(1);
+        model->setHeaderTitle(tr("Find More Addons"));
+    });
     connect(ui->actionSettings, &QAction::triggered, this, &MainWindow::settingsClicked);
     connect(this, &MainWindow::setup, this, &MainWindow::settingsClicked);
     connect(ui->setupButton, &QToolButton::clicked, this, &MainWindow::settingsClicked);

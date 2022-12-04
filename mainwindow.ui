@@ -147,7 +147,7 @@ QToolButton:hover {  background-color: rgb(89, 94, 99); }
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="page_2">
+         <widget class="QWidget" name="findMoreList">
           <layout class="QHBoxLayout" name="horizontalLayout_3">
            <item>
             <widget class="QLineEdit" name="lineEdit"/>
