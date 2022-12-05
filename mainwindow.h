@@ -58,8 +58,6 @@ private:
     PreferencesType fillDataFromSettings() const;
 
 signals:
-    void doRefresh();
-    void doRefreshFromExternal();
     void setup(bool clicked = true);
 
 

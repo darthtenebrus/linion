@@ -48,8 +48,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->statusbar->addPermanentWidget(progressBar);
 
     ui->addonTreeView->setItemDelegate(new QvObjectDelegate(ui->addonTreeView));
-    connect(this, &MainWindow::doRefresh, model, &QAddonListModel::refresh);
-    connect(this, &MainWindow::doRefreshFromExternal, model, &QAddonListModel::refreshFromExternal);
 
     connect(configDialog, &QDialog::accepted, this, &MainWindow::configAccepted);
     connect(backupAction, &QAction::triggered, model, &QAddonListModel::backupAddonClicked);
@@ -92,7 +90,7 @@ MainWindow::MainWindow(QWidget *parent) :
         uninstallAction->setEnabled(false);
         reinstallAction->setText(tr("Install"));
         model->disconnectWatcher();
-        emit doRefreshFromExternal();
+        model->refreshFromExternal();
     });
     connect(ui->actionSettings, &QAction::triggered, this, &MainWindow::settingsClicked);
     connect(this, &MainWindow::setup, this, &MainWindow::settingsClicked);
@@ -118,7 +116,7 @@ MainWindow::~MainWindow() {
 
 void MainWindow::showEvent(QShowEvent *event) {
     QWidget::showEvent(event);
-    emit doRefresh();
+    model->refresh();
 }
 
 void MainWindow::writeSettings(const PreferencesType &data) {
@@ -251,7 +249,7 @@ void MainWindow::refreshListClicked(bool clicked) {
         uninstallAction->setEnabled(true);
         reinstallAction->setText(tr("Reinstall Or Update"));
         model->connectWatcher();
-        emit doRefresh();
+        model->refresh();
 }
 
 
