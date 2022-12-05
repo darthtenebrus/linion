@@ -99,6 +99,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionSettings, &QAction::triggered, this, &MainWindow::settingsClicked);
     connect(this, &MainWindow::setup, this, &MainWindow::settingsClicked);
     connect(ui->setupButton, &QToolButton::clicked, this, &MainWindow::settingsClicked);
+
+    ui->controls->setCurrentIndex(0);
+
 }
 
 

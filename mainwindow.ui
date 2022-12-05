@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1649</width>
+    <width>1849</width>
     <height>711</height>
    </rect>
   </property>
@@ -82,13 +82,13 @@ QToolButton:hover {  background-color: rgb(89, 94, 99); }
          </property>
          <property name="minimumSize">
           <size>
-           <width>450</width>
+           <width>650</width>
            <height>0</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>450</width>
+           <width>650</width>
            <height>16777215</height>
           </size>
          </property>
@@ -106,13 +106,13 @@ QToolButton:hover {  background-color: rgb(89, 94, 99); }
               </sizepolicy>
              </property>
              <property name="toolTip">
-              <string>Backup Installed</string>
+              <string>Backup All Installed Addons</string>
              </property>
              <property name="styleSheet">
               <string notr="true"/>
              </property>
              <property name="text">
-              <string/>
+              <string>Backup Installed</string>
              </property>
              <property name="icon">
               <iconset theme="folder">
@@ -125,7 +125,7 @@ QToolButton:hover {  background-color: rgb(89, 94, 99); }
               </size>
              </property>
              <property name="toolButtonStyle">
-              <enum>Qt::ToolButtonIconOnly</enum>
+              <enum>Qt::ToolButtonTextBesideIcon</enum>
              </property>
              <property name="autoRaise">
               <bool>false</bool>
@@ -150,7 +150,11 @@ QToolButton:hover {  background-color: rgb(89, 94, 99); }
          <widget class="QWidget" name="findMoreList">
           <layout class="QHBoxLayout" name="horizontalLayout_3">
            <item>
-            <widget class="QLineEdit" name="lineEdit"/>
+            <widget class="QLineEdit" name="lineEdit">
+             <property name="placeholderText">
+              <string>Search For Addons</string>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>
@@ -158,6 +162,9 @@ QToolButton:hover {  background-color: rgb(89, 94, 99); }
        </item>
        <item>
         <widget class="QToolButton" name="refreshButton">
+         <property name="toolTip">
+          <string>Installed Addon List</string>
+         </property>
          <property name="text">
           <string>Installed</string>
          </property>
@@ -178,6 +185,9 @@ QToolButton:hover {  background-color: rgb(89, 94, 99); }
        </item>
        <item>
         <widget class="QToolButton" name="findMoreButton">
+         <property name="toolTip">
+          <string>Find More Addons To Install</string>
+         </property>
          <property name="text">
           <string>Find More</string>
          </property>
@@ -237,7 +247,7 @@ QToolButton:hover {  background-color: rgb(89, 94, 99); }
        </property>
        <property name="minimumSize">
         <size>
-         <width>1000</width>
+         <width>600</width>
          <height>0</height>
         </size>
        </property>
@@ -323,7 +333,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1649</width>
+     <width>1849</width>
      <height>32</height>
     </rect>
    </property>
