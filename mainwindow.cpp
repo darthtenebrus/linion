@@ -91,6 +91,7 @@ MainWindow::MainWindow(QWidget *parent) :
         backupAction->setEnabled(false);
         uninstallAction->setEnabled(false);
         reinstallAction->setText(tr("Install"));
+        model->disconnectWatcher();
         emit doRefreshFromExternal();
     });
     connect(ui->actionSettings, &QAction::triggered, this, &MainWindow::settingsClicked);
@@ -219,7 +220,7 @@ void MainWindow::configAccepted() {
     const PreferencesType &data = configDialog->receiveData();
     writeSettings(data);
     model->setModelData(data);
-    emit doRefresh();
+    refreshListClicked(true);
 
 }
 
@@ -249,6 +250,7 @@ void MainWindow::refreshListClicked(bool clicked) {
         backupAction->setEnabled(true);
         uninstallAction->setEnabled(true);
         reinstallAction->setText(tr("Reinstall Or Update"));
+        model->connectWatcher();
         emit doRefresh();
 }
 

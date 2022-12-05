@@ -53,6 +53,8 @@ public:
     void sort(int column, Qt::SortOrder order) override;
     void setModelData(const PreferencesType &hash);
     void setHeaderTitle(const QString &);
+    void disconnectWatcher();
+    void connectWatcher();
 
 private:
     static QString listUrl;
@@ -65,7 +67,7 @@ private:
 
     QString addonFolderPath;
     QString backupPath;
-    QFileSystemWatcher *qsw;
+    QFileSystemWatcher *qsw {nullptr};
 
     bool useTar;
     bool useZip;

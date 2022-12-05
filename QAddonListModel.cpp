@@ -25,16 +25,13 @@ QAddonListModel::QAddonListModel(const PreferencesType &settings, QObject *paren
         : QAbstractListModel(parent), manager(new QNetworkAccessManager(this)) {
 
     setModelData(settings);
-    qsw = new QFileSystemWatcher(QStringList() << this->addonFolderPath << this->backupPath);
-    connect(qsw, &QFileSystemWatcher::directoryChanged, this, &QAddonListModel::refresh);
+    connectWatcher();
     connect(manager, &QNetworkAccessManager::finished, this, &QAddonListModel::replyFinished);
 
 }
 
 QAddonListModel::~QAddonListModel() {
-    qsw->removePath(addonFolderPath);
-    qsw->removePath(backupPath);
-    delete qsw;
+    disconnectWatcher();
     delete manager;
 }
 
@@ -104,18 +101,24 @@ ItemData *QAddonListModel::prepareAndFillDataByAddonName(const QString &addonNam
         return nullptr;
     } else {
 
+        // This fucking MAC OS doesn't allow to use text mode read
         QString title;
         QString version;
         QString author;
         QString description;
-        while (!file.atEnd()) {
-            QString line = file.readLine();
+        file.setTextModeEnabled(false);
+        const QString &allData = file.readAll();
+        const QStringList &splitted = allData.split(QRegularExpression(R"([\r\n]+)"));
+#ifdef _DEBUG
+        qDebug() << splitted;
+#endif
+        for (const QString &line : splitted) {
+
             QRegularExpressionMatch match = re.match(line);
 
             if (match.hasMatch()) {
                 const QString &tag = match.captured("tag");
                 const QString &content = match.captured("content");
-
 
                 if ("Title" == tag || "Name" == tag) {
                     title = content;
@@ -126,16 +129,16 @@ ItemData *QAddonListModel::prepareAndFillDataByAddonName(const QString &addonNam
                 } else if ("Description" == tag) {
                     description = content;
                 }
-
                 if (!title.isEmpty() && !version.isEmpty() &&
                     !author.isEmpty() && !description.isEmpty()) {
+
                     break;
                 }
             }
         }
         
 
-        const QString &finalDesc = description.isEmpty() ? "[" + tr("No description") + "]" : description;
+        QString finalDesc = description.isEmpty() ? "[" + tr("No description") + "]" : description;
         QString finalAuth = author.isEmpty() ? "[" + tr("Unknown Author") + "]" : author;
         QString finalTitle = title.isEmpty() ? "[" + tr("Unknown Title") + "]" : title;
         QString finalVer = version.isEmpty() ? "[" + tr("Unknown Version") + "]" : version;
@@ -147,7 +150,7 @@ ItemData *QAddonListModel::prepareAndFillDataByAddonName(const QString &addonNam
         if (foundNetData != esoSiteList.end()) {
             auto *retData = new ItemData(cleanColorizers(finalAuth), cleanColorizers(finalTitle),
                                          finalVer, fPath,
-                                         finalDesc,
+                                         cleanColorizers(finalDesc),
                                          backupStatus,
                                          foundNetData->value("UIDownloadTotal").toString("0"),
                                          foundNetData->value("UIDownloadMonthly").toString("0"),
@@ -204,6 +207,7 @@ void QAddonListModel::refresh() {
 
 void QAddonListModel::refreshFromExternal() {
     refreshFromSiteList();
+    setTopIndex();
 }
 
 void QAddonListModel::refreshFromSiteList() {
@@ -587,8 +591,6 @@ void QAddonListModel::reinstallAddonClicked() {
                 const QString &addonName = srcDir.dirName();
                 const QDir &dstDir = QDir(addonFolderPath + QDir::separator() + addonName);
 
-                disconnect(qsw, &QFileSystemWatcher::directoryChanged,
-                           this, &QAddonListModel::refresh);
                 prepareAndCleanDestDir(dstDir);
                 copyPath(srcDir.absolutePath(), dstDir.absolutePath());
                 srcDir.removeRecursively();
@@ -659,6 +661,23 @@ void QAddonListModel::onPercentDownload(qint64 c, qint64 t) {
 void QAddonListModel::setHeaderTitle(const QString &hTitle) {
     QAddonListModel::headerTitle = hTitle;
     emit headerDataChanged(Qt::Horizontal, 0, 0);
+}
+
+void QAddonListModel::disconnectWatcher() {
+    disconnect(qsw, &QFileSystemWatcher::directoryChanged,
+               this, &QAddonListModel::refresh);
+    qsw->removePath(addonFolderPath);
+    qsw->removePath(backupPath);
+    delete qsw;
+    qsw = nullptr;
+}
+
+void QAddonListModel::connectWatcher() {
+    if (!qsw) {
+        qsw = new QFileSystemWatcher(QStringList() << this->addonFolderPath << this->backupPath);
+        connect(qsw, &QFileSystemWatcher::directoryChanged,
+                this, &QAddonListModel::refresh);
+    }
 }
 
 
