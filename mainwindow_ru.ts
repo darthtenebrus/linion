@@ -213,6 +213,11 @@
         <translation>Сохранить</translation>
     </message>
     <message>
+        <location filename="mainwindow.cpp" line="94"/>
+        <source>Addons available</source>
+        <translation>Доступные аддоны</translation>
+    </message>
+    <message>
         <location filename="mainwindow.cpp" line="29"/>
         <location filename="mainwindow.cpp" line="89"/>
         <source>Reinstall Or Update</source>
@@ -236,8 +241,9 @@
     </message>
     <message>
         <location filename="mainwindow.cpp" line="94"/>
-        <source>Find More Addons</source>
-        <translation>Поиск Аддонов Для Установки</translation>
+        <source>Addons available</source>
+        <oldsource>Find More Addons</oldsource>
+        <translation type="unfinished">Поиск аддонов для установки</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="97"/>
@@ -265,7 +271,7 @@
         <translation>Не могу найти аддоны. Хотите открыть настройки и выбрать папку с установленными аддонами?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="197"/>
+        <location filename="mainwindow.cpp" line="201"/>
         <source>All completed</source>
         <translation>Завершено</translation>
     </message>

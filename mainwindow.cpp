@@ -91,7 +91,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->findMoreButton, &QToolButton::clicked, this, [=]() {
         ui->controls->setCurrentIndex(1);
-        model->setHeaderTitle(tr("Find More Addons"));
+        model->setHeaderTitle(tr("Addons available"));
         backupAction->setEnabled(false);
         uninstallAction->setEnabled(false);
         reinstallAction->setText(tr("Install"));
@@ -184,6 +184,10 @@ void MainWindow::updateProgressPercent(int current, int total, const QString &ms
         ui->refreshButton->setEnabled(false);
     }
 
+    if (ui->findMoreButton->isEnabled()) {
+        ui->findMoreButton->setEnabled(false);
+    }
+
     if (ui->setupButton->isEnabled()) {
         ui->setupButton->setEnabled(false);
     }
@@ -198,6 +202,7 @@ void MainWindow::updateProgressPercent(int current, int total, const QString &ms
         ui->backupButton->setEnabled(true);
         ui->refreshButton->setEnabled(true);
         ui->setupButton->setEnabled(true);
+        ui->findMoreButton->setEnabled(true);
     }
 }
 
