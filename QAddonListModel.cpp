@@ -117,13 +117,13 @@ ItemData *QAddonListModel::prepareAndFillDataByAddonName(const QString &addonNam
                 const QString &content = match.captured("content");
 
 
-                if (QString::compare("Title", tag) == 0) {
+                if ("Title" == tag || "Name" == tag) {
                     title = content;
-                } else if (QString::compare("Version", tag) == 0) {
+                } else if ("Version" == tag) {
                     version = content;
-                } else if (QString::compare("Author", tag) == 0) {
+                } else if ("Author" == tag || "Credits" == tag) {
                     author = content;
-                } else if (QString::compare("Description", tag) == 0) {
+                } else if ("Description" == tag) {
                     description = content;
                 }
 
@@ -133,28 +133,28 @@ ItemData *QAddonListModel::prepareAndFillDataByAddonName(const QString &addonNam
                 }
             }
         }
+        
 
-        if (!title.isEmpty() && !version.isEmpty() && !author.isEmpty()) {
+        const QString &finalDesc = description.isEmpty() ? "[" + tr("No description") + "]" : description;
+        QString finalAuth = author.isEmpty() ? "[" + tr("Unknown Author") + "]" : author;
+        QString finalTitle = title.isEmpty() ? "[" + tr("Unknown Title") + "]" : title;
+        QString finalVer = version.isEmpty() ? "[" + tr("Unknown Version") + "]" : version;
+        ItemData::ItemStatus backupStatus = checkBackupStatus(addonName);
+        auto foundNetData = std::find_if(esoSiteList.begin(), esoSiteList.end(), [&addonName](QJsonObject o) {
 
-            const QString &finalDesc = description.isEmpty() ? "[" + tr("No description") + "]" : description;
-            ItemData::ItemStatus backupStatus = checkBackupStatus(addonName);
-            auto foundNetData = std::find_if(esoSiteList.begin(), esoSiteList.end(), [&addonName](QJsonObject o) {
-
-                return o.value("UIDir").toArray()[0] == addonName;
-            });
-            if (foundNetData != esoSiteList.end()) {
-                auto *retData = new ItemData(cleanColorizers(author), cleanColorizers(title),
-                                             version, fPath,
-                                             finalDesc,
-                                             backupStatus,
-                                             foundNetData->value("UIDownloadTotal").toString("0"),
-                                             foundNetData->value("UIDownloadMonthly").toString("0"),
-                                             foundNetData->value("UIFavoriteTotal").toString("0"),
-                                             foundNetData->value("UIFileInfoURL").toString(),
-                                             foundNetData->value("UIVersion").toString());
-                return retData;
-            }
-            return nullptr;
+            return o.value("UIDir").toArray()[0] == addonName;
+        });
+        if (foundNetData != esoSiteList.end()) {
+            auto *retData = new ItemData(cleanColorizers(finalAuth), cleanColorizers(finalTitle),
+                                         finalVer, fPath,
+                                         finalDesc,
+                                         backupStatus,
+                                         foundNetData->value("UIDownloadTotal").toString("0"),
+                                         foundNetData->value("UIDownloadMonthly").toString("0"),
+                                         foundNetData->value("UIFavoriteTotal").toString("0"),
+                                         foundNetData->value("UIFileInfoURL").toString(),
+                                         foundNetData->value("UIVersion").toString());
+            return retData;
         }
         return nullptr;
     }
@@ -210,6 +210,40 @@ void QAddonListModel::refreshFromSiteList() {
 #ifdef _DEBUG
     qDebug() << "Refresh from ESO Site";
 #endif
+    int totalCount = addonList.count();
+    beginRemoveRows(QModelIndex(), 0, totalCount >= 1 ? totalCount - 1 : 0);
+    addonList.clear();
+    endRemoveRows();
+
+    int total = esoSiteList.count() - 1;
+    emit percent(0, total, tr("Updating"));
+    beginInsertRows(QModelIndex(), 0, total);
+    int i = 0;
+    for (const QJsonObject &findNow: esoSiteList) {
+        i++;
+        emit percent(i, total, tr("Updating"));
+        const QString &addonName = findNow.value("UIDir").toArray()[0].toString();
+        const QString &fPath = addonFolderPath + QDir::separator() + addonName + QDir::separator() + addonName + ".txt";
+
+        if (QFile(fPath).exists()) {
+            continue;
+        }
+        addonList.append(ItemData(findNow.value("UIAuthorName").toString(),
+                                  findNow.value("UIName").toString(),
+                                  findNow.value("UIVersion").toString(),
+                                  fPath,
+                                  QString(), // todo: external URL
+                                  ItemData::NotInstalled,
+                                  findNow.value("UIDownloadTotal").toString("0"),
+                                  findNow.value("UIDownloadMonthly").toString("0"),
+                                  findNow.value("UIFavoriteTotal").toString("0"),
+                                  findNow.value("UIFileInfoURL").toString(),
+                                  findNow.value("UIVersion").toString()));
+
+    }
+    endInsertRows();
+    emit dataChanged(createIndex(0, 0), createIndex(addonList.count() - 1, 0));
+    emit percent(total, total, "");
 }
 
 void QAddonListModel::uninstallAddonClicked() {
@@ -551,7 +585,7 @@ void QAddonListModel::reinstallAddonClicked() {
                 const QDir &dstDir = QDir(addonFolderPath + QDir::separator() + addonName);
 
                 disconnect(qsw, &QFileSystemWatcher::directoryChanged,
-                        this, &QAddonListModel::refresh);
+                           this, &QAddonListModel::refresh);
                 prepareAndCleanDestDir(dstDir);
                 copyPath(srcDir.absolutePath(), dstDir.absolutePath());
                 srcDir.removeRecursively();
@@ -612,7 +646,7 @@ void QAddonListModel::prepareAndCleanDestDir(const QDir &destDir) const {
 }
 
 void QAddonListModel::onPercentDownload(qint64 c, qint64 t) {
-    if(!t) {
+    if (!t) {
         emit percent(100, 100);
     } else {
         emit percent(c, t, tr("Downloading from site"));
@@ -621,7 +655,7 @@ void QAddonListModel::onPercentDownload(qint64 c, qint64 t) {
 
 void QAddonListModel::setHeaderTitle(const QString &hTitle) {
     QAddonListModel::headerTitle = hTitle;
-    emit headerDataChanged(Qt::Horizontal, 0,0);
+    emit headerDataChanged(Qt::Horizontal, 0, 0);
 }
 
 
