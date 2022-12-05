@@ -84,10 +84,17 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->refreshButton, &QToolButton::clicked, this, [=]() {
         ui->controls->setCurrentIndex(0);
         model->setHeaderTitle(tr("Installed Addons List"));
+        backupAction->setEnabled(true);
+        uninstallAction->setEnabled(true);
+        reinstallAction->setText(tr("Reinstall Or Update"));
     });
+
     connect(ui->findMoreButton, &QToolButton::clicked, this, [=]() {
         ui->controls->setCurrentIndex(1);
         model->setHeaderTitle(tr("Find More Addons"));
+        backupAction->setEnabled(false);
+        uninstallAction->setEnabled(false);
+        reinstallAction->setText(tr("Install"));
     });
     connect(ui->actionSettings, &QAction::triggered, this, &MainWindow::settingsClicked);
     connect(this, &MainWindow::setup, this, &MainWindow::settingsClicked);
