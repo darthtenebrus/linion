@@ -84,6 +84,9 @@ QVariant QAddonListModel::data(const QModelIndex &index, int role) const {
         case QAddonListModel::FileInfoURLRole:
             value = addonList.at(index.row()).getFileInfoUrl();
             break;
+        case QAddonListModel::StatusRole:
+            value = addonList.at(index.row()).isStatus();
+            break;
         default:
             break;
     }
@@ -197,6 +200,16 @@ void QAddonListModel::refresh() {
         refreshFolderList();
         setTopIndex();
     }
+}
+
+void QAddonListModel::refreshFromExternal() {
+    refreshFromSiteList();
+}
+
+void QAddonListModel::refreshFromSiteList() {
+#ifdef _DEBUG
+    qDebug() << "Refresh from ESO Site";
+#endif
 }
 
 void QAddonListModel::uninstallAddonClicked() {
@@ -482,6 +495,8 @@ void QAddonListModel::reinstallAddonClicked() {
 
     const QModelIndex &index = selectedSet[0];
     if (index.isValid()) {
+
+        const ItemData::ItemStatus &cStatus = index.data(QAddonListModel::StatusRole).value<ItemData::ItemStatus>();
         QRegExp rx(R"(info([0-9]*)-([^\.]+)\.html)");
         QString &&urlPath = index.data(QAddonListModel::FileInfoURLRole).toString();
         QString &downPath = urlPath.replace(rx, R"(dl\1/\2.zip)");
@@ -535,20 +550,27 @@ void QAddonListModel::reinstallAddonClicked() {
                 const QString &addonName = srcDir.dirName();
                 const QDir &dstDir = QDir(addonFolderPath + QDir::separator() + addonName);
 
+                disconnect(qsw, &QFileSystemWatcher::directoryChanged,
+                        this, &QAddonListModel::refresh);
                 prepareAndCleanDestDir(dstDir);
                 copyPath(srcDir.absolutePath(), dstDir.absolutePath());
                 srcDir.removeRecursively();
 
                 emit percent(100, 100);
                 //emit refreshSelf();
-                ItemData *rData = prepareAndFillDataByAddonName(addonName);
-                if (rData) {
-                    addonList.replace(index.row(), *rData);
-                    delete rData;
-                    emit dataChanged(index, index);
-                    emit currentRowDetailChanged(index, index);
+                if (cStatus != ItemData::NotInstalled) {
+                    ItemData *rData = prepareAndFillDataByAddonName(addonName);
+                    if (rData) {
+                        addonList.replace(index.row(), *rData);
+                        delete rData;
+                        emit dataChanged(index, index);
+                        emit currentRowDetailChanged(index, index);
+                    }
+                } else {
+                    emit backToInstalled(true);
                 }
-
+                connect(qsw, &QFileSystemWatcher::directoryChanged,
+                        this, &QAddonListModel::refresh);
             } else {
                 if (file) {
                     file->close();
@@ -601,5 +623,7 @@ void QAddonListModel::setHeaderTitle(const QString &hTitle) {
     QAddonListModel::headerTitle = hTitle;
     emit headerDataChanged(Qt::Horizontal, 0,0);
 }
+
+
 
 

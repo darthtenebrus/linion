@@ -49,6 +49,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->addonTreeView->setItemDelegate(new QvObjectDelegate(ui->addonTreeView));
     connect(this, &MainWindow::doRefresh, model, &QAddonListModel::refresh);
+    connect(this, &MainWindow::doRefreshFromExternal, model, &QAddonListModel::refreshFromExternal);
+
     connect(configDialog, &QDialog::accepted, this, &MainWindow::configAccepted);
     connect(backupAction, &QAction::triggered, model, &QAddonListModel::backupAddonClicked);
     connect(reinstallAction, &QAction::triggered, model, &QAddonListModel::reinstallAddonClicked);
@@ -79,15 +81,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->backupButton, &QToolButton::clicked, model, &QAddonListModel::backupAllClicked);
     connect(model, &QAbstractListModel::dataChanged, this, &MainWindow::allChanged);
     connect(model, &QAddonListModel::percent, this, &MainWindow::updateProgressPercent);
-    connect(ui->refreshButton, &QToolButton::clicked, model, &QAddonListModel::refresh);
 
-    connect(ui->refreshButton, &QToolButton::clicked, this, [=]() {
-        ui->controls->setCurrentIndex(0);
-        model->setHeaderTitle(tr("Installed Addons List"));
-        backupAction->setEnabled(true);
-        uninstallAction->setEnabled(true);
-        reinstallAction->setText(tr("Reinstall Or Update"));
-    });
+    connect(ui->refreshButton, &QToolButton::clicked, this, &MainWindow::refreshListClicked);
+    connect(model, &QAddonListModel::backToInstalled, this, &MainWindow::refreshListClicked);
 
     connect(ui->findMoreButton, &QToolButton::clicked, this, [=]() {
         ui->controls->setCurrentIndex(1);
@@ -95,6 +91,7 @@ MainWindow::MainWindow(QWidget *parent) :
         backupAction->setEnabled(false);
         uninstallAction->setEnabled(false);
         reinstallAction->setText(tr("Install"));
+        emit doRefreshFromExternal();
     });
     connect(ui->actionSettings, &QAction::triggered, this, &MainWindow::settingsClicked);
     connect(this, &MainWindow::setup, this, &MainWindow::settingsClicked);
@@ -244,6 +241,15 @@ void MainWindow::closeEvent(QCloseEvent *event) {
     }
     settings.sync();
     QWidget::closeEvent(event);
+}
+
+void MainWindow::refreshListClicked(bool clicked) {
+        ui->controls->setCurrentIndex(0);
+        model->setHeaderTitle(tr("Installed Addons List"));
+        backupAction->setEnabled(true);
+        uninstallAction->setEnabled(true);
+        reinstallAction->setText(tr("Reinstall Or Update"));
+        emit doRefresh();
 }
 
 

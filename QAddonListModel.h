@@ -31,7 +31,8 @@ public:
         DownloadMonthlyRole,
         FavoriteTotalRole,
         FileInfoURLRole,
-        SiteVersionRole
+        SiteVersionRole,
+        StatusRole
     };
 
     explicit QAddonListModel(const PreferencesType &settings, QObject *parent);
@@ -74,6 +75,7 @@ private:
 
     void refreshFolderList();
     void refreshESOSiteList();
+    void refreshFromSiteList();
     void setTopIndex();
     const QString &cleanColorizers(QString &input) const;
     void processBackup(const QString &pPath) const;
@@ -88,10 +90,12 @@ private:
 signals:
     void percent(int current, int total, const QString &msg = "");
     void currentRowDetailChanged(const QModelIndex &current, const QModelIndex &prev);
+    void backToInstalled(bool);
 
 
 public slots:
     void refresh();
+    void refreshFromExternal();
     void uninstallAddonClicked();
     void backupAddonClicked();
     void reinstallAddonClicked();

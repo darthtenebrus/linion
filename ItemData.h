@@ -6,6 +6,7 @@
 #define LINION_ITEMDATA_H
 
 #include <QString>
+#include <QMetaType>
 
 class ItemData {
 
@@ -76,5 +77,6 @@ public:
     void setExternalPicUrl(const QString &externalPicUrl);
 };
 
+Q_DECLARE_METATYPE(ItemData::ItemStatus);
 
 #endif //LINION_ITEMDATA_H

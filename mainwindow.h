@@ -59,6 +59,7 @@ private:
 
 signals:
     void doRefresh();
+    void doRefreshFromExternal();
     void setup(bool clicked = true);
 
 
@@ -69,6 +70,7 @@ public slots:
     void allChanged(const QModelIndex &first, const QModelIndex &last);
     void updateProgressPercent(int current, int total, const QString &msg);
     void settingsClicked(bool checked);
+    void refreshListClicked(bool);
     void configAccepted();
 
 };
