@@ -149,9 +149,9 @@ void MainWindow::aboutQtAction(bool param) {
 
 void MainWindow::allChanged(const QModelIndex &first, const QModelIndex &last) {
 
-    const auto *model = qobject_cast<const QAddonListModel *>(first.model());
+    const auto *cModel = qobject_cast<const QAddonListModel *>(first.model());
 
-    if (model->getAddonList().isEmpty()) {
+    if (cModel->getAddonList().isEmpty()) {
         QMessageBox::StandardButton answer = QMessageBox::question(this, tr("Information"),
                                                                    tr("Unable to locate addons. Do you want "
                                                                       "to open the settings dialog and "
