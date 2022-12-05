@@ -55,6 +55,7 @@ public:
     void setHeaderTitle(const QString &);
     void disconnectWatcher();
     void connectWatcher();
+    void refreshFromExternal();
 
 private:
     static QString listUrl;
@@ -97,7 +98,6 @@ signals:
 
 public slots:
     void refresh();
-    void refreshFromExternal();
     void uninstallAddonClicked();
     void backupAddonClicked();
     void reinstallAddonClicked();

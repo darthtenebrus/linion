@@ -121,13 +121,14 @@
     <message>
         <location filename="mainwindow.ui" line="109"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="273"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="273"/>
         <source>Backup All Installed Addons</source>
         <translation>Сделать резервные копии всех установленных аддонов</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="115"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="275"/>
-        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="273"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="275"/>
         <source>Backup Installed</source>
         <oldsource>Backup Installed Addons</oldsource>
         <translation>Сохранить установленные</translation>

@@ -664,12 +664,14 @@ void QAddonListModel::setHeaderTitle(const QString &hTitle) {
 }
 
 void QAddonListModel::disconnectWatcher() {
-    disconnect(qsw, &QFileSystemWatcher::directoryChanged,
-               this, &QAddonListModel::refresh);
-    qsw->removePath(addonFolderPath);
-    qsw->removePath(backupPath);
-    delete qsw;
-    qsw = nullptr;
+    if (qsw) {
+        disconnect(qsw, &QFileSystemWatcher::directoryChanged,
+                   this, &QAddonListModel::refresh);
+        qsw->removePath(addonFolderPath);
+        qsw->removePath(backupPath);
+        delete qsw;
+        qsw = nullptr;
+    }
 }
 
 void QAddonListModel::connectWatcher() {
