@@ -7,10 +7,12 @@
 ItemData::ItemData(const QString &author, const QString &addonTitle, const QString &version,
                    const QString &addonPath, const QString &description, const ItemStatus &status,
                    const QString &downloadTotal, const QString &downloadMonthly,
-                   const QString &favoriteTotal, const QString &fileInfoUrl, const QString &siteVersion)
+                   const QString &favoriteTotal, const QString &fileInfoUrl, const QString &siteVersion,
+                   const QString &externalPicUrl)
         : addonTitle(addonTitle), version(version), addonPath(addonPath), status(status), author(author),
         description(description),DownloadTotal(downloadTotal), DownloadMonthly(downloadMonthly),
-        FavoriteTotal(favoriteTotal), FileInfoURL(fileInfoUrl), SiteVersion(siteVersion) {}
+        FavoriteTotal(favoriteTotal), FileInfoURL(fileInfoUrl), SiteVersion(siteVersion),
+        ExternalPicURL(externalPicUrl) {}
 
 const QString &ItemData::getAddonTitle() const {
     return addonTitle;

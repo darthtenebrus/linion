@@ -37,7 +37,7 @@ public:
     ItemData(const QString &author, const QString &addonTitle, const QString &version,
              const QString &addonPath, const QString &description, const ItemStatus &status,
              const QString &downloadTotal, const QString &downloadMonthly, const QString &favoriteTotal,
-             const QString &fileInfoUrl, const QString &siteVersion);
+             const QString &fileInfoUrl, const QString &siteVersion, const QString &externalPicUrl = QString());
 
     [[nodiscard]]
     const QString &getAddonTitle() const;

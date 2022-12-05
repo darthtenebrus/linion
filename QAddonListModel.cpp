@@ -228,6 +228,8 @@ void QAddonListModel::refreshFromSiteList() {
         if (QFile(fPath).exists()) {
             continue;
         }
+        const QJsonArray &thumbs = findNow.value("UIIMG_Thumbs").toArray();
+
         addonList.append(ItemData(findNow.value("UIAuthorName").toString(),
                                   findNow.value("UIName").toString(),
                                   findNow.value("UIVersion").toString(),
@@ -238,7 +240,8 @@ void QAddonListModel::refreshFromSiteList() {
                                   findNow.value("UIDownloadMonthly").toString("0"),
                                   findNow.value("UIFavoriteTotal").toString("0"),
                                   findNow.value("UIFileInfoURL").toString(),
-                                  findNow.value("UIVersion").toString()));
+                                  findNow.value("UIVersion").toString(),
+                                  !thumbs.isEmpty() ? thumbs[0].toString() : ""));
 
     }
     endInsertRows();
