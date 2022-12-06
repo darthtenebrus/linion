@@ -53,8 +53,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(backupAction, &QAction::triggered, model, &QAddonListModel::backupAddonClicked);
     connect(reinstallAction, &QAction::triggered, model, &QAddonListModel::reinstallAddonClicked);
     connect(uninstallAction, &QAction::triggered, model, &QAddonListModel::uninstallAddonClicked);
-    
-    
+
+
     connect(visitSiteAction, &QAction::triggered, model, [=]() {
 
         const QModelIndexList &selectedSet = ui->addonTreeView->selectionModel()->selectedIndexes();
@@ -68,7 +68,7 @@ MainWindow::MainWindow(QWidget *parent) :
             QDesktopServices::openUrl(QUrl(url));
         }
     });
-    
+
     connect(ui->addonTreeView->selectionModel(), &QItemSelectionModel::currentRowChanged,
             this, &MainWindow::currentChanged);
 
@@ -84,7 +84,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(model, &QAddonListModel::backToInstalled, this, &MainWindow::refreshListClicked);
 
     connect(ui->findMoreButton, &QToolButton::clicked, this, [=]() {
-        ui->controls->setCurrentIndex(1);
+        ui->backupButton->setVisible(false);
         model->setHeaderTitle(tr("Addons available"));
         backupAction->setEnabled(false);
         uninstallAction->setEnabled(false);
@@ -96,7 +96,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this, &MainWindow::setup, this, &MainWindow::settingsClicked);
     connect(ui->setupButton, &QToolButton::clicked, this, &MainWindow::settingsClicked);
 
-    ui->controls->setCurrentIndex(0);
+    ui->backupButton->setVisible(true);
 
 }
 
@@ -121,7 +121,7 @@ void MainWindow::showEvent(QShowEvent *event) {
 
 void MainWindow::writeSettings(const PreferencesType &data) {
 
-    for (const QString &key : data.keys()) {
+    for (const QString &key: data.keys()) {
         settings.setValue(key, data.value(key));
     }
     settings.sync();
@@ -243,13 +243,13 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 }
 
 void MainWindow::refreshListClicked(bool clicked) {
-        ui->controls->setCurrentIndex(0);
-        model->setHeaderTitle(tr("Installed Addons List"));
-        backupAction->setEnabled(true);
-        uninstallAction->setEnabled(true);
-        reinstallAction->setText(tr("Reinstall Or Update"));
-        model->connectWatcher();
-        model->refresh();
+    ui->backupButton->setVisible(true);
+    model->setHeaderTitle(tr("Installed Addons List"));
+    backupAction->setEnabled(true);
+    uninstallAction->setEnabled(true);
+    reinstallAction->setText(tr("Reinstall Or Update"));
+    model->connectWatcher();
+    model->refresh();
 }
 
 

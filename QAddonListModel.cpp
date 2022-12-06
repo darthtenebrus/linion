@@ -109,9 +109,7 @@ ItemData *QAddonListModel::prepareAndFillDataByAddonName(const QString &addonNam
         file.setTextModeEnabled(false);
         const QString &allData = file.readAll();
         const QStringList &splitted = allData.split(QRegularExpression(R"([\r\n]+)"));
-#ifdef _DEBUG
-        qDebug() << splitted;
-#endif
+
         for (const QString &line : splitted) {
 
             QRegularExpressionMatch match = re.match(line);
