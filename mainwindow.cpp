@@ -18,11 +18,17 @@ MainWindow::MainWindow(QWidget *parent) :
         settings(QSettings::NativeFormat, QSettings::UserScope, "linion", "config") {
     ui->setupUi(this);
 
+    proxyModel = new QSortFilterProxyModel(ui->addonTreeView);
     model = new QAddonListModel(fillDataFromSettings(),
                                 ui->addonTreeView);
+
     model->setHeaderTitle(tr("Installed Addons List"));
+    proxyModel->setSourceModel(model);
+    proxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
+    proxyModel->setFilterRole(Qt::DisplayRole);
+
     ui->addonTreeView->setMouseTracking(true);
-    ui->addonTreeView->setModel(model);
+    ui->addonTreeView->setModel(proxyModel);
     contextMenu = new QMenu(ui->addonTreeView);
     ui->addonTreeView->setContextMenuPolicy(Qt::ActionsContextMenu);
     backupAction = new QAction(QIcon::fromTheme("folder"), tr("Backup"), contextMenu);
@@ -75,6 +81,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(model, &QAddonListModel::currentRowDetailChanged,
             this, &MainWindow::currentChanged);
 
+    connect(ui->searchEdit, &QLineEdit::textChanged, proxyModel, &QSortFilterProxyModel::setFilterWildcard);
     connect(ui->actionAboutQt, &QAction::triggered, this, &MainWindow::aboutQtAction);
     connect(ui->backupButton, &QToolButton::clicked, model, &QAddonListModel::backupAllClicked);
     connect(model, &QAbstractListModel::dataChanged, this, &MainWindow::allChanged);
@@ -110,6 +117,7 @@ MainWindow::~MainWindow() {
     delete progressBar;
     delete configDialog;
     delete model;
+    delete proxyModel;
     delete contextMenu;
     delete ui;
 }

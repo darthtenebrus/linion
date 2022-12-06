@@ -170,7 +170,7 @@ void QAddonListModel::refreshFolderList() {
     QDir dir = QDir(addonFolderPath);
     const QFileInfoList &dirList = dir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot);
     int total = dirList.count();
-    beginInsertRows(QModelIndex(), 0, dirList.count() - 1);
+
     for (int i = 0; i < total; i++) {
         emit percent(i, total, tr("Refresh"));
         const QString &addonName = dirList.at(i).fileName();
@@ -178,11 +178,13 @@ void QAddonListModel::refreshFolderList() {
         if (!rData) {
             continue;
         }
+        beginInsertRows(QModelIndex(), addonList.count(), addonList.count());
         addonList.append(*rData);
+        endInsertRows();
         delete rData;
 
     }
-    endInsertRows();
+
     emit dataChanged(createIndex(0, 0), createIndex(addonList.count() - 1, 0));
     emit percent(total, total, "");
 }
@@ -219,9 +221,9 @@ void QAddonListModel::refreshFromSiteList() {
 
     int total = esoSiteList.count() - 1;
     emit percent(0, total, tr("Updating"));
-    beginInsertRows(QModelIndex(), 0, total);
+
     int i = 0;
-    for (const QJsonObject &findNow: esoSiteList) {
+    for (const QJsonObject &findNow : esoSiteList) {
         i++;
         emit percent(i, total, tr("Updating"));
         const QString &addonName = findNow.value("UIDir").toArray()[0].toString();
@@ -232,6 +234,7 @@ void QAddonListModel::refreshFromSiteList() {
         }
         const QJsonArray &thumbs = findNow.value("UIIMG_Thumbs").toArray();
 
+        beginInsertRows(QModelIndex(), addonList.count(), addonList.count());
         addonList.append(ItemData(findNow.value("UIAuthorName").toString(),
                                   findNow.value("UIName").toString(),
                                   findNow.value("UIVersion").toString(),
@@ -244,9 +247,9 @@ void QAddonListModel::refreshFromSiteList() {
                                   findNow.value("UIFileInfoURL").toString(),
                                   findNow.value("UIVersion").toString(),
                                   !thumbs.isEmpty() ? thumbs[0].toString() : ""));
+        endInsertRows();
 
     }
-    endInsertRows();
     emit dataChanged(createIndex(0, 0), createIndex(addonList.count() - 1, 0));
     emit percent(total, total, "");
 }

@@ -8,6 +8,7 @@
 #include <ui_mainwindow.h>
 #include <QFileInfoList>
 #include <QSettings>
+#include <QSortFilterProxyModel>
 #include "QAddonListModel.h"
 #include "configdialog.h"
 
@@ -28,6 +29,7 @@ protected:
 private:
     Ui::MainWindow *ui;
     QAddonListModel *model;
+    QSortFilterProxyModel *proxyModel;
     ConfigDialog *configDialog;
     QProgressBar *progressBar;
     QMenu *contextMenu;
