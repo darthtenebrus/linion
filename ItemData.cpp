@@ -8,11 +8,11 @@ ItemData::ItemData(const QString &author, const QString &addonTitle, const QStri
                    const QString &addonPath, const QString &description, const ItemStatus &status,
                    const QString &downloadTotal, const QString &downloadMonthly,
                    const QString &favoriteTotal, const QString &fileInfoUrl, const QString &siteVersion,
-                   const QString &externalPicUrl)
+                   const QPixmap &externalPic)
         : addonTitle(addonTitle), version(version), addonPath(addonPath), status(status), author(author),
-        description(description),DownloadTotal(downloadTotal), DownloadMonthly(downloadMonthly),
-        FavoriteTotal(favoriteTotal), FileInfoURL(fileInfoUrl), SiteVersion(siteVersion),
-        ExternalPicURL(externalPicUrl) {}
+          description(description), DownloadTotal(downloadTotal), DownloadMonthly(downloadMonthly),
+          FavoriteTotal(favoriteTotal), FileInfoURL(fileInfoUrl), SiteVersion(siteVersion),
+          ExternalPic(externalPic) {}
 
 const QString &ItemData::getAddonTitle() const {
     return addonTitle;
@@ -58,10 +58,7 @@ const QString &ItemData::getSiteVersion() const {
     return SiteVersion;
 }
 
-const QString &ItemData::getExternalPicUrl() const {
-    return ExternalPicURL;
+const QPixmap &ItemData::getExternalPic() const {
+    return ExternalPic;
 }
 
-void ItemData::setExternalPicUrl(const QString &externalPicUrl) {
-    ExternalPicURL = externalPicUrl;
-}

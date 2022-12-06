@@ -18,6 +18,7 @@
 #include <QFileSystemWatcher>
 #include <QTreeView>
 #include <QProcess>
+#include <QEventLoop>
 
 QString QAddonListModel::listUrl = "https://api.mmoui.com/v3/game/ESO/filelist.json";
 
@@ -65,9 +66,15 @@ QVariant QAddonListModel::data(const QModelIndex &index, int role) const {
         case QAddonListModel::DescriptionRole:
             value = addonList.at(index.row()).getDescription();
             break;
-        case Qt::DecorationRole:
-            value = (addonList.at(index.row()).isStatus() == ItemData::InstalledBackedUp ?
-                     ":/images/green_check.png" : ":/images/red_cross.png");
+        case Qt::DecorationRole: {
+            const ItemData::ItemStatus &cStatus = addonList.at(index.row()).isStatus();
+            if (cStatus != ItemData::NotInstalled) {
+                value = QPixmap(addonList.at(index.row()).isStatus() == ItemData::InstalledBackedUp ?
+                                ":/images/green_check.png" : ":/images/red_cross.png");
+            } else {
+                value = addonList.at(index.row()).getExternalPic();
+            }
+        }
             break;
         case QAddonListModel::DownloadTotalRole:
             value = addonList.at(index.row()).getDownloadTotal();
@@ -223,6 +230,7 @@ void QAddonListModel::refreshFromSiteList() {
     emit percent(0, total, tr("Updating"));
 
     int i = 0;
+
     for (const QJsonObject &findNow : esoSiteList) {
         i++;
         emit percent(i, total, tr("Updating"));
@@ -233,6 +241,8 @@ void QAddonListModel::refreshFromSiteList() {
             continue;
         }
         const QJsonArray &thumbs = findNow.value("UIIMG_Thumbs").toArray();
+        const QString &thumb = !thumbs.isEmpty() ? thumbs[0].toString() : "";
+
 
         beginInsertRows(QModelIndex(), addonList.count(), addonList.count());
         addonList.append(ItemData(findNow.value("UIAuthorName").toString(),
@@ -246,8 +256,9 @@ void QAddonListModel::refreshFromSiteList() {
                                   findNow.value("UIFavoriteTotal").toString("0"),
                                   findNow.value("UIFileInfoURL").toString(),
                                   findNow.value("UIVersion").toString(),
-                                  !thumbs.isEmpty() ? thumbs[0].toString() : ""));
+                                  QPixmap(":/images/red_cross.png")));
         endInsertRows();
+
 
     }
     emit dataChanged(createIndex(0, 0), createIndex(addonList.count() - 1, 0));

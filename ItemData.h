@@ -7,6 +7,7 @@
 
 #include <QString>
 #include <QMetaType>
+#include <QPixmap>
 
 class ItemData {
 
@@ -29,7 +30,7 @@ private:
     QString FavoriteTotal;
     QString FileInfoURL;
     QString SiteVersion;
-    QString ExternalPicURL;
+    QPixmap ExternalPic;
 
 
 public:
@@ -37,7 +38,7 @@ public:
     ItemData(const QString &author, const QString &addonTitle, const QString &version,
              const QString &addonPath, const QString &description, const ItemStatus &status,
              const QString &downloadTotal, const QString &downloadMonthly, const QString &favoriteTotal,
-             const QString &fileInfoUrl, const QString &siteVersion, const QString &externalPicUrl = QString());
+             const QString &fileInfoUrl, const QString &siteVersion, const QPixmap &externalPic = QPixmap());
 
     [[nodiscard]]
     const QString &getAddonTitle() const;
@@ -72,9 +73,9 @@ public:
     [[nodiscard]]
     const QString &getSiteVersion() const;
 
-    const QString &getExternalPicUrl() const;
+    [[nodiscard]]
+    const QPixmap &getExternalPic() const;
 
-    void setExternalPicUrl(const QString &externalPicUrl);
 };
 
 Q_DECLARE_METATYPE(ItemData::ItemStatus);

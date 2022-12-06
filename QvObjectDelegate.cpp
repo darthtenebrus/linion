@@ -37,7 +37,7 @@ void QvObjectDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
 
     painter->setClipRect(option.rect);
     painter->translate(option.rect.topLeft());
-    const QPixmap &pix = QPixmap(index.data(Qt::DecorationRole).toString());
+    const QPixmap &pix = index.data(Qt::DecorationRole).value<QPixmap>();
     painter->translate(ICON_LEFT_OFFSET, (sizeHint(option, index).height() - pix.height()) / 2);
 
     painter->drawPixmap(0,0,pix);
