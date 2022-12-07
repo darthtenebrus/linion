@@ -84,7 +84,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->searchEdit, &QLineEdit::textChanged, proxyModel, &QSortFilterProxyModel::setFilterWildcard);
     connect(ui->actionAboutQt, &QAction::triggered, this, &MainWindow::aboutQtAction);
     connect(ui->backupButton, &QToolButton::clicked, model, &QAddonListModel::backupAllClicked);
-    connect(model, &QAbstractListModel::dataChanged, this, &MainWindow::allChanged);
+    connect(model, &QAddonListModel::addonsListChanged, this, &MainWindow::allChanged);
     connect(model, &QAddonListModel::percent, this, &MainWindow::updateProgressPercent);
 
     connect(ui->refreshButton, &QToolButton::clicked, this, &MainWindow::refreshListClicked);
@@ -104,6 +104,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->setupButton, &QToolButton::clicked, this, &MainWindow::settingsClicked);
 
     ui->backupButton->setVisible(true);
+    model->refresh();
 
 }
 
@@ -120,11 +121,6 @@ MainWindow::~MainWindow() {
     delete proxyModel;
     delete contextMenu;
     delete ui;
-}
-
-void MainWindow::showEvent(QShowEvent *event) {
-    QWidget::showEvent(event);
-    model->refresh();
 }
 
 void MainWindow::writeSettings(const PreferencesType &data) {
@@ -154,11 +150,14 @@ void MainWindow::aboutQtAction(bool param) {
     QMessageBox::aboutQt(this);
 }
 
-void MainWindow::allChanged(const QModelIndex &first, const QModelIndex &last) {
+void MainWindow::allChanged() {
 
-    const auto *cModel = qobject_cast<const QAddonListModel *>(first.model());
+    if (model->getAddonList().isEmpty()) {
 
-    if (cModel->getAddonList().isEmpty()) {
+        ui->backupButton->setEnabled(false);
+        ui->findMoreButton->setEnabled(false);
+        ui->searchEdit->setEnabled(false);
+
         QMessageBox::StandardButton answer = QMessageBox::question(this, tr("Information"),
                                                                    tr("Unable to locate addons. Do you want "
                                                                       "to open the settings dialog and "
@@ -166,7 +165,10 @@ void MainWindow::allChanged(const QModelIndex &first, const QModelIndex &last) {
         if (answer == QMessageBox::StandardButton::Yes) {
             emit setup();
         }
-
+    } else {
+        ui->backupButton->setEnabled(true);
+        ui->findMoreButton->setEnabled(true);
+        ui->searchEdit->setEnabled(true);
     }
 }
 

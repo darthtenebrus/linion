@@ -94,6 +94,7 @@ signals:
     void percent(int current, int total, const QString &msg = "");
     void currentRowDetailChanged(const QModelIndex &current, const QModelIndex &prev);
     void backToInstalled(bool);
+    void addonsListChanged();
 
 
 public slots:
@@ -102,6 +103,8 @@ public slots:
     void backupAddonClicked();
     void reinstallAddonClicked();
     void backupAllClicked();
+
+    int columnCount(const QModelIndex &parent) const override;
 
 private slots:
     void replyFinished(QNetworkReply *replyFinished);

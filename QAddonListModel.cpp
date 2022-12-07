@@ -40,6 +40,10 @@ int QAddonListModel::rowCount(const QModelIndex &) const {
     return addonList.count();
 }
 
+int QAddonListModel::columnCount(const QModelIndex &parent) const {
+    return 1;
+}
+
 QVariant QAddonListModel::data(const QModelIndex &index, int role) const {
 
     QVariant value;
@@ -194,6 +198,8 @@ void QAddonListModel::refreshFolderList() {
 
     emit dataChanged(createIndex(0, 0), createIndex(addonList.count() - 1, 0));
     emit percent(total, total, "");
+    emit addonsListChanged();
+
 }
 
 const QString &QAddonListModel::cleanColorizers(QString &input) const {
@@ -440,13 +446,6 @@ void QAddonListModel::sort(int column, Qt::SortOrder order) {
 
         bool preCondition = ((ver1 != site1) && (ver2 == site2));
         bool postCondition = ((ver1 == site1) && (ver2 != site2));
-#ifdef _DEBUG
-        qDebug() << "1 title = " + v1.getAddonTitle();
-        qDebug() << "2 title = " + v2.getAddonTitle();
-
-        qDebug() << "pre = " << preCondition;
-        qDebug() << "post = " << postCondition;
-#endif
 
         if (preCondition) {
             return preCondition;
@@ -607,13 +606,16 @@ void QAddonListModel::reinstallAddonClicked() {
                 srcDir.removeRecursively();
 
                 emit percent(100, 100);
-                //emit refreshSelf();
+
                 if (cStatus != ItemData::NotInstalled) {
                     ItemData *rData = prepareAndFillDataByAddonName(addonName);
                     if (rData) {
+
+                        beginResetModel();
                         addonList.replace(index.row(), *rData);
                         delete rData;
-                        //emit dataChanged(index, index);
+                        endResetModel();
+                        emit dataChanged(index, index);
                         emit currentRowDetailChanged(index, index);
                     }
                 } else {

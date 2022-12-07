@@ -14,10 +14,6 @@
 
 class MainWindow : public QMainWindow {
 Q_OBJECT
-protected:
-
-    void showEvent(QShowEvent *event) override;
-
 public:
     MainWindow(QWidget *parent = nullptr);
 
@@ -67,7 +63,7 @@ signals:
 public slots:
     void currentChanged(const QModelIndex &current, const QModelIndex &prev);
     void aboutQtAction(bool);
-    void allChanged(const QModelIndex &first, const QModelIndex &last);
+    void allChanged();
     void updateProgressPercent(int current, int total, const QString &msg);
     void settingsClicked(bool checked);
     void refreshListClicked(bool);
