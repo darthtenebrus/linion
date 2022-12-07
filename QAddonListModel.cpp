@@ -72,7 +72,7 @@ QVariant QAddonListModel::data(const QModelIndex &index, int role) const {
                 value = QPixmap(addonList.at(index.row()).isStatus() == ItemData::InstalledBackedUp ?
                                 ":/images/green_check.png" : ":/images/red_cross.png");
             } else {
-                value = addonList.at(index.row()).getExternalPic();
+                value = QPixmap(":/images/red_cross.png");
             }
         }
             break;
@@ -255,8 +255,7 @@ void QAddonListModel::refreshFromSiteList() {
                                   findNow.value("UIDownloadMonthly").toString("0"),
                                   findNow.value("UIFavoriteTotal").toString("0"),
                                   findNow.value("UIFileInfoURL").toString(),
-                                  findNow.value("UIVersion").toString(),
-                                  QPixmap(":/images/red_cross.png")));
+                                  findNow.value("UIVersion").toString()));
         endInsertRows();
 
 
@@ -614,7 +613,7 @@ void QAddonListModel::reinstallAddonClicked() {
                     if (rData) {
                         addonList.replace(index.row(), *rData);
                         delete rData;
-                        emit dataChanged(index, index);
+                        //emit dataChanged(index, index);
                         emit currentRowDetailChanged(index, index);
                     }
                 } else {
