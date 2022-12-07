@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
         settings(QSettings::NativeFormat, QSettings::UserScope, "linion", "config") {
     ui->setupUi(this);
 
-    proxyModel = new QSortFilterProxyModel(ui->addonTreeView);
+    proxyModel = new QAddonProxyModel(ui->addonTreeView);
     model = new QAddonListModel(fillDataFromSettings(),
                                 ui->addonTreeView);
 

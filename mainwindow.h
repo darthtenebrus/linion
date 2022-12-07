@@ -11,6 +11,7 @@
 #include <QSortFilterProxyModel>
 #include "QAddonListModel.h"
 #include "configdialog.h"
+#include "QAddonProxyModel.h"
 
 class MainWindow : public QMainWindow {
 Q_OBJECT
@@ -25,7 +26,7 @@ protected:
 private:
     Ui::MainWindow *ui;
     QAddonListModel *model;
-    QSortFilterProxyModel *proxyModel;
+    QAddonProxyModel *proxyModel;
     ConfigDialog *configDialog;
     QProgressBar *progressBar;
     QMenu *contextMenu;

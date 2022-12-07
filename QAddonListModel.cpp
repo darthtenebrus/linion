@@ -432,36 +432,6 @@ QVariant QAddonListModel::headerData(int section, Qt::Orientation orientation, i
     return value;
 }
 
-void QAddonListModel::sort(int column, Qt::SortOrder order) {
-
-
-    emit layoutAboutToBeChanged();
-    qSort(addonList.begin(), addonList.end(), [&order](ItemData &v1, ItemData &v2) {
-
-        const QString &ver1 = v1.getVersion();
-        const QString &site1 = v1.getSiteVersion();
-
-        const QString &ver2 = v2.getVersion();
-        const QString &site2 = v2.getSiteVersion();
-
-        bool preCondition = ((ver1 != site1) && (ver2 == site2));
-        bool postCondition = ((ver1 == site1) && (ver2 != site2));
-
-        if (preCondition) {
-            return preCondition;
-        }
-
-        if (postCondition) {
-            return false;
-        }
-
-        return order == Qt::AscendingOrder ? v1.getAddonTitle() < v2.getAddonTitle() : v1.getAddonTitle() >
-                                                                                       v2.getAddonTitle();
-    });
-    emit layoutChanged();
-
-}
-
 void QAddonListModel::setModelData(const PreferencesType &data) {
 
     addonFolderPath = data.value("addonFolderPath").toString();
@@ -611,10 +581,10 @@ void QAddonListModel::reinstallAddonClicked() {
                     ItemData *rData = prepareAndFillDataByAddonName(addonName);
                     if (rData) {
 
-                        beginResetModel();
+                        //beginResetModel();
                         addonList.replace(index.row(), *rData);
                         delete rData;
-                        endResetModel();
+                        //endResetModel();
                         emit dataChanged(index, index);
                         emit currentRowDetailChanged(index, index);
                     }
