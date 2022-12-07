@@ -13,7 +13,7 @@ protected:
     bool lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const override;
 
 public:
-    explicit QAddonProxyModel(QObject *parent);
+    explicit QAddonProxyModel(QObject *parent = nullptr);
 };
 
 
