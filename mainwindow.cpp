@@ -78,9 +78,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->addonTreeView->selectionModel(), &QItemSelectionModel::currentRowChanged,
             this, &MainWindow::currentChanged);
 
-    connect(model, &QAddonListModel::currentRowDetailChanged,
-            this, &MainWindow::currentChanged);
-
     connect(ui->searchEdit, &QLineEdit::textChanged, proxyModel, &QSortFilterProxyModel::setFilterWildcard);
     connect(ui->actionAboutQt, &QAction::triggered, this, &MainWindow::aboutQtAction);
     connect(ui->backupButton, &QToolButton::clicked, model, &QAddonListModel::backupAllClicked);

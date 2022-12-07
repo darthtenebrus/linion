@@ -500,9 +500,9 @@ void QAddonListModel::refreshESOSiteList() {
 }
 
 void QAddonListModel::setTopIndex() {
-    const QModelIndex &index = this->index(0, 0);
+    auto *view = qobject_cast<QTreeView *>(parent());
+    const QModelIndex &index = view->model()->index(0, 0);
     if (index.isValid()) {
-        auto *view = qobject_cast<QTreeView *>(parent());
         view->setCurrentIndex(index);
     }
 }
@@ -517,7 +517,6 @@ void QAddonListModel::reinstallAddonClicked() {
     const QModelIndex &index = selectedSet[0];
     if (index.isValid()) {
 
-        const ItemData::ItemStatus &cStatus = index.data(QAddonListModel::StatusRole).value<ItemData::ItemStatus>();
         QRegExp rx(R"(info([0-9]*)-([^\.]+)\.html)");
         QString &&urlPath = index.data(QAddonListModel::FileInfoURLRole).toString();
         QString &downPath = urlPath.replace(rx, R"(dl\1/\2.zip)");
@@ -576,23 +575,8 @@ void QAddonListModel::reinstallAddonClicked() {
                 srcDir.removeRecursively();
 
                 emit percent(100, 100);
+                emit backToInstalled(true);
 
-                if (cStatus != ItemData::NotInstalled) {
-                    ItemData *rData = prepareAndFillDataByAddonName(addonName);
-                    if (rData) {
-
-                        //beginResetModel();
-                        addonList.replace(index.row(), *rData);
-                        delete rData;
-                        //endResetModel();
-                        emit dataChanged(index, index);
-                        emit currentRowDetailChanged(index, index);
-                    }
-                } else {
-                    emit backToInstalled(true);
-                }
-                connect(qsw, &QFileSystemWatcher::directoryChanged,
-                        this, &QAddonListModel::refresh);
             } else {
                 if (file) {
                     file->close();
