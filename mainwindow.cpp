@@ -218,9 +218,7 @@ void MainWindow::settingsClicked(bool) {
 }
 
 void MainWindow::configAccepted() {
-#ifdef _DEBUG
-    qDebug() << "Accepted";
-#endif
+
     const PreferencesType &data = configDialog->receiveData();
     writeSettings(data);
     model->setModelData(data);
