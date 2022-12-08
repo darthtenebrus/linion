@@ -97,7 +97,6 @@ MainWindow::MainWindow(QWidget *parent) :
         model->refreshFromExternal();
     });
     connect(ui->actionSettings, &QAction::triggered, this, &MainWindow::settingsClicked);
-    connect(this, &MainWindow::setup, this, &MainWindow::settingsClicked);
     connect(ui->setupButton, &QToolButton::clicked, this, &MainWindow::settingsClicked);
 
     ui->backupButton->setVisible(true);
@@ -160,7 +159,7 @@ void MainWindow::allChanged() {
                                                                       "to open the settings dialog and "
                                                                       "choose the path to the addons folder yourself?"));
         if (answer == QMessageBox::StandardButton::Yes) {
-            emit setup();
+            settingsClicked(true);
         }
     } else {
         ui->backupButton->setEnabled(true);

@@ -56,11 +56,6 @@ private:
     [[nodiscard]]
     PreferencesType fillDataFromSettings() const;
 
-signals:
-    void setup(bool clicked = true);
-
-
-
 public slots:
     void currentChanged(const QModelIndex &current, const QModelIndex &prev);
     void aboutQtAction(bool);
