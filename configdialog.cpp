@@ -15,15 +15,15 @@ ConfigDialog::ConfigDialog(QWidget *parent) :
         QDialog(parent), ui(new Ui::ConfigDialog) {
     ui->setupUi(this);
     ui->listWidget->setItemDelegate(new DialogItemDelegate(ui->listWidget));
-    connect(ui->buttonBox->button(QDialogButtonBox::Ok), SIGNAL(clicked()),
-            this, SLOT(accept()));
-    connect(ui->buttonBox->button(QDialogButtonBox::Cancel), SIGNAL(clicked()),
-            this, SLOT(reject()));
+    connect(ui->buttonBox->button(QDialogButtonBox::Ok), &QPushButton::clicked,
+            this, &QDialog::accept);
+    connect(ui->buttonBox->button(QDialogButtonBox::Cancel), &QPushButton::clicked,
+            this, &QDialog::reject);
     connect(ui->listWidget->selectionModel(), &QItemSelectionModel::currentRowChanged,
             this, &ConfigDialog::currentChanged);
 
-    connect(ui->addonFolderPathButton, SIGNAL(clicked()), this, SLOT(addonPathChoose()));
-    connect(ui->backupPathButton, SIGNAL(clicked()), this, SLOT(backupPathChoose()));
+    connect(ui->addonFolderPathButton, &QToolButton::clicked, this, &ConfigDialog::addonPathChoose);
+    connect(ui->backupPathButton, &QToolButton::clicked, this, &ConfigDialog::backupPathChoose);
 
     auto *locUi = ui;
     connect(ui->doNotUse, &QRadioButton::toggled, this, [locUi]() {
