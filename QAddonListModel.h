@@ -55,6 +55,7 @@ public:
     void disconnectWatcher();
     void connectWatcher();
     void refreshFromExternal();
+    void setTopIndex();
 
 private:
     static QString listUrl;
@@ -78,7 +79,7 @@ private:
     void refreshFolderList();
     void refreshESOSiteList();
     void refreshFromSiteList();
-    void setTopIndex();
+
     const QString &cleanColorizers(QString &input) const;
     void processBackup(const QString &pPath) const;
     void copyPath(const QString&, const QString&) const;

@@ -56,6 +56,7 @@ private:
 
     [[nodiscard]]
     PreferencesType fillDataFromSettings() const;
+    void tryToPisitionOnInstalled(const QString &qString) const;
 
 public slots:
     void currentChanged(const QModelIndex &current, const QModelIndex &prev);
@@ -65,7 +66,6 @@ public slots:
     void settingsClicked(bool checked);
     void configAccepted();
     void refreshListClicked(const QString &path = QString());
-
 };
 
 #endif //TENANTCONTROL_MAINWINDOW_H

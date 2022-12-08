@@ -86,6 +86,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->refreshButton, &QToolButton::clicked, this, [=]() {
         refreshListClicked();
+        model->setTopIndex();
     });
     connect(model, &QAddonListModel::backToInstalled, this, &MainWindow::refreshListClicked);
 
@@ -97,13 +98,14 @@ MainWindow::MainWindow(QWidget *parent) :
         reinstallAction->setText(tr("Install"));
         model->disconnectWatcher();
         model->refreshFromExternal();
+        model->setTopIndex();
     });
     connect(ui->actionSettings, &QAction::triggered, this, &MainWindow::settingsClicked);
     connect(ui->setupButton, &QToolButton::clicked, this, &MainWindow::settingsClicked);
 
     ui->backupButton->setVisible(true);
     model->refresh();
-
+    model->setTopIndex();
 }
 
 
@@ -225,6 +227,7 @@ void MainWindow::configAccepted() {
     writeSettings(data);
     model->setModelData(data);
     refreshListClicked();
+    model->setTopIndex();
 
 }
 
@@ -257,6 +260,10 @@ void MainWindow::refreshListClicked(const QString &path) {
     model->connectWatcher();
     model->refresh();
 
+    tryToPisitionOnInstalled(path);
+}
+
+void MainWindow::tryToPisitionOnInstalled(const QString &path) const {
     if (!path.isEmpty()) {
         const QList<ItemData> &addonList = model->getAddonList();
 
@@ -272,10 +279,12 @@ void MainWindow::refreshListClicked(const QString &path) {
         if (found) {
             const QModelIndex &sourceIndex = model->index(i, 0);
             if (!sourceIndex.isValid()) {
+                model->setTopIndex();
                 return;
             }
             const QModelIndex &destIndex = proxyModel->mapFromSource(sourceIndex);
             if (!destIndex.isValid()) {
+                model->setTopIndex();
                 return;
             }
             ui->addonTreeView->setCurrentIndex(destIndex);

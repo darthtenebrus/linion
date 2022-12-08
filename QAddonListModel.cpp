@@ -19,6 +19,7 @@
 #include <QTreeView>
 #include <QProcess>
 #include <QEventLoop>
+#include <QToolButton>
 
 QString QAddonListModel::listUrl = "https://api.mmoui.com/v3/game/ESO/filelist.json";
 
@@ -214,13 +215,11 @@ void QAddonListModel::refresh() {
         refreshESOSiteList();
     } else {
         refreshFolderList();
-        setTopIndex();
     }
 }
 
 void QAddonListModel::refreshFromExternal() {
     refreshFromSiteList();
-    setTopIndex();
 }
 
 void QAddonListModel::refreshFromSiteList() {
@@ -474,7 +473,6 @@ void QAddonListModel::replyFinished(QNetworkReply *reply) {
                     }
 
                 refreshFolderList();
-                setTopIndex();
             } else {
                 QMessageBox::critical(qobject_cast<QTreeView *>(parent()), tr("Fatal"),
                                       tr("Invalid data"));
