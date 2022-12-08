@@ -20,6 +20,7 @@ public:
 
     ~MainWindow();
 
+
 protected:
     void closeEvent(QCloseEvent *event) override;
 
@@ -62,8 +63,8 @@ public slots:
     void allChanged();
     void updateProgressPercent(int current, int total, const QString &msg);
     void settingsClicked(bool checked);
-    void refreshListClicked(bool);
     void configAccepted();
+    void refreshListClicked(const QString &path = QString());
 
 };
 

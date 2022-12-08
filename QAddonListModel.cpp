@@ -574,8 +574,10 @@ void QAddonListModel::reinstallAddonClicked() {
                 copyPath(srcDir.absolutePath(), dstDir.absolutePath());
                 srcDir.removeRecursively();
 
+                const QString &aPath = addonFolderPath + QDir::separator() + addonName +
+                        QDir::separator() + addonName + ".txt";
                 emit percent(100, 100);
-                emit backToInstalled(true);
+                emit backToInstalled(aPath);
 
             } else {
                 if (file) {

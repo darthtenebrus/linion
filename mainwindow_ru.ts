@@ -214,7 +214,7 @@
         <translation>Сохранить</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="92"/>
+        <location filename="mainwindow.cpp" line="94"/>
         <source>Addons available</source>
         <translation>Доступные аддоны</translation>
     </message>
@@ -241,32 +241,32 @@
         <translation>Обработка: %p%</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="95"/>
+        <location filename="mainwindow.cpp" line="97"/>
         <source>Install</source>
         <translation>Установить</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="137"/>
+        <location filename="mainwindow.cpp" line="139"/>
         <source>Version: %1</source>
         <translation>Версия: %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="138"/>
+        <location filename="mainwindow.cpp" line="140"/>
         <source>Author: %1</source>
         <translation>Автор: %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="157"/>
+        <location filename="mainwindow.cpp" line="159"/>
         <source>Information</source>
         <translation>Информация</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="158"/>
+        <location filename="mainwindow.cpp" line="160"/>
         <source>Unable to locate addons. Do you want to open the settings dialog and choose the path to the addons folder yourself?</source>
         <translation>Не могу найти аддоны. Хотите открыть диалог конфигурации и указать местоположение папки с аддонами?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="203"/>
+        <location filename="mainwindow.cpp" line="205"/>
         <source>All completed</source>
         <translation>Завершено</translation>
     </message>
@@ -336,7 +336,7 @@
         <location filename="QAddonListModel.cpp" line="479"/>
         <location filename="QAddonListModel.cpp" line="484"/>
         <location filename="QAddonListModel.cpp" line="535"/>
-        <location filename="QAddonListModel.cpp" line="586"/>
+        <location filename="QAddonListModel.cpp" line="588"/>
         <source>Fatal</source>
         <translation>Критическая ошибка</translation>
     </message>
@@ -356,8 +356,8 @@
         <translation>Ошибка ввода/вывода</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="592"/>
-        <location filename="QAddonListModel.cpp" line="624"/>
+        <location filename="QAddonListModel.cpp" line="594"/>
+        <location filename="QAddonListModel.cpp" line="626"/>
         <source>Downloading from site</source>
         <translation>Загрузка с сайта</translation>
     </message>

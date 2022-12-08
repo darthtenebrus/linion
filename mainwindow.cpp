@@ -84,7 +84,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(model, &QAddonListModel::addonsListChanged, this, &MainWindow::allChanged);
     connect(model, &QAddonListModel::percent, this, &MainWindow::updateProgressPercent);
 
-    connect(ui->refreshButton, &QToolButton::clicked, this, &MainWindow::refreshListClicked);
+    connect(ui->refreshButton, &QToolButton::clicked, this, [=]() {
+        refreshListClicked();
+    });
     connect(model, &QAddonListModel::backToInstalled, this, &MainWindow::refreshListClicked);
 
     connect(ui->findMoreButton, &QToolButton::clicked, this, [=]() {
@@ -222,7 +224,7 @@ void MainWindow::configAccepted() {
     const PreferencesType &data = configDialog->receiveData();
     writeSettings(data);
     model->setModelData(data);
-    refreshListClicked(true);
+    refreshListClicked();
 
 }
 
@@ -246,7 +248,7 @@ void MainWindow::closeEvent(QCloseEvent *event) {
     QWidget::closeEvent(event);
 }
 
-void MainWindow::refreshListClicked(bool clicked) {
+void MainWindow::refreshListClicked(const QString &path) {
     ui->backupButton->setVisible(true);
     model->setHeaderTitle(tr("Installed Addons List"));
     backupAction->setEnabled(true);
@@ -254,6 +256,32 @@ void MainWindow::refreshListClicked(bool clicked) {
     reinstallAction->setText(tr("Reinstall Or Update"));
     model->connectWatcher();
     model->refresh();
+
+    if (!path.isEmpty()) {
+        const QList<ItemData> &addonList = model->getAddonList();
+
+        int i = 0;
+        bool found = false;
+        for (ItemData o : addonList) {
+            if (o.getAddonPath() == path) {
+                found = true;
+                break;
+            }
+            i++;
+        }
+        if (found) {
+            const QModelIndex &sourceIndex = model->index(i, 0);
+            if (!sourceIndex.isValid()) {
+                return;
+            }
+            const QModelIndex &destIndex = proxyModel->mapFromSource(sourceIndex);
+            if (!destIndex.isValid()) {
+                return;
+            }
+            ui->addonTreeView->setCurrentIndex(destIndex);
+        }
+
+    }
 }
 
 

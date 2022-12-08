@@ -91,7 +91,7 @@ private:
 
 signals:
     void percent(int current, int total, const QString &msg = "");
-    void backToInstalled(bool);
+    void backToInstalled(const QString &);
     void addonsListChanged();
 
 
