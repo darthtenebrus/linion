@@ -11,7 +11,9 @@ BinaryDownloader::BinaryDownloader(const QString &urlName, QObject *parent) : QO
 }
 
 BinaryDownloader::~BinaryDownloader() {
-    delete request;
+    if (request) {
+        delete request;
+    }
     delete manager;
 }
 
