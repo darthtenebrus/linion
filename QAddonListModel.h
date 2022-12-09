@@ -66,8 +66,6 @@ private:
 
     QList<ItemData> addonList;
     QList<QJsonObject> esoSiteList;
-    QMap<QString, QString> esoDescriptions;
-    QMap<QString, QPixmap> esoImages;
 
     QString addonFolderPath;
     QString backupPath;

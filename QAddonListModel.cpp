@@ -31,8 +31,6 @@ QAddonListModel::QAddonListModel(const PreferencesType &settings, QObject *paren
     setModelData(settings);
     connectWatcher();
     bdl = new BinaryDownloader(QAddonListModel::listUrl, "application/json", this);
-    connect(bdl, &BinaryDownloader::reportSuccess, this, &QAddonListModel::onReportSuccess);
-    connect(bdl, &BinaryDownloader::reportError, this, &QAddonListModel::onReportError);
 
 }
 
@@ -227,9 +225,7 @@ void QAddonListModel::refreshFromExternal() {
 }
 
 void QAddonListModel::refreshFromSiteList() {
-#ifdef _DEBUG
-    qDebug() << esoDescriptions.size();
-#endif
+
     int totalCount = addonList.count();
     beginRemoveRows(QModelIndex(), 0, totalCount >= 1 ? totalCount - 1 : 0);
     addonList.clear();
@@ -256,7 +252,7 @@ void QAddonListModel::refreshFromSiteList() {
                                   findNow.value("UIName").toString(),
                                   findNow.value("UIVersion").toString(),
                                   fPath,
-                                  esoDescriptions.value(uid),
+                                  QString(),
                                   ItemData::NotInstalled,
                                   findNow.value("UIDownloadTotal").toString("0"),
                                   findNow.value("UIDownloadMonthly").toString("0"),
@@ -467,6 +463,8 @@ void QAddonListModel::onReportError(QNetworkReply *reply) {
 
 void QAddonListModel::onReportSuccess(const QByteArray &res, QNetworkReply *reply) {
 
+    disconnect(bdl, &BinaryDownloader::reportSuccess, this, &QAddonListModel::onReportSuccess);
+    disconnect(bdl, &BinaryDownloader::reportError, this, &QAddonListModel::onReportError);
     if (!res.isEmpty()) {
         const QJsonDocument &document = QJsonDocument::fromJson(res);
         if (!document.isEmpty() && document.isArray()) {
@@ -477,30 +475,15 @@ void QAddonListModel::onReportSuccess(const QByteArray &res, QNetworkReply *repl
 
             for (QJsonValue v: dataArray) {
                 if (v.isObject()) {
+
                     const QJsonObject &findNow = v.toObject();
+                     /*
                     const QJsonArray &thumbs = findNow.value("UIIMG_Thumbs").toArray();
                     const QString &thumb = !thumbs.isEmpty() ? thumbs[0].toString() : "";
                     const QString &uid = findNow.value("UID").toString();
                     const QString &fileInfoUrl = findNow.value("UIFileInfoURL").toString();
+                     */
                     esoSiteList.append(findNow);
-
-                    /*
-                    locBd.setDownloadUrl(fileInfoUrl);
-                    locBd.start();
-                    connect(&locBd, &BinaryDownloader::reportError, this,
-                            [=](QNetworkReply *rep) {
-#ifdef _DEBUG
-                                qDebug() << rep->errorString();
-#endif
-                            });
-                    connect(&locBd, &BinaryDownloader::reportSuccess, this,
-                            [=](const QByteArray &res, QNetworkReply *) {
-#ifdef _DEBUG
-                                qDebug() << "res" + res;
-#endif
-                                esoDescriptions.insert(uid, res);
-                            });
-                            */
                 }
                 i++;
                 emit percent(i, total, tr("Processing downloaded data"));
@@ -515,8 +498,8 @@ void QAddonListModel::onReportSuccess(const QByteArray &res, QNetworkReply *repl
 
 void QAddonListModel::refreshESOSiteList() {
 
-    esoDescriptions.clear();
-    esoImages.clear();
+    connect(bdl, &BinaryDownloader::reportSuccess, this, &QAddonListModel::onReportSuccess);
+    connect(bdl, &BinaryDownloader::reportError, this, &QAddonListModel::onReportError);
     emit percent(0, 100, tr("Updating data"));
     QNetworkReply *cRep = bdl->start();
     if (cRep) {
@@ -613,7 +596,9 @@ void QAddonListModel::reinstallAddonClicked() {
                 QMessageBox::critical(qobject_cast<QTreeView *>(parent()), tr("Fatal"),
                                       reply->errorString());
             }
+            reply->close();
             reply->deleteLater();
+            tmpRedirectManager->deleteLater();
             delete file;
         });
         emit percent(0, 100, tr("Downloading from site"));
