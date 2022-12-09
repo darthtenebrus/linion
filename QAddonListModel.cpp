@@ -256,7 +256,7 @@ void QAddonListModel::refreshFromSiteList() {
                                   findNow.value("UIName").toString(),
                                   findNow.value("UIVersion").toString(),
                                   fPath,
-                                  esoDescriptions.value(uid), // todo: external URL
+                                  esoDescriptions.value(uid),
                                   ItemData::NotInstalled,
                                   findNow.value("UIDownloadTotal").toString("0"),
                                   findNow.value("UIDownloadMonthly").toString("0"),
