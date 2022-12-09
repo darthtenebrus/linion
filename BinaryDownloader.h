@@ -14,7 +14,9 @@
 class BinaryDownloader : public QObject {
 Q_OBJECT
 public:
-    explicit BinaryDownloader(const QString &urlName = QString(), QObject *parent = nullptr);
+    explicit BinaryDownloader(const QString &urlName = QString(),
+                              const QByteArray &contentType = "application/json",
+                              QObject *parent = nullptr);
     ~BinaryDownloader() override;
 
     void setDownloadUrl(const QString &urlName);
@@ -24,6 +26,9 @@ private:
     QNetworkAccessManager *manager  {nullptr};
     QMap<QUrl, QByteArray> m_buffers;
     QNetworkRequest *request {nullptr};
+    QByteArray contentType;
+public:
+    void setContentType(const QByteArray &cType);
 
 signals:
     void reportSuccess(const QByteArray &, QNetworkReply *);

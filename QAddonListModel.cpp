@@ -30,7 +30,7 @@ QAddonListModel::QAddonListModel(const PreferencesType &settings, QObject *paren
 
     setModelData(settings);
     connectWatcher();
-    bdl = new BinaryDownloader(QAddonListModel::listUrl, this);
+    bdl = new BinaryDownloader(QAddonListModel::listUrl, "application/json", this);
     connect(bdl, &BinaryDownloader::reportSuccess, this, &QAddonListModel::onReportSuccess);
     connect(bdl, &BinaryDownloader::reportError, this, &QAddonListModel::onReportError);
 

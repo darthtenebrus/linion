@@ -4,7 +4,10 @@
 
 #include "BinaryDownloader.h"
 
-BinaryDownloader::BinaryDownloader(const QString &urlName, QObject *parent) : QObject(parent),
+BinaryDownloader::BinaryDownloader(const QString &urlName,
+                                   const QByteArray &contentType,
+                                   QObject *parent) : QObject(parent),
+                                   contentType(contentType),
     manager(new QNetworkAccessManager(this)) {
     connect(manager, &QNetworkAccessManager::finished, this, &BinaryDownloader::replyFinished);
     setDownloadUrl(urlName);
@@ -41,6 +44,9 @@ QNetworkReply *BinaryDownloader::start() {
 
         connect(currentReply, &QNetworkReply::readyRead, this, [=]() {
             auto *origin = qobject_cast<QNetworkReply *>(sender());
+#ifdef _DEBUG
+            qDebug() << origin->url();
+#endif
             QByteArray mb = m_buffers.value(origin->url());
             mb += origin->readAll();
             m_buffers.insert(origin->url(), mb);
@@ -59,9 +65,13 @@ void BinaryDownloader::setDownloadUrl(const QString &urlName) {
     if (!urlName.isEmpty()) {
         request = new QNetworkRequest(QUrl(urlName));
         request->setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
-        request->setRawHeader("Content-Type", "application/json");
+        request->setRawHeader("Content-Type", contentType);
 
     }
+}
+
+void BinaryDownloader::setContentType(const QByteArray &cType) {
+    contentType = cType;
 }
 
 
