@@ -12,6 +12,7 @@ BinaryDownloader::BinaryDownloader(const QString &urlName, QObject *parent) : QO
 }
 
 BinaryDownloader::~BinaryDownloader() {
+    delete request;
     delete manager;
 }
 
@@ -44,6 +45,12 @@ QNetworkReply *BinaryDownloader::start() {
 }
 
 void BinaryDownloader::setDownloadUrl(const QString &urlName) {
+
+    if (request) {
+        delete request;
+        request = nullptr;
+    }
+
     if (!urlName.isEmpty()) {
         request = new QNetworkRequest(QUrl(urlName));
         request->setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
