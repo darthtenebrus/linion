@@ -274,33 +274,33 @@
 <context>
     <name>QAddonListModel</name>
     <message>
-        <location filename="QAddonListModel.cpp" line="188"/>
+        <location filename="QAddonListModel.cpp" line="191"/>
         <source>Refresh</source>
         <translation>Обновить список</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="152"/>
+        <location filename="QAddonListModel.cpp" line="155"/>
         <source>No description</source>
         <translation>Нет описания</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="153"/>
+        <location filename="QAddonListModel.cpp" line="156"/>
         <source>Unknown Author</source>
         <translation>Автор неизвестен</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="154"/>
+        <location filename="QAddonListModel.cpp" line="157"/>
         <source>Unknown Title</source>
         <translation>Название неизвестно</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="155"/>
+        <location filename="QAddonListModel.cpp" line="158"/>
         <source>Unknown Version</source>
         <translation>Версия неизвестна</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="236"/>
-        <location filename="QAddonListModel.cpp" line="242"/>
+        <location filename="QAddonListModel.cpp" line="239"/>
+        <location filename="QAddonListModel.cpp" line="245"/>
         <source>Updating</source>
         <translation>Обновление</translation>
     </message>
@@ -333,37 +333,37 @@
         <translation>Сохранение одного аддона</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="471"/>
-        <location filename="QAddonListModel.cpp" line="479"/>
+        <location filename="QAddonListModel.cpp" line="473"/>
+        <location filename="QAddonListModel.cpp" line="487"/>
         <source>Processing downloaded data</source>
-        <translation type="unfinished"></translation>
+        <translation>Обработка загруженных данных</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="483"/>
-        <location filename="QAddonListModel.cpp" line="488"/>
-        <location filename="QAddonListModel.cpp" line="539"/>
-        <location filename="QAddonListModel.cpp" line="592"/>
+        <location filename="QAddonListModel.cpp" line="463"/>
+        <location filename="QAddonListModel.cpp" line="491"/>
+        <location filename="QAddonListModel.cpp" line="537"/>
+        <location filename="QAddonListModel.cpp" line="590"/>
         <source>Fatal</source>
         <translation>Критическая ошибка</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="484"/>
+        <location filename="QAddonListModel.cpp" line="492"/>
         <source>Invalid data</source>
         <translation>Некорректные данные</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="496"/>
+        <location filename="QAddonListModel.cpp" line="499"/>
         <source>Updating data</source>
         <translation>Обновление данных</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="540"/>
+        <location filename="QAddonListModel.cpp" line="538"/>
         <source>I/O error</source>
         <translation>Ошибка ввода/вывода</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="598"/>
-        <location filename="QAddonListModel.cpp" line="630"/>
+        <location filename="QAddonListModel.cpp" line="596"/>
+        <location filename="QAddonListModel.cpp" line="628"/>
         <source>Downloading from site</source>
         <translation>Загрузка с сайта</translation>
     </message>

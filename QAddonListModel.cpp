@@ -4,6 +4,7 @@
 
 #include "QAddonListModel.h"
 #include "preferences.h"
+#include "BinaryDownloader.h"
 #include <QPixmap>
 
 #ifdef _DEBUG
@@ -25,17 +26,19 @@
 QString QAddonListModel::listUrl = "https://api.mmoui.com/v3/game/ESO/filelist.json";
 
 QAddonListModel::QAddonListModel(const PreferencesType &settings, QObject *parent)
-        : QAbstractListModel(parent), manager(new QNetworkAccessManager(this)) {
+        : QAbstractListModel(parent) {
 
     setModelData(settings);
     connectWatcher();
-    connect(manager, &QNetworkAccessManager::finished, this, &QAddonListModel::replyFinished);
+    bdl = new BinaryDownloader(QAddonListModel::listUrl, this);
+    connect(bdl, &BinaryDownloader::reportSuccess, this, &QAddonListModel::onReportSuccess);
+    connect(bdl, &BinaryDownloader::reportError, this, &QAddonListModel::onReportError);
 
 }
 
 QAddonListModel::~QAddonListModel() {
+    delete bdl;
     disconnectWatcher();
-    delete manager;
 }
 
 int QAddonListModel::rowCount(const QModelIndex &) const {
@@ -123,7 +126,7 @@ ItemData *QAddonListModel::prepareAndFillDataByAddonName(const QString &addonNam
         const QString &allData = file.readAll();
         const QStringList &splitted = allData.split(QRegularExpression(R"([\r\n]+)"));
 
-        for (const QString &line : splitted) {
+        for (const QString &line: splitted) {
 
             QRegularExpressionMatch match = re.match(line);
 
@@ -147,7 +150,7 @@ ItemData *QAddonListModel::prepareAndFillDataByAddonName(const QString &addonNam
                 }
             }
         }
-        
+
 
         QString finalDesc = description.isEmpty() ? "[" + tr("No description") + "]" : description;
         QString finalAuth = author.isEmpty() ? "[" + tr("Unknown Author") + "]" : author;
@@ -237,7 +240,7 @@ void QAddonListModel::refreshFromSiteList() {
 
     int i = 0;
 
-    for (const QJsonObject &findNow : esoSiteList) {
+    for (const QJsonObject &findNow: esoSiteList) {
         i++;
         emit percent(i, total, tr("Updating"));
         const QString &addonName = findNow.value("UIDir").toArray()[0].toString();
@@ -246,9 +249,6 @@ void QAddonListModel::refreshFromSiteList() {
         if (QFile(fPath).exists()) {
             continue;
         }
-        const QJsonArray &thumbs = findNow.value("UIIMG_Thumbs").toArray();
-        const QString &thumb = !thumbs.isEmpty() ? thumbs[0].toString() : "";
-
 
         beginInsertRows(QModelIndex(), addonList.count(), addonList.count());
         addonList.append(ItemData(findNow.value("UIAuthorName").toString(),
@@ -458,49 +458,47 @@ ItemData::ItemStatus QAddonListModel::checkBackupStatus(const QString &aName) co
 
 }
 
-void QAddonListModel::replyFinished(QNetworkReply *reply) {
-
+void QAddonListModel::onReportError(QNetworkReply *reply) {
     emit percent(100, 100);
-    QNetworkReply::NetworkError error = reply->error();
-    if (error == QNetworkReply::NetworkError::NoError) {
+    QMessageBox::critical(qobject_cast<QTreeView *>(parent()), tr("Fatal"),
+                          reply->errorString());
+}
 
-        if (!m_buffer.isEmpty()) {
-            const QJsonDocument &document = QJsonDocument::fromJson(m_buffer);
-            if (!document.isEmpty() && document.isArray()) {
-                const QJsonArray &dataArray = document.array();
-                emit percent(0, 100, tr("Processing downloaded data"));
-                int total = dataArray.size();
-                int i = 0;
-                for (QJsonValue v: dataArray) {
-                    if (v.isObject()) {
-                        esoSiteList.append(v.toObject());
-                    }
-                    i++;
-                    emit percent(i, total, tr("Processing downloaded data"));
+void QAddonListModel::onReportSuccess(const QByteArray &res, QNetworkReply *reply) {
+
+    if (!res.isEmpty()) {
+        const QJsonDocument &document = QJsonDocument::fromJson(res);
+        if (!document.isEmpty() && document.isArray()) {
+            const QJsonArray &dataArray = document.array();
+            emit percent(0, 100, tr("Processing downloaded data"));
+            int total = dataArray.size();
+            int i = 0;
+            for (QJsonValue v: dataArray) {
+                if (v.isObject()) {
+                    const QJsonObject &findNow = v.toObject();
+                    const QJsonArray &thumbs = findNow.value("UIIMG_Thumbs").toArray();
+                    const QString &thumb = !thumbs.isEmpty() ? thumbs[0].toString() : "";
+                    const QString &uid = findNow.value("UID").toString();
+                    const QString &fileInfoUrl = findNow.value("UIFileInfoURL").toString();
+
+                    esoSiteList.append(findNow);
                 }
-                refreshFolderList();
-            } else {
-                QMessageBox::critical(qobject_cast<QTreeView *>(parent()), tr("Fatal"),
-                                      tr("Invalid data"));
+                i++;
+                emit percent(i, total, tr("Processing downloaded data"));
             }
+            refreshFolderList();
+        } else {
+            QMessageBox::critical(qobject_cast<QTreeView *>(parent()), tr("Fatal"),
+                                  tr("Invalid data"));
         }
-    } else {
-        QMessageBox::critical(qobject_cast<QTreeView *>(parent()), tr("Fatal"),
-                              reply->errorString());
     }
-    reply->deleteLater();
 }
 
 void QAddonListModel::refreshESOSiteList() {
-    m_buffer.clear();
+
     emit percent(0, 100, tr("Updating data"));
-    QNetworkRequest request = QNetworkRequest(QUrl(listUrl));
-    request.setRawHeader("Content-Type", "application/json");
-    m_currentReply = manager->get(QNetworkRequest(request));
-    connect(m_currentReply, &QNetworkReply::downloadProgress, this, &QAddonListModel::onPercentDownload);
-    connect(m_currentReply, &QNetworkReply::readyRead, this, [=]() {
-        m_buffer += m_currentReply->readAll();
-    });
+    QNetworkReply *cRep = bdl->start();
+    connect(cRep, &QNetworkReply::downloadProgress, this, &QAddonListModel::onPercentDownload);
 }
 
 void QAddonListModel::setTopIndex() {
@@ -579,7 +577,7 @@ void QAddonListModel::reinstallAddonClicked() {
                 srcDir.removeRecursively();
 
                 const QString &aPath = addonFolderPath + QDir::separator() + addonName +
-                        QDir::separator() + addonName + ".txt";
+                                       QDir::separator() + addonName + ".txt";
                 emit percent(100, 100);
                 emit backToInstalled(aPath);
 

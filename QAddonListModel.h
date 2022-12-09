@@ -17,6 +17,7 @@
 #include <QtNetwork/QNetworkReply>
 #include "ItemData.h"
 #include "preferences.h"
+#include "BinaryDownloader.h"
 
 class QAddonListModel : public QAbstractListModel {
 Q_OBJECT
@@ -56,17 +57,12 @@ public:
     void connectWatcher();
     void refreshFromExternal();
     void setTopIndex();
+    int columnCount(const QModelIndex &parent) const override;
 
 private:
     static QString listUrl;
     QString headerTitle;
-    /* ???
-     *
-     */
-    QNetworkAccessManager *manager;
-    QNetworkReply *m_currentReply {nullptr};
-    QByteArray m_buffer;
-
+    BinaryDownloader *bdl;
 
     QList<ItemData> addonList;
     QList<QJsonObject> esoSiteList;
@@ -110,10 +106,13 @@ public slots:
     void reinstallAddonClicked();
     void backupAllClicked();
 
-    int columnCount(const QModelIndex &parent) const override;
+    void onReportSuccess(const QByteArray &, QNetworkReply *);
+    void onReportError(QNetworkReply *);
+
+
+
 
 private slots:
-    void replyFinished(QNetworkReply *replyFinished);
     void onPercentDownload(qint64, qint64);
 };
 
