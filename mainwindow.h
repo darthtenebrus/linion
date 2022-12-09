@@ -64,7 +64,6 @@ public slots:
     void allChanged();
     void updateProgressPercent(int current, int total, const QString &msg);
     void settingsClicked(bool checked);
-    void configAccepted();
     void refreshListClicked(const QString &path = QString());
 };
 

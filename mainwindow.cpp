@@ -54,8 +54,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->statusbar->addPermanentWidget(progressBar);
 
     ui->addonTreeView->setItemDelegate(new QvObjectDelegate(ui->addonTreeView));
-
-    connect(configDialog, &QDialog::accepted, this, &MainWindow::configAccepted);
+    
     connect(backupAction, &QAction::triggered, model, &QAddonListModel::backupAddonClicked);
     connect(reinstallAction, &QAction::triggered, model, &QAddonListModel::reinstallAddonClicked);
     connect(uninstallAction, &QAction::triggered, model, &QAddonListModel::uninstallAddonClicked);
@@ -217,19 +216,18 @@ void MainWindow::settingsClicked(bool) {
     configDialog->transferData(data);
     configDialog->setTopSelected();
     configDialog->setModal(true);
-    configDialog->show();
+    int res = configDialog->exec();
+    if (res == QDialog::Accepted) {
+        const PreferencesType &receiveData = configDialog->receiveData();
+        writeSettings(receiveData);
+        model->setModelData(receiveData);
+        refreshListClicked();
+        model->setTopIndex();
+    }
+    
 
 }
 
-void MainWindow::configAccepted() {
-
-    const PreferencesType &data = configDialog->receiveData();
-    writeSettings(data);
-    model->setModelData(data);
-    refreshListClicked();
-    model->setTopIndex();
-
-}
 
 PreferencesType MainWindow::fillDataFromSettings() const {
 
