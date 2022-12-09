@@ -22,7 +22,7 @@ public:
 
 private:
     QNetworkAccessManager *manager  {nullptr};
-    QByteArray m_buffer;
+    QMap<QUrl, QByteArray> m_buffers;
     QNetworkRequest *request {nullptr};
 
 signals:

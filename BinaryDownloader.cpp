@@ -21,24 +21,29 @@ void BinaryDownloader::replyFinished(QNetworkReply *replyFinished) {
 
     QNetworkReply::NetworkError error = replyFinished->error();
     if (error == QNetworkReply::NetworkError::NoError) {
-        if (!m_buffer.isEmpty()) {
-            emit reportSuccess(m_buffer, replyFinished);
+        const QByteArray &mb = m_buffers.value(replyFinished->url());
+        if (!mb.isEmpty()) {
+            emit reportSuccess(mb, replyFinished);
         } else {
             emit reportError(replyFinished);
         }
     } else {
         emit reportError(replyFinished);
     }
+    m_buffers.remove(replyFinished->url());
     replyFinished->close();
     replyFinished->deleteLater();
 }
 
 QNetworkReply *BinaryDownloader::start() {
     if (request) {
-        m_buffer.clear();
+        m_buffers.insert(request->url(), QByteArray());
         QNetworkReply *currentReply = manager->get(*request);
         connect(currentReply, &QNetworkReply::readyRead, this, [=]() {
-            m_buffer += qobject_cast<QNetworkReply *>(sender())->readAll();
+            auto *origin = qobject_cast<QNetworkReply *>(sender());
+            QByteArray mb = m_buffers.value(origin->url());
+            mb += origin->readAll();
+            m_buffers.insert(origin->url(), mb);
         });
         return currentReply;
     }
