@@ -60,11 +60,18 @@ public:
 private:
     static QString listUrl;
     QString headerTitle;
+    /* ???
+     *
+     */
     QNetworkAccessManager *manager;
     QNetworkReply *m_currentReply {nullptr};
     QByteArray m_buffer;
+
+
     QList<ItemData> addonList;
     QList<QJsonObject> esoSiteList;
+    QMap<QString, QString> esoDescriptions;
+    QMap<QString, QPixmap> esoImages;
 
     QString addonFolderPath;
     QString backupPath;

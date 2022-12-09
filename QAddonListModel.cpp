@@ -20,6 +20,7 @@
 #include <QProcess>
 #include <QEventLoop>
 #include <QToolButton>
+#include <QCoreApplication>
 
 QString QAddonListModel::listUrl = "https://api.mmoui.com/v3/game/ESO/filelist.json";
 
@@ -265,8 +266,8 @@ void QAddonListModel::refreshFromSiteList() {
 
 
     }
-    emit dataChanged(createIndex(0, 0), createIndex(addonList.count() - 1, 0));
     emit percent(total, total, "");
+    emit dataChanged(createIndex(0, 0), createIndex(addonList.count() - 1, 0));
 }
 
 void QAddonListModel::uninstallAddonClicked() {
@@ -467,11 +468,16 @@ void QAddonListModel::replyFinished(QNetworkReply *reply) {
             const QJsonDocument &document = QJsonDocument::fromJson(m_buffer);
             if (!document.isEmpty() && document.isArray()) {
                 const QJsonArray &dataArray = document.array();
-                for (QJsonValue v: dataArray)
+                emit percent(0, 100, tr("Processing downloaded data"));
+                int total = dataArray.size();
+                int i = 0;
+                for (QJsonValue v: dataArray) {
                     if (v.isObject()) {
                         esoSiteList.append(v.toObject());
                     }
-
+                    i++;
+                    emit percent(i, total, tr("Processing downloaded data"));
+                }
                 refreshFolderList();
             } else {
                 QMessageBox::critical(qobject_cast<QTreeView *>(parent()), tr("Fatal"),
