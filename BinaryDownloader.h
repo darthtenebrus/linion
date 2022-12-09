@@ -22,7 +22,6 @@ public:
 
 private:
     QNetworkAccessManager *manager  {nullptr};
-    QNetworkReply *m_currentReply {nullptr};
     QByteArray m_buffer;
     QNetworkRequest *request {nullptr};
 

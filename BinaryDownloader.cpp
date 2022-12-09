@@ -6,7 +6,6 @@
 
 BinaryDownloader::BinaryDownloader(const QString &urlName, QObject *parent) : QObject(parent),
     manager(new QNetworkAccessManager(this)) {
-    m_buffer.clear();
     connect(manager, &QNetworkAccessManager::finished, this, &BinaryDownloader::replyFinished);
     setDownloadUrl(urlName);
 }
@@ -20,7 +19,6 @@ void BinaryDownloader::replyFinished(QNetworkReply *replyFinished) {
 
     QNetworkReply::NetworkError error = replyFinished->error();
     if (error == QNetworkReply::NetworkError::NoError) {
-
         if (!m_buffer.isEmpty()) {
             emit reportSuccess(m_buffer, replyFinished);
         } else {
@@ -35,11 +33,12 @@ void BinaryDownloader::replyFinished(QNetworkReply *replyFinished) {
 
 QNetworkReply *BinaryDownloader::start() {
     if (request) {
-        m_currentReply = manager->get(*request);
-        connect(m_currentReply, &QNetworkReply::readyRead, this, [=]() {
-            m_buffer += m_currentReply->readAll();
+        m_buffer.clear();
+        QNetworkReply *currentReply = manager->get(*request);
+        connect(currentReply, &QNetworkReply::readyRead, this, [=]() {
+            m_buffer += qobject_cast<QNetworkReply *>(sender())->readAll();
         });
-        return m_currentReply;
+        return currentReply;
     }
     return nullptr;
 }
