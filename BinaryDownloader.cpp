@@ -18,7 +18,6 @@ BinaryDownloader::~BinaryDownloader() {
 }
 
 void BinaryDownloader::replyFinished(QNetworkReply *replyFinished) {
-
     QNetworkReply::NetworkError error = replyFinished->error();
     if (error == QNetworkReply::NetworkError::NoError) {
         const QByteArray &mb = m_buffers.value(replyFinished->url());
@@ -39,8 +38,10 @@ QNetworkReply *BinaryDownloader::start() {
     if (request) {
         m_buffers.insert(request->url(), QByteArray());
         QNetworkReply *currentReply = manager->get(*request);
+
         connect(currentReply, &QNetworkReply::readyRead, this, [=]() {
             auto *origin = qobject_cast<QNetworkReply *>(sender());
+
             QByteArray mb = m_buffers.value(origin->url());
             mb += origin->readAll();
             m_buffers.insert(origin->url(), mb);
@@ -51,7 +52,6 @@ QNetworkReply *BinaryDownloader::start() {
 }
 
 void BinaryDownloader::setDownloadUrl(const QString &urlName) {
-
     if (request) {
         delete request;
         request = nullptr;
@@ -61,6 +61,8 @@ void BinaryDownloader::setDownloadUrl(const QString &urlName) {
         request = new QNetworkRequest(QUrl(urlName));
         request->setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
         request->setRawHeader("Content-Type", "application/json");
+
     }
 }
+
 

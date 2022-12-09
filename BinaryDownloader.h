@@ -29,9 +29,9 @@ signals:
     void reportSuccess(const QByteArray &, QNetworkReply *);
     void reportError(QNetworkReply *);
 
+
 private slots:
     void replyFinished(QNetworkReply *replyFinished);
-
 };
 
 

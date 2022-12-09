@@ -228,7 +228,7 @@ void QAddonListModel::refreshFromExternal() {
 
 void QAddonListModel::refreshFromSiteList() {
 #ifdef _DEBUG
-    qDebug() << "Refresh from ESO Site";
+    qDebug() << esoDescriptions.size();
 #endif
     int totalCount = addonList.count();
     beginRemoveRows(QModelIndex(), 0, totalCount >= 1 ? totalCount - 1 : 0);
@@ -250,12 +250,13 @@ void QAddonListModel::refreshFromSiteList() {
             continue;
         }
 
+        const QString &uid = findNow.value("UID").toString();
         beginInsertRows(QModelIndex(), addonList.count(), addonList.count());
         addonList.append(ItemData(findNow.value("UIAuthorName").toString(),
                                   findNow.value("UIName").toString(),
                                   findNow.value("UIVersion").toString(),
                                   fPath,
-                                  QString(), // todo: external URL
+                                  esoDescriptions.value(uid), // todo: external URL
                                   ItemData::NotInstalled,
                                   findNow.value("UIDownloadTotal").toString("0"),
                                   findNow.value("UIDownloadMonthly").toString("0"),
@@ -473,6 +474,7 @@ void QAddonListModel::onReportSuccess(const QByteArray &res, QNetworkReply *repl
             emit percent(0, 100, tr("Processing downloaded data"));
             int total = dataArray.size();
             int i = 0;
+
             for (QJsonValue v: dataArray) {
                 if (v.isObject()) {
                     const QJsonObject &findNow = v.toObject();
@@ -480,8 +482,25 @@ void QAddonListModel::onReportSuccess(const QByteArray &res, QNetworkReply *repl
                     const QString &thumb = !thumbs.isEmpty() ? thumbs[0].toString() : "";
                     const QString &uid = findNow.value("UID").toString();
                     const QString &fileInfoUrl = findNow.value("UIFileInfoURL").toString();
-
                     esoSiteList.append(findNow);
+
+                    /*
+                    locBd.setDownloadUrl(fileInfoUrl);
+                    locBd.start();
+                    connect(&locBd, &BinaryDownloader::reportError, this,
+                            [=](QNetworkReply *rep) {
+#ifdef _DEBUG
+                                qDebug() << rep->errorString();
+#endif
+                            });
+                    connect(&locBd, &BinaryDownloader::reportSuccess, this,
+                            [=](const QByteArray &res, QNetworkReply *) {
+#ifdef _DEBUG
+                                qDebug() << "res" + res;
+#endif
+                                esoDescriptions.insert(uid, res);
+                            });
+                            */
                 }
                 i++;
                 emit percent(i, total, tr("Processing downloaded data"));
@@ -496,6 +515,8 @@ void QAddonListModel::onReportSuccess(const QByteArray &res, QNetworkReply *repl
 
 void QAddonListModel::refreshESOSiteList() {
 
+    esoDescriptions.clear();
+    esoImages.clear();
     emit percent(0, 100, tr("Updating data"));
     QNetworkReply *cRep = bdl->start();
     if (cRep) {
