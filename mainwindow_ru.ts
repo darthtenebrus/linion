@@ -341,8 +341,8 @@
     <message>
         <location filename="QAddonListModel.cpp" line="463"/>
         <location filename="QAddonListModel.cpp" line="491"/>
-        <location filename="QAddonListModel.cpp" line="537"/>
-        <location filename="QAddonListModel.cpp" line="590"/>
+        <location filename="QAddonListModel.cpp" line="539"/>
+        <location filename="QAddonListModel.cpp" line="592"/>
         <source>Fatal</source>
         <translation>Критическая ошибка</translation>
     </message>
@@ -357,13 +357,13 @@
         <translation>Обновление данных</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="538"/>
+        <location filename="QAddonListModel.cpp" line="540"/>
         <source>I/O error</source>
         <translation>Ошибка ввода/вывода</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="596"/>
-        <location filename="QAddonListModel.cpp" line="628"/>
+        <location filename="QAddonListModel.cpp" line="598"/>
+        <location filename="QAddonListModel.cpp" line="630"/>
         <source>Downloading from site</source>
         <translation>Загрузка с сайта</translation>
     </message>

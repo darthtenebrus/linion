@@ -14,7 +14,7 @@
 class BinaryDownloader : public QObject {
 Q_OBJECT
 public:
-    explicit BinaryDownloader(const QString &urlName, QObject *parent = nullptr);
+    explicit BinaryDownloader(const QString &urlName = QString(), QObject *parent = nullptr);
     ~BinaryDownloader() override;
 
     void setDownloadUrl(const QString &urlName);
@@ -24,7 +24,7 @@ private:
     QNetworkAccessManager *manager  {nullptr};
     QNetworkReply *m_currentReply {nullptr};
     QByteArray m_buffer;
-    QNetworkRequest request;
+    QNetworkRequest *request {nullptr};
 
 signals:
     void reportSuccess(const QByteArray &, QNetworkReply *);

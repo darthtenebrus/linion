@@ -33,16 +33,21 @@ void BinaryDownloader::replyFinished(QNetworkReply *replyFinished) {
 }
 
 QNetworkReply *BinaryDownloader::start() {
-    m_currentReply = manager->get(request);
-    connect(m_currentReply, &QNetworkReply::readyRead, this, [=]() {
-        m_buffer += m_currentReply->readAll();
-    });
-    return m_currentReply;
+    if (request) {
+        m_currentReply = manager->get(*request);
+        connect(m_currentReply, &QNetworkReply::readyRead, this, [=]() {
+            m_buffer += m_currentReply->readAll();
+        });
+        return m_currentReply;
+    }
+    return nullptr;
 }
 
 void BinaryDownloader::setDownloadUrl(const QString &urlName) {
-    request = QNetworkRequest(QUrl(urlName));
-    request.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
-    request.setRawHeader("Content-Type", "application/json");
+    if (!urlName.isEmpty()) {
+        request = new QNetworkRequest(QUrl(urlName));
+        request->setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
+        request->setRawHeader("Content-Type", "application/json");
+    }
 }
 

@@ -25,9 +25,10 @@ add_executable(${PROJECT_NAME}
         mainwindow.cpp
         mainwindow.ui QAddonListModel.cpp QAddonListModel.h ItemData.cpp ItemData.h
         QvObjectDelegate.cpp QvObjectDelegate.h configdialog.cpp configdialog.h configdialog.ui
-        DialogItemDelegate.cpp DialogItemDelegate.h
+        DialogItemDelegate.cpp DialogItemDelegate.h preferences.h QAddonProxyModel.cpp QAddonProxyModel.h
+        BinaryDownloader.cpp BinaryDownloader.h
         ${RES_FILES}
-        ${QM_FILES} preferences.h QAddonProxyModel.cpp QAddonProxyModel.h BinaryDownloader.cpp BinaryDownloader.h)
+        ${QM_FILES})
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
 target_link_libraries(${PROJECT_NAME} Qt5::Widgets)

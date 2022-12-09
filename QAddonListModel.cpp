@@ -498,7 +498,9 @@ void QAddonListModel::refreshESOSiteList() {
 
     emit percent(0, 100, tr("Updating data"));
     QNetworkReply *cRep = bdl->start();
-    connect(cRep, &QNetworkReply::downloadProgress, this, &QAddonListModel::onPercentDownload);
+    if (cRep) {
+        connect(cRep, &QNetworkReply::downloadProgress, this, &QAddonListModel::onPercentDownload);
+    }
 }
 
 void QAddonListModel::setTopIndex() {
