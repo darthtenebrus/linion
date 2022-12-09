@@ -267,7 +267,7 @@ void MainWindow::tryToPisitionOnInstalled(const QString &path) const {
 
         int i = 0;
         bool found = false;
-        for (ItemData o : addonList) {
+        for (const ItemData &o : addonList) {
             if (o.getAddonPath() == path) {
                 found = true;
                 break;
