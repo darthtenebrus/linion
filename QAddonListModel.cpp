@@ -681,6 +681,8 @@ QString QAddonListModel::tryToGetExtraData(const QString &UID, const QByteArray 
 
         QEventLoop loop;
         QNetworkReply *cRep = bdl->start();
+        connect(cRep, &QNetworkReply::downloadProgress,
+                this, &QAddonListModel::onPercentDownload);
         connect(cRep, &QNetworkReply::finished, &loop, &QEventLoop::quit);
         loop.exec();
         QByteArray retRes = bdl->getRequestResult();

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1849</width>
+    <width>1846</width>
     <height>711</height>
    </rect>
   </property>
@@ -213,7 +213,7 @@ QToolButton:hover {  background-color: rgb(89, 94, 99); }
        </property>
        <property name="minimumSize">
         <size>
-         <width>600</width>
+         <width>500</width>
          <height>0</height>
         </size>
        </property>
@@ -263,7 +263,7 @@ QToolButton:hover {  background-color: rgb(89, 94, 99); }
        </property>
        <property name="minimumSize">
         <size>
-         <width>350</width>
+         <width>300</width>
          <height>0</height>
         </size>
        </property>
@@ -289,6 +289,9 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Droid Sans Fallback'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
+       <property name="openExternalLinks">
+        <bool>true</bool>
+       </property>
       </widget>
      </widget>
     </item>
@@ -299,7 +302,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1849</width>
+     <width>1846</width>
      <height>32</height>
     </rect>
    </property>
