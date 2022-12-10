@@ -133,9 +133,15 @@ void MainWindow::writeSettings(const PreferencesType &data) {
 void MainWindow::currentChanged(const QModelIndex &current, const QModelIndex &prev) {
 
     if (current.isValid()) {
-        const QString &desc = current.data(QAddonListModel::DescriptionRole).toString();
+        QString desc = current.data(QAddonListModel::DescriptionRole).toString();
         const QString &version = current.data(QAddonListModel::VersionRole).toString();
         const QString &author = current.data(QAddonListModel::AuthorRole).toString();
+        const QString &UID = current.data(QAddonListModel::UIDRole).toString();
+
+        if (desc.isEmpty()) {
+            desc = model->tryToGetExtraData(UID, "text/html");
+        }
+
         ui->descriptionView->setText(desc);
         ui->descriptionView->append("\n" + tr("Version: %1").arg(version));
         ui->descriptionView->append(tr("Author: %1").arg(author));

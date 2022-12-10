@@ -22,9 +22,13 @@ public:
     void setDownloadUrl(const QString &urlName);
     QNetworkReply *start();
 
+    [[nodiscard]]
+    const QByteArray &getRequestResult() const;
+
 private:
     QNetworkAccessManager *manager  {nullptr};
     QMap<QUrl, QByteArray> m_buffers;
+    QByteArray requestResult;
     QNetworkRequest *request {nullptr};
     QByteArray contentType;
 public:

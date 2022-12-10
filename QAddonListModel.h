@@ -33,7 +33,8 @@ public:
         FavoriteTotalRole,
         FileInfoURLRole,
         SiteVersionRole,
-        StatusRole
+        StatusRole,
+        UIDRole
     };
 
     explicit QAddonListModel(const PreferencesType &settings, QObject *parent);
@@ -57,15 +58,21 @@ public:
     void connectWatcher();
     void refreshFromExternal();
     void setTopIndex();
+
+    [[nodiscard]]
+    QString tryToGetExtraData(const QString &url, const QByteArray &contentType = QByteArray());
+
     int columnCount(const QModelIndex &parent) const override;
 
 private:
     static QString listUrl;
+    static QString detailsUrl;
     QString headerTitle;
     BinaryDownloader *bdl;
 
     QList<ItemData> addonList;
     QList<QJsonObject> esoSiteList;
+    QMap<QString, QString> esoSiteDescriptionsCache;
 
     QString addonFolderPath;
     QString backupPath;
@@ -107,7 +114,7 @@ public slots:
     void onReportSuccess(const QByteArray &, QNetworkReply *);
     void onReportError(QNetworkReply *);
 
-
+    const QList<QJsonObject> &getEsoSiteList() const;
 
 
 private slots:

@@ -25,6 +25,7 @@ void BinaryDownloader::replyFinished(QNetworkReply *replyFinished) {
     if (error == QNetworkReply::NetworkError::NoError) {
         const QByteArray &mb = m_buffers.value(replyFinished->url());
         if (!mb.isEmpty()) {
+            requestResult = mb;
             emit reportSuccess(mb, replyFinished);
         } else {
             emit reportError(replyFinished);
@@ -39,6 +40,7 @@ void BinaryDownloader::replyFinished(QNetworkReply *replyFinished) {
 
 QNetworkReply *BinaryDownloader::start() {
     if (request) {
+        requestResult.clear();
         m_buffers.insert(request->url(), QByteArray());
         QNetworkReply *currentReply = manager->get(*request);
 
@@ -65,13 +67,19 @@ void BinaryDownloader::setDownloadUrl(const QString &urlName) {
     if (!urlName.isEmpty()) {
         request = new QNetworkRequest(QUrl(urlName));
         request->setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
-        request->setRawHeader("Content-Type", contentType);
+        if (!contentType.isEmpty()) {
+            request->setRawHeader("Content-Type", contentType);
+        }
 
     }
 }
 
 void BinaryDownloader::setContentType(const QByteArray &cType) {
     contentType = cType;
+}
+
+const QByteArray &BinaryDownloader::getRequestResult() const {
+    return requestResult;
 }
 
 

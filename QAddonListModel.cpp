@@ -23,7 +23,9 @@
 #include <QToolButton>
 #include <QCoreApplication>
 
+
 QString QAddonListModel::listUrl = "https://api.mmoui.com/v3/game/ESO/filelist.json";
+QString QAddonListModel::detailsUrl = "https://api.mmoui.com/v3/game/ESO/filedetails/";
 
 QAddonListModel::QAddonListModel(const PreferencesType &settings, QObject *parent)
         : QAbstractListModel(parent) {
@@ -98,6 +100,8 @@ QVariant QAddonListModel::data(const QModelIndex &index, int role) const {
         case QAddonListModel::StatusRole:
             value = addonList.at(index.row()).isStatus();
             break;
+        case QAddonListModel::UIDRole:
+            value = addonList.at(index.row()).getUid();
         default:
             break;
     }
@@ -226,6 +230,7 @@ void QAddonListModel::refreshFromExternal() {
 
 void QAddonListModel::refreshFromSiteList() {
 
+    esoSiteDescriptionsCache.clear();
     int totalCount = addonList.count();
     beginRemoveRows(QModelIndex(), 0, totalCount >= 1 ? totalCount - 1 : 0);
     addonList.clear();
@@ -246,7 +251,7 @@ void QAddonListModel::refreshFromSiteList() {
             continue;
         }
 
-        const QString &uid = findNow.value("UID").toString();
+        const QString &extUid = findNow.value("UID").toString();
         beginInsertRows(QModelIndex(), addonList.count(), addonList.count());
         addonList.append(ItemData(findNow.value("UIAuthorName").toString(),
                                   findNow.value("UIName").toString(),
@@ -258,7 +263,8 @@ void QAddonListModel::refreshFromSiteList() {
                                   findNow.value("UIDownloadMonthly").toString("0"),
                                   findNow.value("UIFavoriteTotal").toString("0"),
                                   findNow.value("UIFileInfoURL").toString(),
-                                  findNow.value("UIVersion").toString()));
+                                  findNow.value("UIVersion").toString(),
+                                  extUid));
         endInsertRows();
 
 
@@ -417,6 +423,10 @@ void QAddonListModel::copyPath(const QString &src, const QString &dst) const {
 
 const QList<ItemData> &QAddonListModel::getAddonList() const {
     return addonList;
+}
+
+const QList<QJsonObject> &QAddonListModel::getEsoSiteList() const {
+    return esoSiteList;
 }
 
 QVariant QAddonListModel::headerData(int section, Qt::Orientation orientation, int role) const {
@@ -660,6 +670,43 @@ void QAddonListModel::connectWatcher() {
                 this, &QAddonListModel::refresh);
     }
 }
+
+QString QAddonListModel::tryToGetExtraData(const QString &UID, const QByteArray &contentType) {
+
+    const QString &tmp = esoSiteDescriptionsCache.value(UID);
+
+    if (tmp.isEmpty()) {
+        bdl->setDownloadUrl(detailsUrl + UID + ".json");
+        bdl->setContentType(contentType);
+
+        QEventLoop loop;
+        QNetworkReply *cRep = bdl->start();
+        connect(cRep, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+        loop.exec();
+        QByteArray retRes = bdl->getRequestResult();
+        if (!retRes.isEmpty()) {
+            const QJsonDocument &document = QJsonDocument::fromJson(retRes);
+            if (!document.isEmpty() && document.isArray()) {
+                const QJsonArray &dataArray = document.array();
+                if (!dataArray.isEmpty()) {
+                    QString UIdesc = dataArray.at(0).toObject().value("UIDescription").toString();
+
+                    const QString &finalDesc = UIdesc.replace(
+                            QRegularExpression(R"(\[[^\]]+\])"),"");
+                    esoSiteDescriptionsCache.insert(UID, finalDesc);
+                    return finalDesc;
+                }
+                return {};
+            }
+            return {};
+        }
+        return retRes;
+    } else {
+        return tmp;
+    }
+}
+
+
 
 
 
