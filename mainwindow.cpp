@@ -139,7 +139,7 @@ void MainWindow::currentChanged(const QModelIndex &current, const QModelIndex &p
         const QString &UID = current.data(QAddonListModel::UIDRole).toString();
 
         if (desc.isEmpty()) {
-            desc = model->tryToGetExtraData(UID, "text/html");
+            desc = model->tryToGetExtraData(UID, "application/json");
         }
 
         ui->descriptionView->setText(desc);
