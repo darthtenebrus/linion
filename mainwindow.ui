@@ -273,6 +273,11 @@ QToolButton:hover {  background-color: rgb(89, 94, 99); }
          <height>16777215</height>
         </size>
        </property>
+       <property name="styleSheet">
+        <string notr="true">#descriptionView pre {
+	white-space: normal;
+}</string>
+       </property>
        <property name="frameShape">
         <enum>QFrame::NoFrame</enum>
        </property>

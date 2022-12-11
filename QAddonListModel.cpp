@@ -164,6 +164,7 @@ ItemData *QAddonListModel::prepareAndFillDataByAddonName(const QString &addonNam
             return o.value("UIDir").toArray()[0] == addonName;
         });
         if (foundNetData != esoSiteList.end()) {
+            const QString &extUid = foundNetData->value("UID").toString();
             auto *retData = new ItemData(cleanColorizers(finalAuth), cleanColorizers(finalTitle),
                                          finalVer, fPath,
                                          cleanColorizers(finalDesc),
@@ -172,7 +173,8 @@ ItemData *QAddonListModel::prepareAndFillDataByAddonName(const QString &addonNam
                                          foundNetData->value("UIDownloadMonthly").toString("0"),
                                          foundNetData->value("UIFavoriteTotal").toString("0"),
                                          foundNetData->value("UIFileInfoURL").toString(),
-                                         foundNetData->value("UIVersion").toString());
+                                         foundNetData->value("UIVersion").toString(),
+                                         extUid);
             return retData;
         }
         return nullptr;
@@ -487,12 +489,7 @@ void QAddonListModel::onReportSuccess(const QByteArray &res, QNetworkReply *repl
                 if (v.isObject()) {
 
                     const QJsonObject &findNow = v.toObject();
-                     /*
-                    const QJsonArray &thumbs = findNow.value("UIIMG_Thumbs").toArray();
-                    const QString &thumb = !thumbs.isEmpty() ? thumbs[0].toString() : "";
-                    const QString &uid = findNow.value("UID").toString();
-                    const QString &fileInfoUrl = findNow.value("UIFileInfoURL").toString();
-                     */
+
                     esoSiteList.append(findNow);
                 }
                 i++;

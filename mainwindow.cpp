@@ -136,20 +136,27 @@ void MainWindow::currentChanged(const QModelIndex &current, const QModelIndex &p
     if (current.isValid()) {
         const QString &infoUrl = current.data(QAddonListModel::FileInfoURLRole).toString();
 
-        QString desc = current.data(QAddonListModel::DescriptionRole).toString();
+        const QString &desc = current.data(QAddonListModel::DescriptionRole).toString();
         const QString &version = current.data(QAddonListModel::VersionRole).toString();
         const QString &author = current.data(QAddonListModel::AuthorRole).toString();
         const QString &UID = current.data(QAddonListModel::UIDRole).toString();
+        ItemData::ItemStatus cStatus = current.data(QAddonListModel::StatusRole).value<ItemData::ItemStatus>();
 
-        if (desc.isEmpty()) {
-            desc = model->tryToGetExtraData(UID, "application/json");
-        }
+        const QString &remoteDesc = model->tryToGetExtraData(UID, "application/json");
+
 
         const QString &urlToOpen = QString("<p><a href=\"%1\">%1</a></p>")
                 .arg(infoUrl);
-        
+
         ui->descriptionView->setText(urlToOpen);
-        ui->descriptionView->append(QString("<pre>%1</pre>").arg(desc));
+
+        if (cStatus == ItemData::NotInstalled) {
+            ui->descriptionView->append(QString("<pre>%1</pre>").arg(remoteDesc));
+        } else {
+            ui->descriptionView->append(QString("<b><i><p>%1</p></i></b><pre>%2</pre><b><i><p>%3</p></i></b>"
+                                                "<pre>%4</pre>")
+                .arg(tr("Local Description"), desc, tr("Remote Description"), remoteDesc));
+        }
 
         ui->descriptionView->append(QString("<ul><li>%1<li>%2</ul>")
                     .arg(tr("Version: %1").arg(version),
