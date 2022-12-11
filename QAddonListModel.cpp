@@ -157,6 +157,7 @@ ItemData *QAddonListModel::prepareAndFillDataByAddonName(const QString &addonNam
         QString finalDesc = description.isEmpty() ? "[" + tr("No description") + "]" : description;
         QString finalAuth = author.isEmpty() ? "[" + tr("Unknown Author") + "]" : author;
         QString finalTitle = title.isEmpty() ? "[" + tr("Unknown Title") + "]" : title;
+
         QString finalVer = version.isEmpty() ? "[" + tr("Unknown Version") + "]" : version;
         ItemData::ItemStatus backupStatus = checkBackupStatus(addonName);
         auto foundNetData = std::find_if(esoSiteList.begin(), esoSiteList.end(), [&addonName](QJsonObject o) {
@@ -254,6 +255,7 @@ void QAddonListModel::refreshFromSiteList() {
         }
 
         const QString &extUid = findNow.value("UID").toString();
+
         beginInsertRows(QModelIndex(), addonList.count(), addonList.count());
         addonList.append(ItemData(findNow.value("UIAuthorName").toString(),
                                   findNow.value("UIName").toString(),
@@ -283,8 +285,9 @@ void QAddonListModel::uninstallAddonClicked() {
     if (selectedSet.count() > 1) {
         return; // fuckup
     }
-
+    
     const QModelIndex &index = selectedSet[0];
+
     const QString &aPath = index.data(QAddonListModel::PathRole).toString();
     const QString &aTitle = index.data(Qt::DisplayRole).toString();
 
@@ -523,7 +526,7 @@ void QAddonListModel::setTopIndex() {
 }
 
 void QAddonListModel::reinstallAddonClicked() {
-    const QTreeView *view = qobject_cast<QTreeView *>(parent());
+    QTreeView *view = qobject_cast<QTreeView *>(parent());
     const QModelIndexList &selectedSet = view->selectionModel()->selectedIndexes();
     if (selectedSet.count() > 1) {
         return; // fuckup
@@ -531,6 +534,19 @@ void QAddonListModel::reinstallAddonClicked() {
 
     const QModelIndex &index = selectedSet[0];
     if (index.isValid()) {
+
+        const QString &aTitle = index.data(Qt::DisplayRole).toString();
+        ItemData::ItemStatus aStatus = index.data(QAddonListModel::StatusRole).value<ItemData::ItemStatus>();
+        const QString &toDo = (aStatus == ItemData::NotInstalled ? tr("install") : tr("update or reinstall"));
+        QMessageBox::StandardButton button = QMessageBox::warning(view, tr("Info"),
+                                                                  tr("Do you really want to %1 this addon: %2?")
+                                                                          .arg(toDo, aTitle),
+                                                                  QMessageBox::StandardButtons(
+                                                                          QMessageBox::Yes | QMessageBox::No));
+
+        if (button == QMessageBox::No) {
+            return;
+        }
 
         QRegExp rx(R"(info([0-9]*)-([^\.]+)\.html)");
         QString &&urlPath = index.data(QAddonListModel::FileInfoURLRole).toString();

@@ -53,7 +53,10 @@ MainWindow::MainWindow(QWidget *parent) :
 // position of progress bar should be extreme right
     ui->statusbar->addPermanentWidget(progressBar);
 
-    ui->addonTreeView->setItemDelegate(new QvObjectDelegate(ui->addonTreeView));
+    auto *delegate = new QvObjectDelegate(ui->addonTreeView);
+    ui->addonTreeView->setItemDelegate(delegate);
+    connect(delegate, &QvObjectDelegate::reinstallButtonClicked, model,
+            &QAddonListModel::reinstallAddonClicked);
     
     connect(backupAction, &QAction::triggered, model, &QAddonListModel::backupAddonClicked);
     connect(reinstallAction, &QAction::triggered, model, &QAddonListModel::reinstallAddonClicked);

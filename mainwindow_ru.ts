@@ -114,21 +114,21 @@
     <message>
         <location filename="mainwindow.ui" line="20"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="249"/>
-        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="245"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="249"/>
         <source>Linion Addon Manager</source>
         <translation>Менеджер аддонов Linion</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="81"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="253"/>
-        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="249"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="253"/>
         <source>Backup All Installed Addons</source>
         <translation>Сделать резервные копии всех установленных аддонов</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="87"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="255"/>
-        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="251"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="255"/>
         <source>Backup Installed</source>
         <oldsource>Backup Installed Addons</oldsource>
         <translation>Сохранить установленные</translation>
@@ -136,42 +136,42 @@
     <message>
         <location filename="mainwindow.ui" line="122"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="256"/>
-        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="252"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="256"/>
         <source>Search For Addons</source>
         <translation>Поиск Аддонов</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="132"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="258"/>
-        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="254"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="258"/>
         <source>Installed Addon List</source>
         <translation>Список уже установленых аддонов</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="135"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="260"/>
-        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="256"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="260"/>
         <source>Installed</source>
         <translation>Установленные</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="155"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="262"/>
-        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="258"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="262"/>
         <source>Find More Addons To Install</source>
         <translation>Поиск аддонов для установки</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="158"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="264"/>
-        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="260"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="264"/>
         <source>Find More</source>
         <translation>Найти еще</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="316"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="269"/>
-        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="265"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="269"/>
         <source>Help</source>
         <translation>Помощь</translation>
     </message>
@@ -182,29 +182,29 @@
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="266"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="268"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="270"/>
-        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="262"/>
-        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="264"/>
         <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="266"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="268"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="270"/>
         <source>Settings</source>
         <translation>Настройки</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="332"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="250"/>
-        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="246"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="250"/>
         <source>About Qt</source>
         <translation>О программе Qt</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="337"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="251"/>
-        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="247"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="251"/>
         <source>Application Settings</source>
         <translation>Настроить приложение</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="25"/>
-        <location filename="mainwindow.cpp" line="274"/>
+        <location filename="mainwindow.cpp" line="277"/>
         <source>Installed Addons List</source>
         <translation>Список установленых аддонов</translation>
     </message>
@@ -214,13 +214,13 @@
         <translation>Сохранить</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="94"/>
+        <location filename="mainwindow.cpp" line="97"/>
         <source>Addons available</source>
         <translation>Доступные аддоны</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="35"/>
-        <location filename="mainwindow.cpp" line="277"/>
+        <location filename="mainwindow.cpp" line="280"/>
         <source>Reinstall Or Update</source>
         <oldsource>Reinstall/update</oldsource>
         <translation>Переустановить или обновить</translation>
@@ -241,42 +241,42 @@
         <translation>Обработка: %p%</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="97"/>
+        <location filename="mainwindow.cpp" line="100"/>
         <source>Install</source>
         <translation>Установить</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="158"/>
+        <location filename="mainwindow.cpp" line="161"/>
         <source>Local Description</source>
         <translation>Описание из файла установки</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="158"/>
+        <location filename="mainwindow.cpp" line="161"/>
         <source>Remote Description</source>
         <translation>Описание с сайта</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="162"/>
+        <location filename="mainwindow.cpp" line="165"/>
         <source>Version: %1</source>
         <translation>Версия: %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="163"/>
+        <location filename="mainwindow.cpp" line="166"/>
         <source>Author: %1</source>
         <translation>Автор: %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="180"/>
+        <location filename="mainwindow.cpp" line="183"/>
         <source>Information</source>
         <translation>Информация</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="181"/>
+        <location filename="mainwindow.cpp" line="184"/>
         <source>Unable to locate addons. Do you want to open the settings dialog and choose the path to the addons folder yourself?</source>
         <translation>Не могу найти аддоны. Хотите открыть диалог конфигурации и указать местоположение папки с аддонами?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="226"/>
+        <location filename="mainwindow.cpp" line="229"/>
         <source>All completed</source>
         <translation>Завершено</translation>
     </message>
@@ -284,7 +284,7 @@
 <context>
     <name>QAddonListModel</name>
     <message>
-        <location filename="QAddonListModel.cpp" line="195"/>
+        <location filename="QAddonListModel.cpp" line="196"/>
         <source>Refresh</source>
         <translation>Обновить список</translation>
     </message>
@@ -304,76 +304,92 @@
         <translation>Название неизвестно</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="160"/>
+        <location filename="QAddonListModel.cpp" line="161"/>
         <source>Unknown Version</source>
         <translation>Версия неизвестна</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="242"/>
-        <location filename="QAddonListModel.cpp" line="248"/>
+        <location filename="QAddonListModel.cpp" line="243"/>
+        <location filename="QAddonListModel.cpp" line="249"/>
         <source>Updating</source>
         <translation>Обновление</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="292"/>
-        <location filename="QAddonListModel.cpp" line="308"/>
+        <location filename="QAddonListModel.cpp" line="295"/>
+        <location filename="QAddonListModel.cpp" line="311"/>
+        <location filename="QAddonListModel.cpp" line="541"/>
         <source>Info</source>
         <translation>Информация</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="293"/>
+        <location filename="QAddonListModel.cpp" line="296"/>
         <source>Do you really want to delete this addon: %1?</source>
         <oldsource>Do you really want to delete this addon: %1</oldsource>
         <translation>Вы действительно хотите удалить аддон %1?</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="309"/>
+        <location filename="QAddonListModel.cpp" line="312"/>
         <source>Do you want to make a backup of all installed addons?</source>
         <translation>Вы хотите создать резервную копию установленных аддонов?</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="318"/>
+        <location filename="QAddonListModel.cpp" line="321"/>
         <source>Backing up</source>
         <translation>Сохранение</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="334"/>
-        <location filename="QAddonListModel.cpp" line="336"/>
+        <location filename="QAddonListModel.cpp" line="337"/>
+        <location filename="QAddonListModel.cpp" line="339"/>
         <source>Backing up single addon</source>
         <translation>Сохранение одного аддона</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="484"/>
-        <location filename="QAddonListModel.cpp" line="496"/>
+        <location filename="QAddonListModel.cpp" line="487"/>
+        <location filename="QAddonListModel.cpp" line="499"/>
         <source>Processing downloaded data</source>
         <translation>Обработка загруженных данных</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="472"/>
-        <location filename="QAddonListModel.cpp" line="500"/>
-        <location filename="QAddonListModel.cpp" line="550"/>
-        <location filename="QAddonListModel.cpp" line="603"/>
+        <location filename="QAddonListModel.cpp" line="475"/>
+        <location filename="QAddonListModel.cpp" line="503"/>
+        <location filename="QAddonListModel.cpp" line="566"/>
+        <location filename="QAddonListModel.cpp" line="619"/>
         <source>Fatal</source>
         <translation>Критическая ошибка</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="501"/>
+        <location filename="QAddonListModel.cpp" line="504"/>
         <source>Invalid data</source>
         <translation>Некорректные данные</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="510"/>
+        <location filename="QAddonListModel.cpp" line="513"/>
         <source>Updating data</source>
         <translation>Обновление данных</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="551"/>
+        <location filename="QAddonListModel.cpp" line="540"/>
+        <source>install</source>
+        <translation>установить</translation>
+    </message>
+    <message>
+        <location filename="QAddonListModel.cpp" line="540"/>
+        <source>update or reinstall</source>
+        <translation>обновить или переустановить</translation>
+    </message>
+    <message>
+        <location filename="QAddonListModel.cpp" line="542"/>
+        <source>Do you really want to %1 this addon: %2?</source>
+        <translation>Вы действительно хотите %1 аддон %2?</translation>
+    </message>
+    <message>
+        <location filename="QAddonListModel.cpp" line="567"/>
         <source>I/O error</source>
         <translation>Ошибка ввода/вывода</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="611"/>
-        <location filename="QAddonListModel.cpp" line="643"/>
+        <location filename="QAddonListModel.cpp" line="627"/>
+        <location filename="QAddonListModel.cpp" line="659"/>
         <source>Downloading from site</source>
         <translation>Загрузка с сайта</translation>
     </message>
@@ -394,19 +410,24 @@
 <context>
     <name>QvObjectDelegate</name>
     <message>
-        <location filename="QvObjectDelegate.cpp" line="56"/>
+        <location filename="QvObjectDelegate.cpp" line="64"/>
         <source>Version: %1</source>
         <translation>Версия: %1</translation>
     </message>
     <message>
-        <location filename="QvObjectDelegate.cpp" line="66"/>
+        <location filename="QvObjectDelegate.cpp" line="74"/>
         <source>Created by: %1</source>
         <translation>Создан: %1</translation>
     </message>
     <message>
-        <location filename="QvObjectDelegate.cpp" line="74"/>
-        <source>Available: %1</source>
-        <translation>Доступна: %1</translation>
+        <location filename="QvObjectDelegate.h" line="36"/>
+        <source>Install</source>
+        <translation>Установить</translation>
+    </message>
+    <message>
+        <location filename="QvObjectDelegate.h" line="37"/>
+        <source>Update Available</source>
+        <translation>Доступно обновление</translation>
     </message>
 </context>
 </TS>

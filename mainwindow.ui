@@ -213,7 +213,7 @@ QToolButton:hover {  background-color: rgb(89, 94, 99); }
        </property>
        <property name="minimumSize">
         <size>
-         <width>500</width>
+         <width>1000</width>
          <height>0</height>
         </size>
        </property>
@@ -263,7 +263,7 @@ QToolButton:hover {  background-color: rgb(89, 94, 99); }
        </property>
        <property name="minimumSize">
         <size>
-         <width>300</width>
+         <width>500</width>
          <height>0</height>
         </size>
        </property>
