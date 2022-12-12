@@ -66,7 +66,8 @@ void BinaryDownloader::setDownloadUrl(const QString &urlName) {
 
     if (!urlName.isEmpty()) {
         request = new QNetworkRequest(QUrl(urlName));
-        request->setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
+        //request->setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
+        request->setAttribute(QNetworkRequest::RedirectPolicyAttribute, QNetworkRequest::NoLessSafeRedirectPolicy);
         if (!contentType.isEmpty()) {
             request->setRawHeader("Content-Type", contentType);
         }
