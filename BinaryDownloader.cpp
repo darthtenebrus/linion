@@ -46,9 +46,6 @@ QNetworkReply *BinaryDownloader::start() {
 
         connect(currentReply, &QNetworkReply::readyRead, this, [=]() {
             auto *origin = qobject_cast<QNetworkReply *>(sender());
-#ifdef _DEBUG
-            qDebug() << origin->url();
-#endif
             QByteArray mb = m_buffers.value(origin->url());
             mb += origin->readAll();
             m_buffers.insert(origin->url(), mb);
