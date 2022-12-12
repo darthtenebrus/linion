@@ -213,7 +213,6 @@ bool QvObjectDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, con
 }
 
 bool QvObjectDelegate::validateButton(const QModelIndex &index, const QStyleOptionViewItem &option, QEvent *event) {
-
     const QString &txt = getButtonText(index);
     if (txt.isEmpty()) {
         return false;
@@ -228,9 +227,7 @@ bool QvObjectDelegate::validateButton(const QModelIndex &index, const QStyleOpti
 
     if (me->button() == Qt::LeftButton) {
         const QPoint &pNormal = calculateNormal(option);
-
         const QPoint &newX = me->pos() - pNormal;
-
         if (checkRect.contains(newX)) {
 
             if (event->type() == QEvent::MouseButtonPress) {
