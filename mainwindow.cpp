@@ -13,9 +13,11 @@
 
 #endif
 
+QString MainWindow::orgName = "linion";
+
 MainWindow::MainWindow(QWidget *parent) :
         QMainWindow(parent), ui(new Ui::MainWindow()), configDialog(new ConfigDialog(this)),
-        settings(QSettings::NativeFormat, QSettings::UserScope, "linion", "config") {
+        settings(QSettings::NativeFormat, QSettings::UserScope, MainWindow::orgName, "config") {
     ui->setupUi(this);
 
     proxyModel = new QAddonProxyModel(ui->addonTreeView);

@@ -20,6 +20,7 @@ public:
 
     ~MainWindow();
 
+    static QString orgName;
 
 protected:
     void closeEvent(QCloseEvent *event) override;
@@ -42,7 +43,8 @@ private:
             {"addonFolderPath",
              QVariant(QDir::homePath())},
             {"backupPath",
-            QVariant(QDir::homePath() + QDir::separator() + "ESObackup")},
+            QVariant(QDir::homePath() + QDir::separator() +
+                "." + MainWindow::orgName + QDir::separator() + "ESObackup")},
             {"useTar", QVariant(true)},
             {"useZip", QVariant(false)},
             {"tarCommand", QVariant("tar cvzf %1.tgz")},
