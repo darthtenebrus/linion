@@ -63,6 +63,7 @@ private:
 public slots:
     void currentChanged(const QModelIndex &current, const QModelIndex &prev);
     void aboutQtAction(bool);
+    void aboutAppAction(bool);
     void allChanged();
     void updateProgressPercent(int current, int total, const QString &msg);
     void settingsClicked(bool checked);

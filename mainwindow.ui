@@ -316,6 +316,8 @@ p, li { white-space: pre-wrap; }
      <string>Help</string>
     </property>
     <addaction name="actionAboutQt"/>
+    <addaction name="separator"/>
+    <addaction name="actionAboutApp"/>
    </widget>
    <widget class="QMenu" name="menuSettings">
     <property name="title">
@@ -335,6 +337,11 @@ p, li { white-space: pre-wrap; }
   <action name="actionSettings">
    <property name="text">
     <string>Application Settings</string>
+   </property>
+  </action>
+  <action name="actionAboutApp">
+   <property name="text">
+    <string>About this application</string>
    </property>
   </action>
  </widget>

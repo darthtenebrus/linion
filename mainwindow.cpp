@@ -4,6 +4,7 @@
 #include "mainwindow.h"
 #include "QvObjectDelegate.h"
 #include "configdialog.h"
+#include "aboutdialog.h"
 
 #ifdef _DEBUG
 
@@ -84,6 +85,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->searchEdit, &QLineEdit::textChanged, proxyModel, &QSortFilterProxyModel::setFilterWildcard);
     connect(ui->actionAboutQt, &QAction::triggered, this, &MainWindow::aboutQtAction);
+    connect(ui->actionAboutApp, &QAction::triggered, this, &MainWindow::aboutAppAction);
     connect(ui->backupButton, &QToolButton::clicked, model, &QAddonListModel::backupAllClicked);
     connect(model, &QAddonListModel::addonsListChanged, this, &MainWindow::allChanged);
     connect(model, &QAddonListModel::percent, this, &MainWindow::updateProgressPercent);
@@ -314,6 +316,12 @@ void MainWindow::tryToPisitionOnInstalled(const QString &path) const {
         }
 
     }
+}
+
+void MainWindow::aboutAppAction(bool clicked) {
+    auto *aboutApp = new AboutDialog(this);
+    aboutApp->exec();
+    delete aboutApp;
 }
 
 
