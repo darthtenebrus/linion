@@ -160,9 +160,7 @@ void QvObjectDelegate::paintObjectBtn(QPainter *p, const QStyleOptionViewItem &o
     QStyleOptionButton opt;
     opt.rect = buttonRect;
     opt.state |= QStyle::State_Active;
-#ifdef _DEBUG
-    qDebug() << selectedSet.contains(index);
-#endif
+
     if (selectedSet.contains(index)) {
         opt.state |= QStyle::State_Enabled;
         opt.state |= QStyle::State_Active;

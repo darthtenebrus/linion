@@ -8,9 +8,7 @@
 #include <QPixmap>
 
 #ifdef _DEBUG
-
 #include <QDebug>
-
 #endif
 
 #include <QRegularExpression>

@@ -7,12 +7,10 @@
 #include "aboutdialog.h"
 
 #ifdef _DEBUG
-
 #include <QDebug>
-#include <QSettings>
-#include <QDesktopServices>
-
 #endif
+#include <QSettings>
+
 
 QString MainWindow::orgName = "linion";
 
