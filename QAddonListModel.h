@@ -62,11 +62,13 @@ public:
     [[nodiscard]]
     QString tryToGetExtraData(const QString &url, const QByteArray &contentType = QByteArray());
 
+    [[nodiscard]]
     int columnCount(const QModelIndex &parent) const override;
 
 private:
     static QString listUrl;
     static QString detailsUrl;
+    static QStringList restrictedCategs;
     QString headerTitle;
     BinaryDownloader *bdl;
 
@@ -88,11 +90,13 @@ private:
     void refreshESOSiteList();
     void refreshFromSiteList();
 
-    const QString &cleanColorizers(QString &input) const;
-    void processBackup(const QString &pPath) const;
-    void copyPath(const QString&, const QString&) const;
+    static const QString &cleanColorizers(QString &);
+    void processBackup(const QString &) const;
+    void copyPath(const QString&, const QString &) const;
     void prepareAndCleanDestDir(const QDir &dir) const;
-    ItemData * prepareAndFillDataByAddonName(const QString &addonName) const;
+
+    [[nodiscard]]
+    ItemData * prepareAndFillDataByAddonName(const QString &) const;
 
     [[nodiscard]]
     ItemData::ItemStatus checkBackupStatus(const QString &qString) const;
@@ -113,8 +117,6 @@ public slots:
 
     void onReportSuccess(const QByteArray &, QNetworkReply *);
     void onReportError(QNetworkReply *);
-
-    const QList<QJsonObject> &getEsoSiteList() const;
 
 
 private slots:

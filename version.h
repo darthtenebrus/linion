@@ -4,6 +4,6 @@
 
 #ifndef LINION_VERSION_H
 #define LINION_VERSION_H
-#define APP_VERSION "1.0-3"
+#define APP_VERSION "1.0-4"
 
 #endif //LINION_VERSION_H

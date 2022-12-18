@@ -24,6 +24,7 @@
 
 QString QAddonListModel::listUrl = "https://api.mmoui.com/v3/game/ESO/filelist.json";
 QString QAddonListModel::detailsUrl = "https://api.mmoui.com/v3/game/ESO/filedetails/";
+QStringList QAddonListModel::restrictedCategs = QStringList() << "35" << "88";
 
 QAddonListModel::QAddonListModel(const PreferencesType &settings, QObject *parent)
         : QAbstractListModel(parent) {
@@ -158,7 +159,7 @@ ItemData *QAddonListModel::prepareAndFillDataByAddonName(const QString &addonNam
 
         QString finalVer = version.isEmpty() ? "[" + tr("Unknown Version") + "]" : version;
         ItemData::ItemStatus backupStatus = checkBackupStatus(addonName);
-        auto foundNetData = std::find_if(esoSiteList.begin(), esoSiteList.end(), [&addonName](QJsonObject o) {
+        auto foundNetData = std::find_if(esoSiteList.begin(), esoSiteList.end(), [&addonName](const QJsonObject &o) {
 
             return o.value("UIDir").toArray()[0] == addonName;
         });
@@ -183,9 +184,11 @@ ItemData *QAddonListModel::prepareAndFillDataByAddonName(const QString &addonNam
 void QAddonListModel::refreshFolderList() {
 
     int totalCount = addonList.count();
-    beginRemoveRows(QModelIndex(), 0, totalCount >= 1 ? totalCount - 1 : 0);
-    addonList.clear();
-    endRemoveRows();
+    if (!addonList.isEmpty()) {
+        beginRemoveRows(QModelIndex(), 0, totalCount - 1);
+        addonList.clear();
+        endRemoveRows();
+    }
     QDir dir = QDir(addonFolderPath);
     const QFileInfoList &dirList = dir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot);
     int total = dirList.count();
@@ -210,7 +213,7 @@ void QAddonListModel::refreshFolderList() {
 
 }
 
-const QString &QAddonListModel::cleanColorizers(QString &input) const {
+const QString &QAddonListModel::cleanColorizers(QString &input) {
     return input.replace(
                     QRegularExpression(R"(\|c[A-Za-z0-9]{6})"), "")
             .replace("|r", "")
@@ -232,10 +235,13 @@ void QAddonListModel::refreshFromExternal() {
 void QAddonListModel::refreshFromSiteList() {
 
     esoSiteDescriptionsCache.clear();
-    int totalCount = addonList.count();
-    beginRemoveRows(QModelIndex(), 0, totalCount >= 1 ? totalCount - 1 : 0);
-    addonList.clear();
-    endRemoveRows();
+
+    if (!addonList.isEmpty()) {
+        int totalCount = addonList.count();
+        beginRemoveRows(QModelIndex(), 0, totalCount - 1);
+        addonList.clear();
+        endRemoveRows();
+    }
 
     int total = esoSiteList.count() - 1;
     emit percent(0, total, tr("Updating"));
@@ -245,6 +251,11 @@ void QAddonListModel::refreshFromSiteList() {
     for (const QJsonObject &findNow: esoSiteList) {
         i++;
         emit percent(i, total, tr("Updating"));
+        const QString &catId = findNow.value("UICATID").toString();
+        if (restrictedCategs.contains(catId)) {
+            continue;
+        }
+
         const QString &addonName = findNow.value("UIDir").toArray()[0].toString();
         const QString &fPath = addonFolderPath + QDir::separator() + addonName + QDir::separator() + addonName + ".txt";
 
@@ -426,10 +437,6 @@ void QAddonListModel::copyPath(const QString &src, const QString &dst) const {
 
 const QList<ItemData> &QAddonListModel::getAddonList() const {
     return addonList;
-}
-
-const QList<QJsonObject> &QAddonListModel::getEsoSiteList() const {
-    return esoSiteList;
 }
 
 QVariant QAddonListModel::headerData(int section, Qt::Orientation orientation, int role) const {
@@ -695,7 +702,7 @@ QString QAddonListModel::tryToGetExtraData(const QString &UID, const QByteArray 
         connect(cRep, &QNetworkReply::downloadProgress,
                 this, &QAddonListModel::onPercentDownload);
         connect(cRep, &QNetworkReply::finished, &loop, &QEventLoop::quit);
-        loop.exec();
+        loop.exec(QEventLoop::ExcludeUserInputEvents);
         QByteArray retRes = bdl->getRequestResult();
         if (!retRes.isEmpty()) {
             const QJsonDocument &document = QJsonDocument::fromJson(retRes);
