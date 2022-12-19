@@ -20,6 +20,7 @@
 #include <QEventLoop>
 #include <QToolButton>
 #include <QCoreApplication>
+#define TMP_DIR "tesotmp"
 
 
 QString QAddonListModel::listUrl = "https://api.mmoui.com/v3/game/ESO/filelist.json";
@@ -352,7 +353,7 @@ void QAddonListModel::processBackup(const QString &pPath) const {
 
     const QString &parPath = QFileInfo(pPath).absolutePath();
     const QDir &srcDir = QDir(parPath);
-    const QString &tmpPath = QDir::tempPath() + QDir::separator() + "tesotmp";
+    const QString &tmpPath = QDir::tempPath() + QDir::separator() + TMP_DIR;
     const QDir &destDir = QDir(((useTar || useZip) ? tmpPath :
                                 backupPath) + QDir::separator() + srcDir.dirName());
 

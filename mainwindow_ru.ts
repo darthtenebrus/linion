@@ -142,7 +142,7 @@ p, li { white-space: pre-wrap; }
         <location filename="configdialog.ui" line="323"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="316"/>
         <source>Tar Extract Command</source>
-        <translation type="unfinished"></translation>
+        <translation>Распаковщик TAR</translation>
     </message>
     <message>
         <location filename="configdialog.cpp" line="80"/>
@@ -405,7 +405,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="QAddonListModel.cpp" line="439"/>
         <source>Do you want to restore this addon: %1?</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы действительно хотите восстановить аддон %1 из резервной копии?</translation>
     </message>
     <message>
         <location filename="QAddonListModel.cpp" line="527"/>
