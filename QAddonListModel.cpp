@@ -352,7 +352,8 @@ void QAddonListModel::processBackup(const QString &pPath) const {
 
     const QString &parPath = QFileInfo(pPath).absolutePath();
     const QDir &srcDir = QDir(parPath);
-    const QDir &destDir = QDir(((useTar || useZip) ? QDir::tempPath() :
+    const QString &tmpPath = QDir::tempPath() + QDir::separator() + "tesotmp";
+    const QDir &destDir = QDir(((useTar || useZip) ? tmpPath :
                                 backupPath) + QDir::separator() + srcDir.dirName());
 
     prepareAndCleanDestDir(destDir);
@@ -362,7 +363,7 @@ void QAddonListModel::processBackup(const QString &pPath) const {
     if (useZip || useTar) {
 
         QProcess proc;
-        proc.setWorkingDirectory(QDir::tempPath());
+        proc.setWorkingDirectory(tmpPath);
         if (useTar) {
             // имя архива. Пробелы убираем
             const QString &newTarCommand = QString(tarCommand)
@@ -402,16 +403,23 @@ void QAddonListModel::processBackup(const QString &pPath) const {
 
         QDir ddir(destDir);
         ddir.removeRecursively();
-        const QString &ext = (useTar ? ".tgz" : (useZip ? ".zip" : ""));
 
-        const QString &srcPath = QDir::tempPath() + QDir::separator() + ddir.dirName() + ext;
-        const QString &dstPath = backupPath + QDir::separator() + ddir.dirName() + ext;
+        // now copy the archive from temp to dest
+        QDir &&tpDir = QDir(tmpPath);
+        for (const QString &f: tpDir.entryList(QDir::Files)) {
+            const QString &curF = f.contains(".") ? f.section('.',0,0) : f;
 
-        if (QFile::exists(dstPath)) {
-            QFile::remove(dstPath);
+            if (curF == ddir.dirName()) {
+                const QString &srcPath = tmpPath + QDir::separator() + f;
+                const QString &dstPath = backupPath + QDir::separator() + f;
+                if (QFile::exists(dstPath)) {
+                    QFile::remove(dstPath);
+                }
+                QFile::copy(srcPath, dstPath);
+                tpDir.removeRecursively();
+                break;
+            }
         }
-        QFile::copy(srcPath, dstPath);
-        QFile::remove(srcPath);
     }
 }
 
@@ -483,6 +491,7 @@ void QAddonListModel::setModelData(const PreferencesType &data) {
 
     tarCommand = data.value("tarCommand").toString();
     zipCommand = data.value("zipCommand").toString();
+    tarExtractCommand = data.value("tarExtractCommand").toString();
     zipExtractCommand = data.value("zipExtractCommand").toString();
 
 }
@@ -490,6 +499,8 @@ void QAddonListModel::setModelData(const PreferencesType &data) {
 ItemData::ItemStatus QAddonListModel::checkBackupStatus(const QString &aName) const {
 
     if (QFile(backupPath + QDir::separator() + aName + ".tgz").exists() ||
+        QFile(backupPath + QDir::separator() + aName + ".tar.gz").exists() ||
+            QFile(backupPath + QDir::separator() + aName + ".tar.xz").exists() ||
         QFile(backupPath + QDir::separator() + aName + ".zip").exists() ||
         QDir(backupPath + QDir::separator() + aName).exists()) {
         return ItemData::InstalledBackedUp;
