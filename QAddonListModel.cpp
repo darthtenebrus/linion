@@ -456,7 +456,20 @@ void QAddonListModel::processRestore(const QString &srcDirName) {
         prepareAndCleanDestDir(QDir(dstDir));
         copyPath(srcDir, dstDir);
     } else {
+        const QString &tmpDir = QDir::tempPath() + QDir::separator() + TMP_DIR;
+        QDir(tmpDir).mkpath(".");
+        for (const QString &f : QDir(backupPath).entryList(QDir::Files)) {
+            const QString &curName = f.section(".", -2, -2);
 
+            if (curName == srcDirName) {
+                const QString &workFile = tmpDir + QDir::separator() + f;
+                QFile::copy(backupPath + QDir::separator() + f, workFile);
+
+                QProcess proc;
+                proc.setWorkingDirectory(tmpDir);
+                break;
+            }
+        }
     }
 }
 
