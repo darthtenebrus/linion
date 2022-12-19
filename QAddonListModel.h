@@ -112,8 +112,10 @@ public slots:
     void refresh();
     void uninstallAddonClicked();
     void backupAddonClicked();
-    void reinstallAddonClicked();
     void backupAllClicked();
+    void restoreAddonClicked();
+    void reinstallAddonClicked();
+
 
     void onReportSuccess(const QByteArray &, QNetworkReply *);
     void onReportError(QNetworkReply *);

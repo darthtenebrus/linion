@@ -34,6 +34,7 @@ private:
     QMenu *contextMenu;
 
     QAction *backupAction;
+    QAction *restoreAction;
     QAction *uninstallAction;
     QAction *reinstallAction;
     QAction *visitSiteAction;

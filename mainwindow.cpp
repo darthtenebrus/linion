@@ -33,11 +33,15 @@ MainWindow::MainWindow(QWidget *parent) :
     contextMenu = new QMenu(ui->addonTreeView);
     ui->addonTreeView->setContextMenuPolicy(Qt::ActionsContextMenu);
     backupAction = new QAction(QIcon::fromTheme("folder"), tr("Backup"), contextMenu);
+    QIcon restIcon = QIcon(":/images/restore_back.png");
+    restIcon.addFile(":/images/restore_back_disabled.png", QSize(), QIcon::Disabled, QIcon::Off);
+    restoreAction = new QAction(restIcon, tr("Restore"), contextMenu);
     reinstallAction = new QAction(QIcon::fromTheme("folder-sync"), tr("Reinstall Or Update"), contextMenu);
     uninstallAction = new QAction(QIcon::fromTheme("delete"), tr("Uninstall"), contextMenu);
     visitSiteAction = new QAction(QIcon::fromTheme("gnumeric-link-url"), tr("Visit Web site"), contextMenu);
     // folder-sync
     ui->addonTreeView->addAction(backupAction);
+    ui->addonTreeView->addAction(restoreAction);
     ui->addonTreeView->addAction(reinstallAction);
     ui->addonTreeView->addAction(visitSiteAction);
     ui->addonTreeView->addAction(uninstallAction);
@@ -60,6 +64,7 @@ MainWindow::MainWindow(QWidget *parent) :
             &QAddonListModel::reinstallAddonClicked);
     
     connect(backupAction, &QAction::triggered, model, &QAddonListModel::backupAddonClicked);
+    connect(restoreAction, &QAction::triggered, model, &QAddonListModel::restoreAddonClicked);
     connect(reinstallAction, &QAction::triggered, model, &QAddonListModel::reinstallAddonClicked);
     connect(uninstallAction, &QAction::triggered, model, &QAddonListModel::uninstallAddonClicked);
 
@@ -118,6 +123,7 @@ MainWindow::~MainWindow() {
     delete visitSiteAction;
     delete reinstallAction;
     delete uninstallAction;
+    delete restoreAction;
     delete backupAction;
     delete progressBar;
     delete configDialog;
@@ -145,10 +151,10 @@ void MainWindow::currentChanged(const QModelIndex &current, const QModelIndex &p
         const QString &version = current.data(QAddonListModel::VersionRole).toString();
         const QString &author = current.data(QAddonListModel::AuthorRole).toString();
         const QString &UID = current.data(QAddonListModel::UIDRole).toString();
-        ItemData::ItemStatus cStatus = current.data(QAddonListModel::StatusRole).value<ItemData::ItemStatus>();
+        auto cStatus = current.data(QAddonListModel::StatusRole).value<ItemData::ItemStatus>();
 
         const QString &remoteDesc = model->tryToGetExtraData(UID, "application/json");
-
+        restoreAction->setEnabled(cStatus == ItemData::InstalledBackedUp);
 
         const QString &urlToOpen = QString("<p><a href=\"%1\">%1</a></p>")
                 .arg(infoUrl);

@@ -415,6 +415,30 @@ void QAddonListModel::processBackup(const QString &pPath) const {
     }
 }
 
+void QAddonListModel::restoreAddonClicked() {
+    auto *view = qobject_cast<QTreeView *>(parent());
+    
+    const QModelIndexList &selectedSet = view->selectionModel()->selectedIndexes();
+    if (selectedSet.count() > 1) {
+        return; // fuckup
+    }
+    const QModelIndex &index = selectedSet[0];
+    const QString &aPath = index.data(QAddonListModel::PathRole).toString();
+    const QString &destDir = aPath.section(QDir::separator(), -2, -2);
+    const QString &addonDisplayName = index.data(Qt::DisplayRole).toString();
+
+    QMessageBox::StandardButton button = QMessageBox::warning(view, tr("Info"),
+                                                              tr("Do you want to restore this addon: %1?")
+                                                                    .arg(addonDisplayName),
+                                                              QMessageBox::StandardButtons(
+                                                                      QMessageBox::Yes | QMessageBox::No));
+    if (button == QMessageBox::No) {
+        return;
+    }
+#ifdef _DEBUG
+    qDebug() << destDir;
+#endif
+}
 
 void QAddonListModel::copyPath(const QString &src, const QString &dst) const {
 
@@ -725,6 +749,7 @@ QString QAddonListModel::tryToGetExtraData(const QString &UID, const QByteArray 
         return tmp;
     }
 }
+
 
 
 
