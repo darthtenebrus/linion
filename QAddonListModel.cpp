@@ -444,9 +444,12 @@ void QAddonListModel::restoreAddonClicked() {
     if (button == QMessageBox::No) {
         return;
     }
-#ifdef _DEBUG
-    qDebug() << destDir;
-#endif
+
+    processRestore(destDir);
+}
+
+void QAddonListModel::processRestore(const QString &sPath) {
+
 }
 
 void QAddonListModel::copyPath(const QString &src, const QString &dst) const {
@@ -761,6 +764,7 @@ QString QAddonListModel::tryToGetExtraData(const QString &UID, const QByteArray 
         return tmp;
     }
 }
+
 
 
 

@@ -94,14 +94,15 @@ private:
     static const QString &cleanColorizers(QString &);
     void processBackup(const QString &) const;
     void copyPath(const QString&, const QString &) const;
-    void prepareAndCleanDestDir(const QDir &dir) const;
+    void prepareAndCleanDestDir(const QDir &) const;
 
     [[nodiscard]]
     ItemData * prepareAndFillDataByAddonName(const QString &) const;
 
     [[nodiscard]]
-    ItemData::ItemStatus checkBackupStatus(const QString &qString) const;
+    ItemData::ItemStatus checkBackupStatus(const QString &) const;
 
+    void processRestore(const QString &);
 
 signals:
     void percent(int current, int total, const QString &msg = "");
