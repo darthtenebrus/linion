@@ -433,7 +433,7 @@ void QAddonListModel::restoreAddonClicked() {
     }
     const QModelIndex &index = selectedSet[0];
     const QString &aPath = index.data(QAddonListModel::PathRole).toString();
-    const QString &destDir = aPath.section(QDir::separator(), -2, -2);
+    const QString &srcDirName = aPath.section(QDir::separator(), -2, -2);
     const QString &addonDisplayName = index.data(Qt::DisplayRole).toString();
 
     QMessageBox::StandardButton button = QMessageBox::warning(view, tr("Info"),
@@ -445,11 +445,19 @@ void QAddonListModel::restoreAddonClicked() {
         return;
     }
 
-    processRestore(destDir);
+    processRestore(srcDirName);
 }
 
-void QAddonListModel::processRestore(const QString &sPath) {
+void QAddonListModel::processRestore(const QString &srcDirName) {
 
+    const QString &srcDir = backupPath + QDir::separator() + srcDirName;
+    if (QDir(srcDir).exists()) {
+        const QString &dstDir = addonFolderPath + QDir::separator() + srcDirName;
+        prepareAndCleanDestDir(QDir(dstDir));
+        copyPath(srcDir, dstDir);
+    } else {
+
+    }
 }
 
 void QAddonListModel::copyPath(const QString &src, const QString &dst) const {
