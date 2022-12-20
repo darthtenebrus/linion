@@ -97,7 +97,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(model, &QAddonListModel::addonsListChanged, this, &MainWindow::allChanged);
     connect(model, &QAddonListModel::percent, this, &MainWindow::updateProgressPercent);
     connect(model, &QAddonListModel::processFinished, this, [=](const QString &str, const QString &err) {
-        termWindow->setWIndowData(str, err);
+        termWindow->setWindowData(str, err);
     });
 
     connect(ui->refreshButton, &QToolButton::clicked, this, [=]() {

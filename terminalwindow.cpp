@@ -17,7 +17,7 @@ TerminalWindow::~TerminalWindow() {
     delete ui;
 }
 
-void TerminalWindow::setWIndowData(const QString &data, const QString &err) const {
+void TerminalWindow::setWindowData(const QString &data, const QString &err) const {
     ui->terminalResult->setText(data);
     ui->terminalResult->append("\n");
     ui->terminalResult->append(err);

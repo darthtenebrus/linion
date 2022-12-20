@@ -19,7 +19,7 @@ public:
     explicit TerminalWindow(QWidget *parent = nullptr);
     ~TerminalWindow() override;
 
-    void setWIndowData(const QString &, const QString &) const;
+    void setWindowData(const QString &data, const QString &err) const;
 
 private:
     Ui::TerminalWindow *ui;
