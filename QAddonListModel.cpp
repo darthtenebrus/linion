@@ -297,7 +297,7 @@ void QAddonListModel::uninstallAddonClicked() {
     if (selectedSet.count() > 1) {
         return; // fuckup
     }
-    
+
     const QModelIndex &index = selectedSet[0];
 
     const QString &aPath = index.data(QAddonListModel::PathRole).toString();
@@ -409,24 +409,23 @@ void QAddonListModel::processBackup(const QString &pPath) const {
         QDir &&tpDir = QDir(tmpPath);
         for (const QString &f: tpDir.entryList(QDir::Files)) {
             const QString &srcPath = tmpPath + QDir::separator() + f;
-            const QString &curF = QFileInfo(srcPath).completeBaseName();
+            // файл только один!
 
-            if (curF == destDir.dirName()) {
-                const QString &dstPath = backupPath + QDir::separator() + f;
-                if (QFile::exists(dstPath)) {
-                    QFile::remove(dstPath);
-                }
-                QFile::copy(srcPath, dstPath);
-                tpDir.removeRecursively();
-                break;
+            const QString &dstPath = backupPath + QDir::separator() + f;
+            if (QFile::exists(dstPath)) {
+                QFile::remove(dstPath);
             }
+            QFile::copy(srcPath, dstPath);
+            tpDir.removeRecursively();
+            break;
+
         }
     }
 }
 
 void QAddonListModel::restoreAddonClicked() {
     auto *view = qobject_cast<QTreeView *>(parent());
-    
+
     const QModelIndexList &selectedSet = view->selectionModel()->selectedIndexes();
     if (selectedSet.count() > 1) {
         return; // fuckup
@@ -460,15 +459,20 @@ void QAddonListModel::processRestore(const QString &srcDirName) {
         return;
     } else {
         const QString &tmpDir = QDir::tempPath() + QDir::separator() + TMP_DIR;
-        QDir(tmpDir).mkpath(".");
-        for (const QString &f : QDir(backupPath).entryList(QDir::Files)) {
-            const QString &workFile = tmpDir + QDir::separator() + f;
-            QFileInfo fi(workFile);
+
+        QFileInfoList &&eList = QDir(backupPath).entryInfoList(QDir::Files);
+
+        std::sort(eList.begin(), eList.end(), [=](QFileInfo &a, QFileInfo &b) {
+            return a.completeBaseName() < b.completeBaseName();
+        });
+        for (const QFileInfo &fi : eList) {
+            const QString &workFile = tmpDir + QDir::separator() + fi.fileName();
+
             const QString &curName = fi.completeBaseName();
 
-            if (curName == srcDirName) {
-
-                QFile::copy(backupPath + QDir::separator() + f, workFile);
+            if (curName.startsWith(srcDirName)) {
+                QDir(tmpDir).mkpath(".");
+                QFile::copy(backupPath + QDir::separator() + fi.fileName(), workFile);
                 QProcess proc;
                 proc.setWorkingDirectory(tmpDir);
                 QMimeDatabase db;
@@ -484,6 +488,10 @@ void QAddonListModel::processRestore(const QString &srcDirName) {
                     tmpCommand = tarExtractCommand;
                 } else if (mime.name().contains("zip")) {
                     tmpCommand = zipExtractCommand;
+                }
+
+                if (tmpCommand.isEmpty()) {
+                    break;
                 }
 
                 QStringList commandList = tmpCommand.split(' ');
@@ -559,8 +567,11 @@ ItemData::ItemStatus QAddonListModel::checkBackupStatus(const QString &aName) co
 
     if (QFile(backupPath + QDir::separator() + aName + ".tgz").exists() ||
         QFile(backupPath + QDir::separator() + aName + ".tar.gz").exists() ||
+            QFile(backupPath + QDir::separator() + aName + ".tar.bz2").exists() ||
             QFile(backupPath + QDir::separator() + aName + ".tar.xz").exists() ||
         QFile(backupPath + QDir::separator() + aName + ".zip").exists() ||
+            QFile(backupPath + QDir::separator() + aName + ".gzip").exists() ||
+            QFile(backupPath + QDir::separator() + aName + ".gz").exists() ||
         QDir(backupPath + QDir::separator() + aName).exists()) {
         return ItemData::InstalledBackedUp;
     } else {
@@ -653,7 +664,9 @@ void QAddonListModel::reinstallAddonClicked() {
 
 
         const QString &aPath = index.data(QAddonListModel::PathRole).toString();
-        const QString &tmpDirPath = QDir::tempPath() + QDir::separator() + QDir(
+        const QString &tempRoot = QDir::tempPath() + QDir::separator() + TMP_DIR;
+        prepareAndCleanDestDir(tempRoot);
+        const QString &tmpDirPath = tempRoot + QDir::separator() + QDir(
                 QFileInfo(aPath).absolutePath()
         ).dirName();
         const QString &tmpFilePath = tmpDirPath + ".zip";
@@ -678,7 +691,7 @@ void QAddonListModel::reinstallAddonClicked() {
                 file->close();
 
                 QProcess extractProc;
-                extractProc.setWorkingDirectory(QDir::tempPath());
+                extractProc.setWorkingDirectory(tempRoot);
 
                 QStringList commandList = zipExtractCommand.trimmed().split(
                         QRegularExpression(R"(\s+)")
@@ -702,7 +715,7 @@ void QAddonListModel::reinstallAddonClicked() {
 
                 prepareAndCleanDestDir(dstDir);
                 copyPath(srcDir.absolutePath(), dstDir.absolutePath());
-                srcDir.removeRecursively();
+                QDir(tempRoot).removeRecursively();
 
                 const QString &aPath = addonFolderPath + QDir::separator() + addonName +
                                        QDir::separator() + addonName + ".txt";
