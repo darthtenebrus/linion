@@ -77,15 +77,28 @@ QVariant QAddonListModel::data(const QModelIndex &index, int role) const {
         case QAddonListModel::DescriptionRole:
             value = addonList.at(index.row()).getDescription();
             break;
-        case Qt::DecorationRole: {
-            const ItemData::ItemStatus &cStatus = addonList.at(index.row()).isStatus();
-            if (cStatus != ItemData::NotInstalled) {
-                value = QPixmap(addonList.at(index.row()).isStatus() == ItemData::InstalledBackedUp ?
-                                ":/images/green_check.png" : ":/images/red_cross.png");
-            } else {
-                value = QPixmap(":/images/red_cross.png");
+        case Qt::ToolTipRole: {
+                const ItemData::ItemStatus &cStatus = addonList.at(index.row()).isStatus();
+                if (cStatus == ItemData::NotInstalled) {
+                    value = tr("Not installed");
+                } else if (cStatus == ItemData::Installed) {
+                    value = tr("Installed, Not backed up");
+                } else if (cStatus == ItemData::InstalledBackedUp) {
+                    value = tr("Installed. Backed up");
+                } else {
+                    value = QVariant();
+                }
             }
-        }
+            break;
+        case Qt::DecorationRole: {
+                const ItemData::ItemStatus &cStatus = addonList.at(index.row()).isStatus();
+                if (cStatus != ItemData::NotInstalled) {
+                    value = QPixmap(addonList.at(index.row()).isStatus() == ItemData::InstalledBackedUp ?
+                                    ":/images/green_check.png" : ":/images/red_cross.png");
+                } else {
+                    value = QPixmap(":/images/red_cross.png");
+                }
+            }
             break;
         case QAddonListModel::DownloadTotalRole:
             value = addonList.at(index.row()).getDownloadTotal();
