@@ -110,6 +110,7 @@ signals:
     void percent(int current, int total, const QString &msg = "");
     void backToInstalled(const QString &);
     void addonsListChanged();
+    void processFinished(const QString &, const QString &) const;
 
 
 public slots:

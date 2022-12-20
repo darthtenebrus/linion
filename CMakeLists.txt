@@ -27,6 +27,7 @@ add_executable(${PROJECT_NAME}
         QvObjectDelegate.cpp QvObjectDelegate.h configdialog.cpp configdialog.h configdialog.ui
         DialogItemDelegate.cpp DialogItemDelegate.h preferences.h QAddonProxyModel.cpp QAddonProxyModel.h
         BinaryDownloader.cpp BinaryDownloader.h aboutdialog.cpp aboutdialog.h aboutdialog.ui version.h
+        terminalwindow.cpp terminalwindow.h terminalwindow.ui
         ${RES_FILES}
         ${QM_FILES})
 

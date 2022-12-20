@@ -825,6 +825,7 @@ void QAddonListModel::workWithProcess(const QString &tempPath, QStringList &comm
     QProcess::ProcessError res = proc.error();
     const QString &strRes = QString(proc.readAllStandardOutput());
     const QString &errRes = QString(proc.readAllStandardError());
+    emit processFinished(strRes, errRes);
 
 }
 

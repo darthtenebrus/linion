@@ -16,6 +16,7 @@ QString MainWindow::orgName = "linion";
 
 MainWindow::MainWindow(QWidget *parent) :
         QMainWindow(parent), ui(new Ui::MainWindow()), configDialog(new ConfigDialog(this)),
+        termWindow(new TerminalWindow(this)),
         settings(QSettings::NativeFormat, QSettings::UserScope, MainWindow::orgName, "config") {
     ui->setupUi(this);
 
@@ -89,9 +90,15 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->searchEdit, &QLineEdit::textChanged, proxyModel, &QSortFilterProxyModel::setFilterWildcard);
     connect(ui->actionAboutQt, &QAction::triggered, this, &MainWindow::aboutQtAction);
     connect(ui->actionAboutApp, &QAction::triggered, this, &MainWindow::aboutAppAction);
+    connect(ui->showTerminalAction, &QAction::triggered, this, [=]() {
+        termWindow->exec();
+    });
     connect(ui->backupButton, &QToolButton::clicked, model, &QAddonListModel::backupAllClicked);
     connect(model, &QAddonListModel::addonsListChanged, this, &MainWindow::allChanged);
     connect(model, &QAddonListModel::percent, this, &MainWindow::updateProgressPercent);
+    connect(model, &QAddonListModel::processFinished, this, [=](const QString &str, const QString &err) {
+        termWindow->setWIndowData(str, err);
+    });
 
     connect(ui->refreshButton, &QToolButton::clicked, this, [=]() {
         refreshListClicked();
@@ -127,6 +134,7 @@ MainWindow::~MainWindow() {
     delete backupAction;
     delete progressBar;
     delete configDialog;
+    delete termWindow;
     delete model;
     delete proxyModel;
     delete contextMenu;

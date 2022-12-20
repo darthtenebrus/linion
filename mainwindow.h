@@ -12,6 +12,7 @@
 #include "QAddonListModel.h"
 #include "configdialog.h"
 #include "QAddonProxyModel.h"
+#include "terminalwindow.h"
 
 class MainWindow : public QMainWindow {
 Q_OBJECT
@@ -30,6 +31,7 @@ private:
     QAddonListModel *model;
     QAddonProxyModel *proxyModel;
     ConfigDialog *configDialog;
+    TerminalWindow *termWindow;
     QProgressBar *progressBar;
     QMenu *contextMenu;
 

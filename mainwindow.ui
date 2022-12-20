@@ -324,6 +324,8 @@ p, li { white-space: pre-wrap; }
      <string>Settings</string>
     </property>
     <addaction name="actionSettings"/>
+    <addaction name="separator"/>
+    <addaction name="showTerminalAction"/>
    </widget>
    <addaction name="menuSettings"/>
    <addaction name="menuHelp"/>
@@ -342,6 +344,11 @@ p, li { white-space: pre-wrap; }
   <action name="actionAboutApp">
    <property name="text">
     <string>About this application</string>
+   </property>
+  </action>
+  <action name="showTerminalAction">
+   <property name="text">
+    <string>Show Terminal Output</string>
    </property>
   </action>
  </widget>
