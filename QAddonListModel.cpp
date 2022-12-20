@@ -20,6 +20,8 @@
 #include <QEventLoop>
 #include <QToolButton>
 #include <QCoreApplication>
+#include <QMimeDatabase>
+
 #define TMP_DIR "tesotmp"
 
 
@@ -402,16 +404,14 @@ void QAddonListModel::processBackup(const QString &pPath) const {
 
         }
 
-        QDir ddir(destDir);
-        ddir.removeRecursively();
 
         // now copy the archive from temp to dest
         QDir &&tpDir = QDir(tmpPath);
         for (const QString &f: tpDir.entryList(QDir::Files)) {
-            const QString &curF = f.contains(".") ? f.section('.',0,0) : f;
+            const QString &srcPath = tmpPath + QDir::separator() + f;
+            const QString &curF = QFileInfo(srcPath).completeBaseName();
 
-            if (curF == ddir.dirName()) {
-                const QString &srcPath = tmpPath + QDir::separator() + f;
+            if (curF == destDir.dirName()) {
                 const QString &dstPath = backupPath + QDir::separator() + f;
                 if (QFile::exists(dstPath)) {
                     QFile::remove(dstPath);
@@ -445,7 +445,9 @@ void QAddonListModel::restoreAddonClicked() {
         return;
     }
 
+    emit percent(1, 100, tr("Restoring single addon"));
     processRestore(srcDirName);
+    emit percent(100, 100, tr("Restoring single addon"));
 }
 
 void QAddonListModel::processRestore(const QString &srcDirName) {
@@ -455,18 +457,50 @@ void QAddonListModel::processRestore(const QString &srcDirName) {
         const QString &dstDir = addonFolderPath + QDir::separator() + srcDirName;
         prepareAndCleanDestDir(QDir(dstDir));
         copyPath(srcDir, dstDir);
+        return;
     } else {
         const QString &tmpDir = QDir::tempPath() + QDir::separator() + TMP_DIR;
         QDir(tmpDir).mkpath(".");
         for (const QString &f : QDir(backupPath).entryList(QDir::Files)) {
-            const QString &curName = f.section(".", -2, -2);
+            const QString &workFile = tmpDir + QDir::separator() + f;
+            QFileInfo fi(workFile);
+            const QString &curName = fi.completeBaseName();
 
             if (curName == srcDirName) {
-                const QString &workFile = tmpDir + QDir::separator() + f;
-                QFile::copy(backupPath + QDir::separator() + f, workFile);
 
+                QFile::copy(backupPath + QDir::separator() + f, workFile);
                 QProcess proc;
                 proc.setWorkingDirectory(tmpDir);
+                QMimeDatabase db;
+                QMimeType mime = db.mimeTypeForFile(workFile);
+                const QString &workFileExt = fi.completeSuffix();
+                QString tmpCommand;
+                if (workFileExt == "tgz" || workFile == "tar.gz" || workFileExt == "tar.xz" ||
+                        workFileExt == "tar.bz2") {
+                    tmpCommand = tarExtractCommand;
+                } else if (workFileExt == "zip" || workFile == "gzip" || workFileExt == "gz") {
+                    tmpCommand = zipExtractCommand;
+                } else if (mime.name().contains("tar")) {
+                    tmpCommand = tarExtractCommand;
+                } else if (mime.name().contains("zip")) {
+                    tmpCommand = zipExtractCommand;
+                }
+
+                QStringList commandList = tmpCommand.split(' ');
+                const QString &mainCommand = commandList.value(0);
+                commandList.removeAt(0);
+                commandList << fi.fileName();
+
+                proc.start(mainCommand, commandList);
+                proc.waitForFinished();
+                QProcess::ProcessError res = proc.error();
+                const QString &strRes = QString(proc.readAllStandardOutput());
+                const QString &errRes = QString(proc.readAllStandardError());
+
+                const QString &dstDir = addonFolderPath + QDir::separator() + srcDirName;
+                prepareAndCleanDestDir(QDir(dstDir));
+                copyPath(tmpDir + QDir::separator() + srcDirName, dstDir);
+                QDir(tmpDir).removeRecursively();
                 break;
             }
         }
