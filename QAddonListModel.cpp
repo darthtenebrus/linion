@@ -365,24 +365,15 @@ void QAddonListModel::processBackup(const QString &pPath) const {
 
     if (useZip || useTar) {
 
-        QProcess proc;
-        proc.setWorkingDirectory(tmpPath);
         if (useTar) {
             // имя архива. Пробелы убираем
             const QString &newTarCommand = QString(tarCommand)
                     .arg(destDir.dirName().replace(QRegularExpression(R"(\s+)"), ""));
             QStringList commandList = newTarCommand.trimmed().split(QRegularExpression(R"(\s+)"));
-
-            const QString &command = commandList.value(0);
-            commandList.removeAt(0);
             const QString &dDir = destDir.dirName();
-            commandList << (!dDir.contains(" ") ? dDir : R"(")" + dDir + R"(")");
 
-            proc.start(command, commandList);
-            proc.waitForFinished();
-            QProcess::ProcessError res = proc.error();
-            const QString &strRes = QString(proc.readAllStandardOutput());
-            const QString &errRes = QString(proc.readAllStandardError());
+            workWithProcess(tmpPath, commandList,
+                            (!dDir.contains(" ") ? dDir : R"(")" + dDir + R"(")"));
 
         } else if (useZip) {
             // имя архива. Пробелы убираем
@@ -390,16 +381,9 @@ void QAddonListModel::processBackup(const QString &pPath) const {
                     .arg(destDir.dirName().replace(QRegularExpression(R"(\s+)"), ""));
             QStringList commandList = newZipCommand.trimmed().split(QRegularExpression(R"(\s+)"));
 
-            const QString &command = commandList.value(0);
-            commandList.removeAt(0);
             const QString &dDir = destDir.dirName();
-            commandList << (!dDir.contains(" ") ? dDir : R"(")" + dDir + R"(")");
-
-            proc.start(command, commandList);
-            proc.waitForFinished();
-            QProcess::ProcessError res = proc.error();
-            const QString &strRes = QString(proc.readAllStandardOutput());
-            const QString &errRes = QString(proc.readAllStandardError());
+            workWithProcess(tmpPath, commandList,
+                            (!dDir.contains(" ") ? dDir : R"(")" + dDir + R"(")"));
 
 
         }
@@ -473,8 +457,7 @@ void QAddonListModel::processRestore(const QString &srcDirName) {
             if (curName.startsWith(srcDirName)) {
                 QDir(tmpDir).mkpath(".");
                 QFile::copy(backupPath + QDir::separator() + fi.fileName(), workFile);
-                QProcess proc;
-                proc.setWorkingDirectory(tmpDir);
+
                 QMimeDatabase db;
                 QMimeType mime = db.mimeTypeForFile(workFile);
                 const QString &workFileExt = fi.completeSuffix();
@@ -495,15 +478,7 @@ void QAddonListModel::processRestore(const QString &srcDirName) {
                 }
 
                 QStringList commandList = tmpCommand.split(' ');
-                const QString &mainCommand = commandList.value(0);
-                commandList.removeAt(0);
-                commandList << fi.fileName();
-
-                proc.start(mainCommand, commandList);
-                proc.waitForFinished();
-                QProcess::ProcessError res = proc.error();
-                const QString &strRes = QString(proc.readAllStandardOutput());
-                const QString &errRes = QString(proc.readAllStandardError());
+                workWithProcess(tmpDir, commandList, fi.fileName());
 
                 const QString &dstDir = addonFolderPath + QDir::separator() + srcDirName;
                 prepareAndCleanDestDir(QDir(dstDir));
@@ -690,22 +665,11 @@ void QAddonListModel::reinstallAddonClicked() {
                 file->flush();
                 file->close();
 
-                QProcess extractProc;
-                extractProc.setWorkingDirectory(tempRoot);
-
                 QStringList commandList = zipExtractCommand.trimmed().split(
                         QRegularExpression(R"(\s+)")
                 );
 
-                const QString &command = commandList.value(0);
-                commandList.removeAt(0);
-                commandList << QFileInfo(tmpFilePath).fileName();
-
-                extractProc.start(command, commandList);
-                extractProc.waitForFinished();
-                QProcess::ProcessError res = extractProc.error();
-                const QString &strRes = QString(extractProc.readAllStandardOutput());
-                const QString &errRes = QString(extractProc.readAllStandardError());
+                workWithProcess(tempRoot, commandList, QFileInfo(tmpFilePath).fileName());
 
                 QFile::remove(tmpFilePath);
 
@@ -831,6 +795,24 @@ QString QAddonListModel::tryToGetExtraData(const QString &UID, const QByteArray 
     } else {
         return tmp;
     }
+}
+
+void QAddonListModel::workWithProcess(const QString &tempPath, QStringList &commandList, const QString &tailParam) const {
+
+    QProcess proc;
+    proc.setWorkingDirectory(tempPath);
+
+    const QString &command = commandList.value(0);
+    commandList.removeAt(0);
+
+    commandList << tailParam;
+
+    proc.start(command, commandList);
+    proc.waitForFinished();
+    QProcess::ProcessError res = proc.error();
+    const QString &strRes = QString(proc.readAllStandardOutput());
+    const QString &errRes = QString(proc.readAllStandardError());
+
 }
 
 

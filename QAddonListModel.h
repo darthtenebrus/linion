@@ -104,6 +104,8 @@ private:
 
     void processRestore(const QString &);
 
+    void workWithProcess(const QString &, QStringList &, const QString &) const;
+
 signals:
     void percent(int current, int total, const QString &msg = "");
     void backToInstalled(const QString &);
