@@ -3,7 +3,7 @@
         <file>green_check.png</file>
         <file>small_check.png</file>
         <file>red_cross.png</file>
-        <file>linion.png</file>
+        <file>desktop/64x64/linion.png</file>
         <file>restore_back.png</file>
         <file>restore_back_disabled.png</file>
     </qresource>

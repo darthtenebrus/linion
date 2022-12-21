@@ -5,15 +5,15 @@
     <name>AboutDialog</name>
     <message>
         <location filename="aboutdialog.ui" line="17"/>
-        <location filename="cmake-build-debug/linion_autogen/include/ui_aboutdialog.h" line="76"/>
-        <location filename="cmake-build-release/linion_autogen/include/ui_aboutdialog.h" line="76"/>
+        <location filename="cmake-build-debug/linion_autogen/include/ui_aboutdialog.h" line="80"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_aboutdialog.h" line="80"/>
         <source>About This Application</source>
         <translation>О программе</translation>
     </message>
     <message>
-        <location filename="aboutdialog.ui" line="23"/>
-        <location filename="cmake-build-debug/linion_autogen/include/ui_aboutdialog.h" line="77"/>
-        <location filename="cmake-build-release/linion_autogen/include/ui_aboutdialog.h" line="77"/>
+        <location filename="aboutdialog.ui" line="27"/>
+        <location filename="cmake-build-debug/linion_autogen/include/ui_aboutdialog.h" line="81"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_aboutdialog.h" line="81"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -34,9 +34,9 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Исходный текст доступен на GitHub &lt;a href=&quot;https://github.com/darthtenebrus/linion&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#1d99f3;&quot;&gt;GitHub&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="aboutdialog.ui" line="71"/>
-        <location filename="cmake-build-debug/linion_autogen/include/ui_aboutdialog.h" line="84"/>
-        <location filename="cmake-build-release/linion_autogen/include/ui_aboutdialog.h" line="84"/>
+        <location filename="aboutdialog.ui" line="75"/>
+        <location filename="cmake-build-debug/linion_autogen/include/ui_aboutdialog.h" line="88"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_aboutdialog.h" line="88"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
@@ -575,15 +575,15 @@ p, li { white-space: pre-wrap; }
     <name>TerminalWindow</name>
     <message>
         <location filename="terminalwindow.ui" line="14"/>
-        <location filename="cmake-build-debug/linion_autogen/include/ui_terminalwindow.h" line="73"/>
-        <location filename="cmake-build-release/linion_autogen/include/ui_terminalwindow.h" line="73"/>
+        <location filename="cmake-build-debug/linion_autogen/include/ui_terminalwindow.h" line="77"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_terminalwindow.h" line="77"/>
         <source>Terminal Output</source>
         <translation>Терминал внешних процессов</translation>
     </message>
     <message>
-        <location filename="terminalwindow.ui" line="50"/>
-        <location filename="cmake-build-debug/linion_autogen/include/ui_terminalwindow.h" line="74"/>
-        <location filename="cmake-build-release/linion_autogen/include/ui_terminalwindow.h" line="74"/>
+        <location filename="terminalwindow.ui" line="54"/>
+        <location filename="cmake-build-debug/linion_autogen/include/ui_terminalwindow.h" line="78"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_terminalwindow.h" line="78"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
