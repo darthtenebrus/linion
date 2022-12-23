@@ -16,6 +16,7 @@ endif()
 find_package(Qt5 COMPONENTS Core Widgets Network LinguistTools)
 set(LING_OPTIONS -no-obsolete)
 qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} mainwindow_ru.ts OPTIONS ${LING_OPTIONS})
+qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} mainwindow_de.ts OPTIONS ${LING_OPTIONS})
 configure_file(translations.qrc ${CMAKE_BINARY_DIR} COPYONLY)
 set(RES_FILES ${CMAKE_BINARY_DIR}/translations.qrc images.qrc)
 

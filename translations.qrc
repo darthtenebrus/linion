@@ -1,5 +1,6 @@
 <!DOCTYPE RCC><RCC version="1.0">
     <qresource prefix="i18n">
         <file>mainwindow_ru.qm</file>
+        <file>mainwindow_de.qm</file>
     </qresource>
 </RCC>
