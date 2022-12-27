@@ -156,17 +156,17 @@ p, li { white-space: pre-wrap; }
         <translation>Распаковщик TAR</translation>
     </message>
     <message>
-        <location filename="configdialog.cpp" line="90"/>
+        <location filename="configdialog.cpp" line="89"/>
         <source>Choose ESO Adddons Directory</source>
         <translation>Папка с аддонами ESO</translation>
     </message>
     <message>
-        <location filename="configdialog.cpp" line="100"/>
+        <location filename="configdialog.cpp" line="101"/>
         <source>Choose Backup Directory</source>
         <translation>Папка для резервных копий</translation>
     </message>
     <message>
-        <location filename="configdialog.cpp" line="126"/>
+        <location filename="configdialog.cpp" line="127"/>
         <source>Choose Saved Vars Directory</source>
         <translation>Папка для файлов переменных</translation>
     </message>

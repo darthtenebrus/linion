@@ -69,8 +69,7 @@ void ConfigDialog::transferData(const PreferencesType &data) const {
     ui->zipExtractCommand->setText(data.value("zipExtractCommand").toString());
     QString sPath = data.value("savedVarsPath").toString();
     if (sPath.isEmpty() && !ui->addonFolderPath->text().isEmpty()) {
-        sPath = ui->addonFolderPath->text().section(QDir::separator(), 0, -2) +
-                QDir::separator() + ConfigDialog::savedVarsSuffix;
+        sPath = prepareSavedPath(ui->addonFolderPath->text());
     }
     ui->savedVarsPath->setText(sPath);
 
@@ -93,6 +92,8 @@ void ConfigDialog::addonPathChoose() {
                                                  | QFileDialog::DontResolveSymlinks);
     if (!dir.isEmpty()) {
         ui->addonFolderPath->setText(dir);
+        const QString &sPath = prepareSavedPath(ui->addonFolderPath->text());
+        ui->savedVarsPath->setText(sPath);
     }
 }
 
@@ -130,6 +131,14 @@ void ConfigDialog::savedVarsPathChoose() {
     if (!dir.isEmpty()) {
         ui->savedVarsPath->setText(dir);
     }
+}
+
+QString ConfigDialog::prepareSavedPath(const QString &sPath) const {
+
+    const QString &cPath = sPath.section(QDir::separator(), 0, -2) +
+                           QDir::separator() + ConfigDialog::savedVarsSuffix;
+    return  cPath;
+    
 }
 
 

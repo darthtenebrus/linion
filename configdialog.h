@@ -31,6 +31,7 @@ public:
 
 private:
     Ui::ConfigDialog *ui;
+    QString prepareSavedPath(const QString &) const;
 
 
 private slots:

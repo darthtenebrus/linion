@@ -149,17 +149,17 @@ p, li { white-space: pre-wrap; }
         <translation>Tar Schleuderkommand</translation>
     </message>
     <message>
-        <location filename="configdialog.cpp" line="90"/>
+        <location filename="configdialog.cpp" line="89"/>
         <source>Choose ESO Adddons Directory</source>
         <translation>Wahlen Sie ESO Addonsdateiverzeichnis</translation>
     </message>
     <message>
-        <location filename="configdialog.cpp" line="100"/>
+        <location filename="configdialog.cpp" line="101"/>
         <source>Choose Backup Directory</source>
         <translation>Wahlen Sie ESO Sicherungsverzeichnis</translation>
     </message>
     <message>
-        <location filename="configdialog.cpp" line="126"/>
+        <location filename="configdialog.cpp" line="127"/>
         <source>Choose Saved Vars Directory</source>
         <translation>Wahlen Sie Sichervariabelsverzeichnis</translation>
     </message>
