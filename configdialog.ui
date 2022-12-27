@@ -141,7 +141,7 @@
      <item>
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="pathsPage">
         <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -179,8 +179,31 @@
               </property>
              </widget>
             </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="label_2">
+              <property name="text">
+               <string>Backup Path</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QLineEdit" name="backupPath"/>
+            </item>
             <item row="0" column="1">
              <widget class="QLineEdit" name="addonFolderPath"/>
+            </item>
+            <item row="2" column="2">
+             <widget class="QToolButton" name="backupPathButton">
+              <property name="statusTip">
+               <string notr="true"/>
+              </property>
+              <property name="text">
+               <string>...</string>
+              </property>
+             </widget>
             </item>
             <item row="0" column="2">
              <widget class="QToolButton" name="addonFolderPathButton">
@@ -192,24 +215,21 @@
               </property>
              </widget>
             </item>
+            <item row="1" column="1">
+             <widget class="QLineEdit" name="savedVarsPath"/>
+            </item>
             <item row="1" column="0">
-             <widget class="QLabel" name="label_2">
+             <widget class="QLabel" name="label_5">
               <property name="text">
-               <string>Backup Path</string>
+               <string>Saved Vars Path</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
              </widget>
             </item>
-            <item row="1" column="1">
-             <widget class="QLineEdit" name="backupPath"/>
-            </item>
             <item row="1" column="2">
-             <widget class="QToolButton" name="backupPathButton">
-              <property name="statusTip">
-               <string notr="true"/>
-              </property>
+             <widget class="QToolButton" name="savedVarsPathButton">
               <property name="text">
                <string>...</string>
               </property>

@@ -11,6 +11,9 @@
 #include <QPushButton>
 #include <QFileDialog>
 
+
+QString ConfigDialog::savedVarsSuffix = "SavedVariables";
+
 ConfigDialog::ConfigDialog(QWidget *parent) :
         QDialog(parent), ui(new Ui::ConfigDialog) {
     ui->setupUi(this);
@@ -24,6 +27,7 @@ ConfigDialog::ConfigDialog(QWidget *parent) :
 
     connect(ui->addonFolderPathButton, &QToolButton::clicked, this, &ConfigDialog::addonPathChoose);
     connect(ui->backupPathButton, &QToolButton::clicked, this, &ConfigDialog::backupPathChoose);
+    connect(ui->savedVarsPathButton, &QToolButton::clicked, this, &ConfigDialog::savedVarsPathChoose);
 
     auto *locUi = ui;
     connect(ui->doNotUse, &QRadioButton::toggled, this, [locUi]() {
@@ -63,6 +67,12 @@ void ConfigDialog::transferData(const PreferencesType &data) const {
 
     ui->tarExtractCommand->setText(data.value("tarExtractCommand").toString());
     ui->zipExtractCommand->setText(data.value("zipExtractCommand").toString());
+    QString sPath = data.value("savedVarsPath").toString();
+    if (sPath.isEmpty() && !ui->addonFolderPath->text().isEmpty()) {
+        sPath = ui->addonFolderPath->text().section(QDir::separator(), 0, -2) +
+                QDir::separator() + ConfigDialog::savedVarsSuffix;
+    }
+    ui->savedVarsPath->setText(sPath);
 
 }
 
@@ -94,7 +104,6 @@ void ConfigDialog::backupPathChoose() {
     if (!dir.isEmpty()) {
         ui->backupPath->setText(dir);
     }
-
 }
 
 PreferencesType ConfigDialog::receiveData() const {
@@ -109,6 +118,18 @@ PreferencesType ConfigDialog::receiveData() const {
     data.insert("zipCommand", ui->zipCommand->text());
     data.insert("tarExtractCommand", ui->tarExtractCommand->text());
     data.insert("zipExtractCommand", ui->zipExtractCommand->text());
+    data.insert("savedVarsPath", ui->savedVarsPath->text());
     return data;
 }
+
+void ConfigDialog::savedVarsPathChoose() {
+    auto dir = QFileDialog::getExistingDirectory(this, tr("Choose Saved Vars Directory"),
+                                                 ui->savedVarsPath->text(),
+                                                 QFileDialog::ShowDirsOnly
+                                                 | QFileDialog::DontResolveSymlinks);
+    if (!dir.isEmpty()) {
+        ui->savedVarsPath->setText(dir);
+    }
+}
+
 

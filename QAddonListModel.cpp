@@ -43,7 +43,10 @@ QAddonListModel::~QAddonListModel() {
     disconnectWatcher();
 }
 
-int QAddonListModel::rowCount(const QModelIndex &) const {
+int QAddonListModel::rowCount(const QModelIndex &parent) const {
+    if (parent.isValid()) {
+        return 0;
+    }
     return addonList.count();
 }
 
@@ -548,6 +551,7 @@ void QAddonListModel::setModelData(const PreferencesType &data) {
     zipCommand = data.value("zipCommand").toString();
     tarExtractCommand = data.value("tarExtractCommand").toString();
     zipExtractCommand = data.value("zipExtractCommand").toString();
+    savedVarsPath = data.value("savedVarsPath").toString();
 
 }
 

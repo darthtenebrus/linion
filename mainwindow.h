@@ -53,9 +53,8 @@ private:
             {"tarCommand", QVariant("tar cvzf %1.tgz")},
             {"zipCommand", QVariant("zip -r %1.zip")},
             {"tarExtractCommand", QVariant("tar xvf")},
-            {"zipExtractCommand", QVariant("unzip -o")}
-
-
+            {"zipExtractCommand", QVariant("unzip -o")},
+            {"savedVarsPath", QVariant()}
     };
 
     void writeSettings(const PreferencesType &data);

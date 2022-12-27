@@ -17,6 +17,9 @@ class ConfigDialog : public QDialog {
 Q_OBJECT
 
 public:
+
+    static QString savedVarsSuffix;
+
     explicit ConfigDialog(QWidget *parent = nullptr);
     ~ConfigDialog() override;
     void setTopSelected();
@@ -34,6 +37,7 @@ private slots:
     void currentChanged(const QModelIndex &, const QModelIndex &);
     void addonPathChoose();
     void backupPathChoose();
+    void savedVarsPathChoose();
 
 
 };
