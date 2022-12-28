@@ -5,6 +5,7 @@
 #include "QAddonListModel.h"
 #include "preferences.h"
 #include "BinaryDownloader.h"
+#include "configdialog.h"
 #include <QPixmap>
 
 #ifdef _DEBUG
@@ -420,6 +421,21 @@ void QAddonListModel::processBackup(const QString &pPath) const {
             break;
 
         }
+    }
+
+    if (backupSaved) {
+        const QString &srcVars = savedVarsPath + QDir::separator() + srcDir.dirName() + ".lua";
+        if (!QFile(srcVars).exists()) {
+            return;
+        }
+        const QString &dstVarsDirStr = backupPath + QDir::separator() + ConfigDialog::savedVarsSuffix;
+        const QDir &dDir = QDir(dstVarsDirStr);
+        if (!dDir.exists()) {
+            dDir.mkpath(".");
+        }
+
+        const QString &dstVarsFileStr = dstVarsDirStr + QDir::separator() + srcDir.dirName() + ".lua";
+        QFile::copy(srcVars, dstVarsFileStr);
     }
 }
 
