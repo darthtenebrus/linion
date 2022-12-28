@@ -520,6 +520,17 @@ void QAddonListModel::processRestore(const QString &srcDirName) {
             }
         }
     }
+
+    if (backupSaved) {
+
+        const QString &srcVars = backupPath + QDir::separator() + ConfigDialog::savedVarsSuffix +
+                QDir::separator() + srcDirName + ".lua";
+        if (!QFile(srcVars).exists()) {
+            return;
+        }
+        const QString &dstVarsFileStr = savedVarsPath + QDir::separator() + srcDirName + ".lua";
+        QFile::copy(srcVars, dstVarsFileStr);
+    }
 }
 
 void QAddonListModel::copyPath(const QString &src, const QString &dst) const {
