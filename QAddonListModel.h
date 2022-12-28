@@ -87,6 +87,7 @@ private:
     QString tarExtractCommand;
     QString zipExtractCommand;
     QString savedVarsPath;
+    bool backupSaved;
 
     void refreshFolderList();
     void refreshESOSiteList();

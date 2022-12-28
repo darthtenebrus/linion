@@ -552,6 +552,7 @@ void QAddonListModel::setModelData(const PreferencesType &data) {
     tarExtractCommand = data.value("tarExtractCommand").toString();
     zipExtractCommand = data.value("zipExtractCommand").toString();
     savedVarsPath = data.value("savedVarsPath").toString();
+    backupSaved = data.value("backupSaved").toBool();
 
 }
 

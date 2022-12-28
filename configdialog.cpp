@@ -72,6 +72,8 @@ void ConfigDialog::transferData(const PreferencesType &data) const {
         sPath = prepareSavedPath(ui->addonFolderPath->text());
     }
     ui->savedVarsPath->setText(sPath);
+    ui->backupSaved->setChecked(data.value("backupSaved").toBool());
+    ui->savedVarsPath->setEnabled(ui->backupSaved->isChecked());
 
 }
 
@@ -120,6 +122,7 @@ PreferencesType ConfigDialog::receiveData() const {
     data.insert("tarExtractCommand", ui->tarExtractCommand->text());
     data.insert("zipExtractCommand", ui->zipExtractCommand->text());
     data.insert("savedVarsPath", ui->savedVarsPath->text());
+    data.insert("backupSaved", ui->backupSaved->isChecked());
     return data;
 }
 
