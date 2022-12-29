@@ -356,13 +356,23 @@ void QAddonListModel::backupAllClicked() {
 
 void QAddonListModel::backupAddonClicked() {
 
-    const QTreeView *view = qobject_cast<QTreeView *>(parent());
+    auto *view = qobject_cast<QTreeView *>(parent());
     const QModelIndexList &selectedSet = view->selectionModel()->selectedIndexes();
     if (selectedSet.count() > 1) {
         return; // fuckup
     }
     const QModelIndex &index = selectedSet[0];
     const QString &aPath = index.data(QAddonListModel::PathRole).toString();
+    const QString &addonDisplayName = index.data(Qt::DisplayRole).toString();
+
+    QMessageBox::StandardButton button = QMessageBox::warning(view, tr("Info"),
+                                                              tr("Do you want to backup this addon: %1?")
+                                                                      .arg(addonDisplayName),
+                                                              QMessageBox::StandardButtons(
+                                                                      QMessageBox::Yes | QMessageBox::No));
+    if (button == QMessageBox::No) {
+        return;
+    }
 
     emit percent(1, 100, tr("Backing up single addon"));
     processBackup(aPath);
