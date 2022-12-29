@@ -96,9 +96,10 @@ QVariant QAddonListModel::data(const QModelIndex &index, int role) const {
             break;
         case Qt::DecorationRole: {
                 const ItemData::ItemStatus &cStatus = addonList.at(index.row()).isStatus();
-                if (cStatus != ItemData::NotInstalled) {
-                    value = QPixmap(addonList.at(index.row()).isStatus() == ItemData::InstalledBackedUp ?
-                                    ":/images/green_check.png" : ":/images/red_cross.png");
+                if (cStatus == ItemData::InstalledBackedUp) {
+                    value = QPixmap(":/images/green_check.png");
+                } else if (cStatus == ItemData::Installed) {
+                    value = QPixmap(":/images/installed.png");
                 } else {
                     value = QPixmap(":/images/red_cross.png");
                 }

@@ -6,6 +6,7 @@
         <file>desktop/64x64/linion.png</file>
         <file>restore_back.png</file>
         <file>restore_back_disabled.png</file>
+        <file>installed.png</file>
     </qresource>
 </RCC>
 

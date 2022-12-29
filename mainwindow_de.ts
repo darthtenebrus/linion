@@ -378,123 +378,123 @@ p, li { white-space: pre-wrap; }
         <translation>Installiert, Gesichert</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="176"/>
+        <location filename="QAddonListModel.cpp" line="177"/>
         <source>No description</source>
         <translation>Keine Beschreibung</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="177"/>
+        <location filename="QAddonListModel.cpp" line="178"/>
         <source>Unknown Author</source>
         <translation>Ungeklärter Autor</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="178"/>
+        <location filename="QAddonListModel.cpp" line="179"/>
         <source>Unknown Title</source>
         <translation>Ungeklärter Titel</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="180"/>
+        <location filename="QAddonListModel.cpp" line="181"/>
         <source>Unknown Version</source>
         <translation>Ungeklärte Version</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="217"/>
+        <location filename="QAddonListModel.cpp" line="218"/>
         <source>Refresh</source>
         <translation>Aktualisieren</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="267"/>
-        <location filename="QAddonListModel.cpp" line="273"/>
+        <location filename="QAddonListModel.cpp" line="268"/>
+        <location filename="QAddonListModel.cpp" line="274"/>
         <source>Updating</source>
         <translation>Aktualisierung ein</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="324"/>
-        <location filename="QAddonListModel.cpp" line="340"/>
-        <location filename="QAddonListModel.cpp" line="454"/>
-        <location filename="QAddonListModel.cpp" line="671"/>
+        <location filename="QAddonListModel.cpp" line="325"/>
+        <location filename="QAddonListModel.cpp" line="341"/>
+        <location filename="QAddonListModel.cpp" line="455"/>
+        <location filename="QAddonListModel.cpp" line="672"/>
         <source>Info</source>
         <translation>Info</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="325"/>
+        <location filename="QAddonListModel.cpp" line="326"/>
         <source>Do you really want to delete this addon: %1?</source>
         <translation>Möchten Sie wirklich dieses Addon löschen: %1?</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="341"/>
+        <location filename="QAddonListModel.cpp" line="342"/>
         <source>Do you want to make a backup of all installed addons?</source>
         <translation>Möchten Sie wirklich alle installierte Addons sicherkopieren?</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="350"/>
+        <location filename="QAddonListModel.cpp" line="351"/>
         <source>Backing up</source>
         <translation>Sicherung ein</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="366"/>
-        <location filename="QAddonListModel.cpp" line="368"/>
+        <location filename="QAddonListModel.cpp" line="367"/>
+        <location filename="QAddonListModel.cpp" line="369"/>
         <source>Backing up single addon</source>
         <translation>Addonsicherung ein</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="455"/>
+        <location filename="QAddonListModel.cpp" line="456"/>
         <source>Do you want to restore this addon: %1?</source>
         <translation>Möchten Sie wirklich dieses Addon wiederherstellen: %1?</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="463"/>
-        <location filename="QAddonListModel.cpp" line="465"/>
+        <location filename="QAddonListModel.cpp" line="464"/>
+        <location filename="QAddonListModel.cpp" line="466"/>
         <source>Restoring single addon</source>
         <translation>Addon-Wiederherstellung ein</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="605"/>
-        <location filename="QAddonListModel.cpp" line="633"/>
-        <location filename="QAddonListModel.cpp" line="698"/>
-        <location filename="QAddonListModel.cpp" line="740"/>
+        <location filename="QAddonListModel.cpp" line="606"/>
+        <location filename="QAddonListModel.cpp" line="634"/>
+        <location filename="QAddonListModel.cpp" line="699"/>
+        <location filename="QAddonListModel.cpp" line="741"/>
         <source>Fatal</source>
         <translation>Fatal</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="617"/>
-        <location filename="QAddonListModel.cpp" line="629"/>
+        <location filename="QAddonListModel.cpp" line="618"/>
+        <location filename="QAddonListModel.cpp" line="630"/>
         <source>Processing downloaded data</source>
         <translation>Dateidowngeloadetbearbeitung ein</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="634"/>
+        <location filename="QAddonListModel.cpp" line="635"/>
         <source>Invalid data</source>
         <translation>Datei ist ungeklärt</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="643"/>
+        <location filename="QAddonListModel.cpp" line="644"/>
         <source>Updating data</source>
         <translation>Dataaktualisierung ein</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="670"/>
+        <location filename="QAddonListModel.cpp" line="671"/>
         <source>install</source>
         <translation>installieren</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="670"/>
+        <location filename="QAddonListModel.cpp" line="671"/>
         <source>update or reinstall</source>
         <translation>Wiederinstallieren oder aktualisieren</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="672"/>
+        <location filename="QAddonListModel.cpp" line="673"/>
         <source>Do you really want to %1 this addon: %2?</source>
         <translation>Möchten Sie wirklich dieses Addon %1: %2?</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="699"/>
+        <location filename="QAddonListModel.cpp" line="700"/>
         <source>I/O error</source>
         <translation>E/A Fehler</translation>
     </message>
     <message>
-        <location filename="QAddonListModel.cpp" line="748"/>
-        <location filename="QAddonListModel.cpp" line="780"/>
+        <location filename="QAddonListModel.cpp" line="749"/>
+        <location filename="QAddonListModel.cpp" line="781"/>
         <source>Downloading from site</source>
         <translation>Seitedateidowngeloadung ein</translation>
     </message>
