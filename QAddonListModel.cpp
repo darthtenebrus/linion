@@ -139,7 +139,7 @@ ItemData *QAddonListModel::prepareAndFillDataByAddonName(const QString &addonNam
         return nullptr;
     } else {
 
-        // This fucking MAC OS doesn't allow to use text mode read
+        // This fucking MACOS doesn't allow to use text mode read
         QString title;
         QString version;
         QString author;
