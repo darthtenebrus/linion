@@ -445,7 +445,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="QAddonListModel.cpp" line="369"/>
         <source>Do you want to backup this addon: %1?</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы хотите создать резервную копию аддона: %1?</translation>
     </message>
     <message>
         <location filename="QAddonListModel.cpp" line="377"/>
