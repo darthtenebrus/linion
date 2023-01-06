@@ -59,6 +59,7 @@ private:
             {"backupSaved", false}
     };
 
+    void setAllEnabled();
     void writeSettings(const PreferencesType &data);
 
     [[nodiscard]]

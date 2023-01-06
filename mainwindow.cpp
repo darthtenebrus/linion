@@ -190,12 +190,12 @@ void MainWindow::aboutQtAction(bool param) {
 
 void MainWindow::allChanged() {
 
+    ui->setupButton->setEnabled(true);
     if (model->getAddonList().isEmpty()) {
         ui->backupButton->setEnabled(false);
         ui->searchEdit->setEnabled(false);
         if (!dirSetUp) {
             ui->findMoreButton->setEnabled(false);
-
             QMessageBox::StandardButton answer = QMessageBox::question(this, tr("Information"),
                                                                        tr("Unable to locate addons. Do you want "
                                                                           "to open the settings dialog and "
@@ -205,7 +205,6 @@ void MainWindow::allChanged() {
             }
         } else {
             ui->findMoreButton->setEnabled(true);
-            ui->setupButton->setEnabled(true);
         }
     } else {
         ui->backupButton->setEnabled(true);
@@ -237,6 +236,12 @@ void MainWindow::updateProgressPercent(int current, int total, const QString &ms
 
     if (ui->setupButton->isEnabled()) {
         ui->setupButton->setEnabled(false);
+    }
+
+    if (total == 0) {
+        ui->statusbar->showMessage(tr("All completed"));
+        progressBar->setVisible(false);
+        return;
     }
 
     int percent = qRound((float) current / (float) total * 100);

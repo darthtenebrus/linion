@@ -228,7 +228,8 @@ void QAddonListModel::refreshFolderList() {
 
     }
 
-    emit dataChanged(createIndex(0, 0), createIndex(addonList.count() - 1, 0));
+    totalCount = addonList.count();
+    emit dataChanged(createIndex(0, 0), createIndex(totalCount ? totalCount - 1 : 0, 0));
     emit percent(total, total, "");
     emit addonsListChanged();
 
