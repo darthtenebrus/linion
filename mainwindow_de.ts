@@ -279,7 +279,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="mainwindow.cpp" line="27"/>
-        <location filename="mainwindow.cpp" line="296"/>
+        <location filename="mainwindow.cpp" line="297"/>
         <source>Installed Addons List</source>
         <translation>Installiertliste</translation>
     </message>
@@ -295,7 +295,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="mainwindow.cpp" line="40"/>
-        <location filename="mainwindow.cpp" line="299"/>
+        <location filename="mainwindow.cpp" line="300"/>
         <source>Reinstall Or Update</source>
         <translation>Wiederinstallieren oder aktualisieren</translation>
     </message>
@@ -355,7 +355,7 @@ p, li { white-space: pre-wrap; }
         <translation>Kann keine Addons gefunden. Möchten Sie das Einstellungsdialog öffnen und den Dateiverzeichnispfad selbst wahlen?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="247"/>
+        <location filename="mainwindow.cpp" line="248"/>
         <source>All completed</source>
         <translation>Alles fertiggestellt</translation>
     </message>

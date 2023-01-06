@@ -205,6 +205,7 @@ void MainWindow::allChanged() {
             }
         } else {
             ui->findMoreButton->setEnabled(true);
+            ui->setupButton->setEnabled(true);
         }
     } else {
         ui->backupButton->setEnabled(true);
