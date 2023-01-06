@@ -191,21 +191,23 @@ void MainWindow::aboutQtAction(bool param) {
 void MainWindow::allChanged() {
 
     if (model->getAddonList().isEmpty()) {
-
         ui->backupButton->setEnabled(false);
-        ui->findMoreButton->setEnabled(false);
         ui->searchEdit->setEnabled(false);
+        if (!dirSetUp) {
+            ui->findMoreButton->setEnabled(false);
 
-        QMessageBox::StandardButton answer = QMessageBox::question(this, tr("Information"),
-                                                                   tr("Unable to locate addons. Do you want "
-                                                                      "to open the settings dialog and "
-                                                                      "choose the path to the addons folder yourself?"));
-        if (answer == QMessageBox::StandardButton::Yes) {
-            settingsClicked(true);
+            QMessageBox::StandardButton answer = QMessageBox::question(this, tr("Information"),
+                                                                       tr("Unable to locate addons. Do you want "
+                                                                          "to open the settings dialog and "
+                                                                          "choose the path to the addons folder yourself?"));
+            if (answer == QMessageBox::StandardButton::Yes) {
+                settingsClicked(true);
+            }
+        } else {
+            ui->findMoreButton->setEnabled(true);
         }
     } else {
         ui->backupButton->setEnabled(true);
-        ui->findMoreButton->setEnabled(true);
         ui->searchEdit->setEnabled(true);
     }
 }
@@ -257,6 +259,7 @@ void MainWindow::settingsClicked(bool) {
     configDialog->setModal(true);
     int res = configDialog->exec();
     if (res == QDialog::Accepted) {
+        dirSetUp = true;
         const PreferencesType &receiveData = configDialog->receiveData();
         writeSettings(receiveData);
         model->setModelData(receiveData);

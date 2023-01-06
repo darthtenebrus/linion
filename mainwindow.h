@@ -27,6 +27,7 @@ protected:
     void closeEvent(QCloseEvent *event) override;
 
 private:
+    bool dirSetUp = false;
     Ui::MainWindow *ui;
     QAddonListModel *model;
     QAddonProxyModel *proxyModel;
