@@ -21,6 +21,7 @@ apps:
       - kde-neon
     plugs:
       - home
+      - network
       - desktop
       - desktop-legacy
 
