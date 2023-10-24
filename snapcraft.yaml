@@ -1,0 +1,58 @@
+name: linion # you probably want to 'snapcraft register <name>'
+base: core22 # the base snap is the execution environment for this snap
+version: '1.0-8' # just for humans, typically '1.2+git' or '1.3.2'
+summary: TESO addon manager # 79 char long summary
+description: |
+  linion
+  is a lightweight addon manager for TESO. Being smaller than its Java brother and built for those
+  playing TESO on WINE
+
+website: https://www.darkguard.net
+grade: stable # must be 'stable' to release into candidate/stable channels
+confinement: strict # use 'strict' once you have the right plugs and slots
+architectures:
+  - build-on: [amd64]
+  - build-on: [arm64]
+apps:
+  linion:
+    command: usr/bin/linion
+    desktop: linion.desktop
+    extensions:
+      - kde-neon
+    plugs:
+      - home
+      - desktop
+      - desktop-legacy
+
+
+parts:
+  org-desk:
+    after: [my-part]
+    plugin: dump
+    source: desktop/
+    override-stage: |
+      craftctl default
+
+      # Point icon to the correct location
+      sed -i -e 's|Icon=linion|Icon=linion.png|g' $CRAFT_STAGE/linion.desktop
+    organize:
+      64x64/linion.png: linion.png
+    stage: [linion.png, linion.desktop]
+  my-part:
+    build-attributes:
+      - enable-patchelf
+    # See 'snapcraft plugins'
+    plugin: cmake
+    cmake-parameters:
+      - -DCMAKE_BUILD_TYPE=Release
+      - -DCMAKE_INSTALL_PREFIX=/usr
+    source: .
+    build-packages:
+      - gcc
+      - cmake
+      - qtbase5-dev
+      - qttools5-dev
+      - qttools5-dev-tools
+      - qtchooser
+      - libx11-dev
+
