@@ -6,12 +6,28 @@
     <message>
         <location filename="aboutdialog.ui" line="17"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_aboutdialog.h" line="80"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_aboutdialog.h" line="80"/>
         <source>About This Application</source>
         <translation>О программе</translation>
     </message>
     <message>
         <location filename="aboutdialog.ui" line="27"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_aboutdialog.h" line="81"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Droid Sans Fallback&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;This application is a lightweight addon manager for TESO. Simply a bit faster than its Java big brother. Created and tested on Ubuntu Linux for those playing TESO using WINE.&lt;br /&gt;Author: @esorochinskiy&lt;br /&gt;Special thanks to:&lt;br /&gt;Good Game Mods, LLC&lt;br /&gt;&lt;br /&gt;The software is distributed under &lt;a href=&quot;https://www.gnu.org/licenses/gpl-3.0.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#1d99f3;&quot;&gt;GPL V3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Source code is available on &lt;a href=&quot;https://gitverse.ru/esorochinskiy/linion&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#1d99f3;&quot;&gt;GitVerse&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Droid Sans Fallback&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Это приложение является более легковесным вариантом известного менеджера аддонов TESO. Чуть побыстрее своего Java-собрата. Собран и протестирован под Ubuntu Linux для тех, кто играет в TESO под WINE.&lt;br /&gt;&lt;br /&gt;Автор: @esorochinskiy&lt;br /&gt;Благодарности:&lt;br /&gt;Good Game Mods, LLC&lt;br /&gt;&lt;br /&gt;ПО распространяется под лицензией &lt;a href=&quot;https://www.gnu.org/licenses/gpl-3.0.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#1d99f3;&quot;&gt;GPL V3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Исходный текст доступен на &lt;a href=&quot;https://gitverse.ru/esorochinskiy/linion&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#1d99f3;&quot;&gt;GitVerse&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="cmake-build-release/linion_autogen/include/ui_aboutdialog.h" line="81"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -34,6 +50,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="aboutdialog.ui" line="75"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_aboutdialog.h" line="88"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_aboutdialog.h" line="88"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
@@ -43,30 +60,35 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="configdialog.ui" line="17"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="322"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="322"/>
         <source>Application Settings</source>
         <translation>Настройки приложения</translation>
     </message>
     <message>
         <location filename="configdialog.ui" line="114"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="327"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="327"/>
         <source>App Paths</source>
         <translation>Пути</translation>
     </message>
     <message>
         <location filename="configdialog.ui" line="129"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="329"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="329"/>
         <source>Archivers</source>
         <translation>Архивы</translation>
     </message>
     <message>
         <location filename="configdialog.ui" line="166"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="332"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="332"/>
         <source>TESO Addons And Backup</source>
         <translation>Аддоны и резервная копия</translation>
     </message>
     <message>
         <location filename="configdialog.ui" line="221"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="337"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="337"/>
         <source>TESO Addons Path</source>
         <translation>Аддоны TESO</translation>
     </message>
@@ -77,36 +99,44 @@ p, li { white-space: pre-wrap; }
         <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="333"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="334"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="338"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="333"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="334"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="338"/>
         <source>...</source>
         <translation></translation>
     </message>
     <message>
         <location filename="configdialog.ui" line="211"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="336"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="336"/>
         <source>Backup Path</source>
         <translation>Резервные копии</translation>
     </message>
     <message>
         <location filename="configdialog.ui" line="201"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="335"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="335"/>
         <source>Saved Vars Path</source>
         <translation>Файлы переменных</translation>
     </message>
     <message>
         <location filename="configdialog.ui" line="241"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="339"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="339"/>
         <source>Backup Saved Vars</source>
         <translation>Сохранить переменные</translation>
     </message>
     <message>
         <location filename="configdialog.ui" line="280"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="340"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="340"/>
         <source>Backup Archivers</source>
         <translation>Архивация</translation>
     </message>
     <message>
         <location filename="configdialog.ui" line="289"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="341"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="341"/>
         <source>Do not use just copy</source>
         <oldsource>Do not use, just copy</oldsource>
         <translation>Не использовть, только копировать</translation>
@@ -114,30 +144,35 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="configdialog.ui" line="296"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="342"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="342"/>
         <source>Tar</source>
         <translation>Архиватор tar</translation>
     </message>
     <message>
         <location filename="configdialog.ui" line="306"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="343"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="343"/>
         <source>Zip</source>
         <translation>Архиватор Zip</translation>
     </message>
     <message>
         <location filename="configdialog.ui" line="319"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="344"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="344"/>
         <source>Extractors</source>
         <translation>Распаковщики</translation>
     </message>
     <message>
         <location filename="configdialog.ui" line="340"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="345"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="345"/>
         <source>Zip Extract Command</source>
         <translation>Распаковщик ZIP</translation>
     </message>
     <message>
         <location filename="configdialog.ui" line="350"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_configdialog.h" line="346"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_configdialog.h" line="346"/>
         <source>Tar Extract Command</source>
         <translation>Распаковщик TAR</translation>
     </message>
@@ -162,18 +197,21 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="mainwindow.ui" line="20"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="259"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="259"/>
         <source>Linion Addon Manager</source>
         <translation>Менеджер аддонов Linion</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="81"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="265"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="265"/>
         <source>Backup All Installed Addons</source>
         <translation>Сделать резервные копии всех установленных аддонов</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="87"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="267"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="267"/>
         <source>Backup Installed</source>
         <oldsource>Backup Installed Addons</oldsource>
         <translation>Сохранить установленные</translation>
@@ -181,48 +219,56 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="mainwindow.ui" line="122"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="268"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="268"/>
         <source>Search For Addons</source>
         <translation>Поиск Аддонов</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="132"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="270"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="270"/>
         <source>Installed Addon List</source>
         <translation>Список уже установленых аддонов</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="135"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="272"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="272"/>
         <source>Installed</source>
         <translation>Установленные</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="155"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="274"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="274"/>
         <source>Find More Addons To Install</source>
         <translation>Поиск аддонов для установки</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="158"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="276"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="276"/>
         <source>Find More</source>
         <translation>Найти еще</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="316"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="281"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="281"/>
         <source>Help</source>
         <translation>Помощь</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="346"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="262"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="262"/>
         <source>About this application</source>
         <translation>О программе</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="351"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="263"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="263"/>
         <source>Show Terminal Output</source>
         <translation>Показать вывод внешних процесссов</translation>
     </message>
@@ -233,18 +279,23 @@ p, li { white-space: pre-wrap; }
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="278"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="280"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="282"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="278"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="280"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="282"/>
         <source>Settings</source>
         <translation>Настройки</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="336"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="260"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="260"/>
         <source>About Qt</source>
         <translation>О программе Qt</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="341"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_mainwindow.h" line="261"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_mainwindow.h" line="261"/>
         <source>Application Settings</source>
         <translation>Настроить приложение</translation>
     </message>
@@ -474,7 +525,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="QAddonListModel.cpp" line="760"/>
-        <location filename="QAddonListModel.cpp" line="792"/>
+        <location filename="QAddonListModel.cpp" line="795"/>
         <source>Downloading from site</source>
         <translation>Загрузка с сайта</translation>
     </message>
@@ -568,12 +619,14 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="terminalwindow.ui" line="14"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_terminalwindow.h" line="77"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_terminalwindow.h" line="77"/>
         <source>Terminal Output</source>
         <translation>Терминал внешних процессов</translation>
     </message>
     <message>
         <location filename="terminalwindow.ui" line="54"/>
         <location filename="cmake-build-debug/linion_autogen/include/ui_terminalwindow.h" line="78"/>
+        <location filename="cmake-build-release/linion_autogen/include/ui_terminalwindow.h" line="78"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>

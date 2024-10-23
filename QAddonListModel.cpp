@@ -759,7 +759,10 @@ void QAddonListModel::reinstallAddonClicked() {
         });
         emit percent(0, 100, tr("Downloading from site"));
         QNetworkRequest &&request = QNetworkRequest(QUrl(downPath));
+
         request.setAttribute(QNetworkRequest::RedirectPolicyAttribute, QNetworkRequest::NoLessSafeRedirectPolicy);
+        request.setAttribute(QNetworkRequest::Http2AllowedAttribute, true);
+        
         QNetworkReply *cRep = tmpRedirectManager->get(request);
         connect(cRep, &QNetworkReply::readyRead, this, [=]() {
             if (file && file->isOpen()) {
