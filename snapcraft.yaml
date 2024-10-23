@@ -1,6 +1,6 @@
 name: linion # you probably want to 'snapcraft register <name>'
 base: core22 # the base snap is the execution environment for this snap
-version: '1.0-9' # just for humans, typically '1.2+git' or '1.3.2'
+version: '1.0-10' # just for humans, typically '1.2+git' or '1.3.2'
 summary: TESO addon manager # 79 char long summary
 description: |
   linion

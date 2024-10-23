@@ -25,7 +25,7 @@
     <number>6</number>
    </property>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <layout class="QVBoxLayout" name="verticalLayout_4">
      <property name="spacing">
       <number>6</number>
      </property>
@@ -38,21 +38,21 @@
      <item>
       <widget class="QListWidget" name="listWidget">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
+        <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
        <property name="minimumSize">
         <size>
-         <width>112</width>
-         <height>0</height>
+         <width>0</width>
+         <height>72</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>113</width>
-         <height>16777215</height>
+         <width>16777215</width>
+         <height>72</height>
         </size>
        </property>
        <property name="mouseTracking">
@@ -104,7 +104,7 @@
         <bool>true</bool>
        </property>
        <property name="itemAlignment">
-        <set>Qt::AlignCenter|Qt::AlignHCenter|Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
        </property>
        <property name="currentRow">
         <number>-1</number>
@@ -141,7 +141,7 @@
      <item>
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="pathsPage">
         <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -359,19 +359,6 @@
             </item>
            </layout>
           </widget>
-         </item>
-         <item>
-          <spacer name="verticalSpacer_2">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>17</width>
-             <height>293</height>
-            </size>
-           </property>
-          </spacer>
          </item>
         </layout>
        </widget>
