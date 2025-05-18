@@ -14,6 +14,7 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
 endif()
 
 find_package(Qt5 COMPONENTS Core Widgets Network LinguistTools)
+find_package(X11)
 set(LING_OPTIONS -no-obsolete)
 qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} mainwindow_ru.ts OPTIONS ${LING_OPTIONS})
 qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} mainwindow_de.ts OPTIONS ${LING_OPTIONS})
@@ -32,8 +33,10 @@ add_executable(${PROJECT_NAME}
         ${RES_FILES}
         ${QM_FILES})
 
-target_link_libraries(${PROJECT_NAME} Qt5::Core)
-target_link_libraries(${PROJECT_NAME} Qt5::Widgets)
-target_link_libraries(${PROJECT_NAME} Qt5::Network)
+target_link_libraries(${PROJECT_NAME}
+        Qt5::Core
+        Qt5::Widgets
+        Qt5::Network
+        X11)
 
 install(TARGETS ${PROJECT_NAME})

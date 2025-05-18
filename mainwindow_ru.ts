@@ -513,37 +513,37 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QObject</name>
     <message>
-        <location filename="main.cpp" line="31"/>
+        <location filename="main.cpp" line="34"/>
         <source>TESO addon manager</source>
         <translation>Менеджер аддонов TESO</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="32"/>
+        <location filename="main.cpp" line="35"/>
         <source>Created by: </source>
         <translation>Создан: </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="36"/>
+        <location filename="main.cpp" line="39"/>
         <source>Usage %1 [options]</source>
         <translation>Использование %1 [параметры]</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="38"/>
+        <location filename="main.cpp" line="41"/>
         <source>Valid options:</source>
         <translation>Возможные параметры:</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="39"/>
+        <location filename="main.cpp" line="42"/>
         <source>show this help</source>
         <translation>показать эту инструкцию</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="40"/>
+        <location filename="main.cpp" line="43"/>
         <source>display version</source>
         <translation>показать версию</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="45"/>
+        <location filename="main.cpp" line="48"/>
         <source>Unknown option %1</source>
         <oldsource>Unknown option %1
 
@@ -551,24 +551,14 @@ p, li { white-space: pre-wrap; }
         <translation>Неизвестный параметр %1</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="46"/>
+        <location filename="main.cpp" line="49"/>
         <source>Launch %1 -h or %1 --help for help</source>
         <translation>Запустите %1 -h или %1 --help для получения помощи</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="50"/>
+        <location filename="main.cpp" line="53"/>
         <source>Launch this application without any parameters to see its main functional</source>
         <translation>Запустите эту программу без параметров, чтобы воспользоваться ее основной функцией</translation>
-    </message>
-    <message>
-        <location filename="main.cpp" line="84"/>
-        <source>Already Running</source>
-        <translation>Уже Запущено</translation>
-    </message>
-    <message>
-        <location filename="main.cpp" line="85"/>
-        <source>Linion Already Running</source>
-        <translation>Приложение Linion уже запущено</translation>
     </message>
 </context>
 <context>

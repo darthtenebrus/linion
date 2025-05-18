@@ -3,9 +3,12 @@
 #include <mainwindow.h>
 #include <QSystemSemaphore>
 #include <QSharedMemory>
-#include <QMessageBox>
 #include <iostream>
 #include "version.h"
+#include <X11/Xlib.h>
+#ifdef _DEBUG
+#include <QDebug>
+#endif
 
 
 int main(int argc, char *argv[]) {
@@ -68,30 +71,48 @@ int main(int argc, char *argv[]) {
     }
 #endif
 
+    WId wid;
     QSharedMemory sharedMemory(shared_id);
     bool is_running = false;
     if (sharedMemory.attach())
     {
         is_running = true;
+        memcpy(&wid, sharedMemory.data(), sizeof(WId));
     } else {
         sharedMemory.create(1);
     }
     semaphore.release();
 
     if (is_running) {
-        QMessageBox msgBox;
-        msgBox.setIcon(QMessageBox::Warning);
-        msgBox.setWindowTitle(QObject::tr("Already Running"));
-        msgBox.setText(QObject::tr("Linion Already Running"));
-        msgBox.exec();
+
+#ifdef _DEBUG
+        qDebug() << wid;
+#endif
+
+        Display *display = XOpenDisplay(nullptr);
+        XEvent event = { 0 };
+        event.xclient.type = ClientMessage;
+        event.xclient.serial = 0;
+        event.xclient.send_event = True;
+        event.xclient.message_type = XInternAtom(display, "_NET_ACTIVE_WINDOW", False);
+        event.xclient.window = wid;
+        event.xclient.format = 32;
+
+        XSendEvent(display, DefaultRootWindow(display), False, SubstructureRedirectMask | SubstructureNotifyMask, &event );
+        XMapRaised(display, wid);
+        XCloseDisplay(display);
         return 1;
     }
 
 
     auto *w(new MainWindow());
+    wid = w->winId();
+#ifdef _DEBUG
+    qDebug() << wid;
+#endif
+    memcpy(sharedMemory.data(), &wid, sizeof(WId));
     w->show();
     int res = QApplication::exec();
     delete w;
     return res;
-
 }

@@ -509,59 +509,49 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QObject</name>
     <message>
-        <location filename="main.cpp" line="31"/>
+        <location filename="main.cpp" line="34"/>
         <source>TESO addon manager</source>
         <translation>TESO Addon Manager</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="32"/>
+        <location filename="main.cpp" line="35"/>
         <source>Created by: </source>
         <translation>Erstellt von: </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="36"/>
+        <location filename="main.cpp" line="39"/>
         <source>Usage %1 [options]</source>
         <translation>Benutzen%1 [Optionen]</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="38"/>
+        <location filename="main.cpp" line="41"/>
         <source>Valid options:</source>
         <translation>Gültige Optionen:</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="39"/>
+        <location filename="main.cpp" line="42"/>
         <source>show this help</source>
         <translation>Dieses Helfen anzeigen</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="40"/>
+        <location filename="main.cpp" line="43"/>
         <source>display version</source>
         <translation>Version anzeigen</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="45"/>
+        <location filename="main.cpp" line="48"/>
         <source>Unknown option %1</source>
         <translation>Ungeklärte Option %1</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="46"/>
+        <location filename="main.cpp" line="49"/>
         <source>Launch %1 -h or %1 --help for help</source>
         <translation>Start %1 -h oder %1 --help für das Helfe</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="50"/>
+        <location filename="main.cpp" line="53"/>
         <source>Launch this application without any parameters to see its main functional</source>
         <translation>Start diese App mit keine Optionen, um ihre Hauptfunktion zu benutzen</translation>
-    </message>
-    <message>
-        <location filename="main.cpp" line="84"/>
-        <source>Already Running</source>
-        <translation>Läuft bereits</translation>
-    </message>
-    <message>
-        <location filename="main.cpp" line="85"/>
-        <source>Linion Already Running</source>
-        <translation>Läuft bereits</translation>
     </message>
 </context>
 <context>
