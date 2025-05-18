@@ -133,7 +133,16 @@ ItemData *QAddonListModel::prepareAndFillDataByAddonName(const QString &addonNam
     QRegularExpression re(R"(##\s+(?<tag>[A-Za-z]+):\s+(?<content>.*))");
 
     auto separ = QDir::separator();
-    const QString &fPath = addonFolderPath + separ + addonName + separ + addonName + ".txt";
+    QStringList fExts = QStringList() << ".txt" << ".addon";
+    QString fPath;
+    for (const QString &fExt : fExts) {
+        fPath = addonFolderPath + separ + addonName + separ + addonName + fExt;
+
+        if (QFile(fPath).exists()) {
+            break;
+        }
+    }
+
     QFile file(fPath);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         return nullptr;
@@ -279,9 +288,18 @@ void QAddonListModel::refreshFromSiteList() {
         }
 
         const QString &addonName = findNow.value("UIDir").toArray()[0].toString();
-        const QString &fPath = addonFolderPath + QDir::separator() + addonName + QDir::separator() + addonName + ".txt";
+        QStringList fExts = QStringList() << ".txt" << ".addon";
+        QString fPath;
+        bool fExists = false;
+        for (const QString &fExt : fExts) {
+            fPath = addonFolderPath + QDir::separator() + addonName + QDir::separator() + addonName + fExt;
+            if (QFile(fPath).exists()) {
+                fExists = true;
+                break;
+            }
+        }
 
-        if (QFile(fPath).exists()) {
+        if (fExists) {
             continue;
         }
 
@@ -738,8 +756,15 @@ void QAddonListModel::reinstallAddonClicked() {
                 copyPath(srcDir.absolutePath(), dstDir.absolutePath());
                 QDir(tempRoot).removeRecursively();
 
-                const QString &aPath = addonFolderPath + QDir::separator() + addonName +
-                                       QDir::separator() + addonName + ".txt";
+                QString aPath;
+                QStringList fExts = QStringList() << ".txt" << ".addon";
+                for (const QString &fExt : fExts) {
+                    aPath = addonFolderPath + QDir::separator() + addonName +
+                                           QDir::separator() + addonName + fExt;
+                    if (QFile(aPath).exists()) {
+                        break;
+                    }
+                }
                 emit percent(100, 100);
                 emit backToInstalled(aPath);
 
