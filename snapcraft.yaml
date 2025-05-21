@@ -24,6 +24,7 @@ apps:
       - network
       - desktop
       - desktop-legacy
+      - x11
 
 
 parts:
